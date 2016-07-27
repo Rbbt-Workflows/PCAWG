@@ -1,0 +1,95 @@
+- load Rbbt.lib['pcawg.rb'].find
+
+#plot.sample_column.rbbt.plot
+
+- study = Study.setup("Bladder-TCC")
+- study2 = Study.setup("Bone-Cart")
+- recurrent_genes = study.recurrent_genes
+
+:ruby
+  graph = {
+    :namespace => "Hsa/feb2014",
+    :entities => {}, 
+    :rules => [],
+    :aes_rules => [],
+  }
+
+  
+  graph[:entities]["Donor"] = {:codes => study.donors + study2.donors}
+
+  graph[:aes_rules].push(:aes => :label, :name => :code)
+
+  graph[:rules].push(:property => :abbr_color)
+  graph[:rules].push(:property => :gene_status, :args => [recurrent_genes])
+  graph[:aes_rules].push(:aes => :color, :name => :abbr_color)
+  graph[:aes_rules].push(:aes => :color_column, :name => :gene_status,
+                         :mapper => :function, :mapper_obj => "function(arry){ 
+                           return arry.map(function(x){ 
+                             if (x == 'broken') return 'red'
+                             if (x == 'affected') return 'yellow'
+                             if (x == 'lost') return 'pink'
+                             if (x == 'gain') return 'green'
+                            }) 
+                         }")
+ 
+:sass
+  .sample_column.rbbt.plot
+    .column, .donor.label, .donor.color
+      margin-left: 2px
+    .columns
+      background-color: white
+      .column
+        display: inline-block
+        width: 2em
+        .tile_column
+          width: 100%
+          height: 5px
+          margin-bottom: 2px
+          border-bottom: 1px solid #AAA 
+    .donor.label, .donor.color
+      display: inline-block
+      height: 8em
+      width: 2em
+      overflow: hidden
+      text-overflow: ellipsis
+    .donor.color
+      height: 2em
+      width: 2em
+    .vertical_text
+      writing-mode: vertical-rl
+      text-orientation: sideways-left
+      text-position: center
+      text-orientation: upright
+
+:deferjs
+  var graph = #{ graph.to_json }
+  var plot = $("#plot.sample_column.rbbt.plot").first()
+  var genes = #{study.recurrent_genes.name.to_json}
+
+  var produce_obj = function(code, i, aes){ 
+    var obj = {}
+    tiles = []
+    for (j in aes.color_column[i]){ var color = aes.color_column[i][j]; tiles.push( m('.tile_column', {style: "background-color:" + color, title: genes[j]}) ) }
+    obj.column = m('div.column', tiles)
+    obj.label = m('div.donor.label.vertical_text', aes.label[i])
+    obj.color = m('div.donor.color', {style: "background-color:" + aes.color[i]})
+    return obj
+  }
+
+  var container_obj = function(graph_model, objs){
+    var columns = []
+    forArray(objs["Donor"], function(obj){ columns.push(obj.column) })
+
+    var labels = []
+    forArray(objs["Donor"], function(obj){ labels.push(obj.label) })
+
+    var colors = []
+    forArray(objs["Donor"], function(obj){ colors.push(obj.color) })
+
+    return [m('div.columns', columns), m('div.labels',labels), m('div.colors', colors)]
+  }
+
+  rbbt.plots.graph.view_mithril(graph, plot, container_obj, produce_obj)
+
+
+

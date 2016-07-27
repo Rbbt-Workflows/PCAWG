@@ -1,0 +1,74 @@
+- load Rbbt.lib['pcawg.rb'].find
+- action_card = ActionCard.new do 
+  - input :histology_abbreviation, :select, "Donor code", nil, :select_options => ["Ignore"] + PCAWG.all_abbreviations
+  - input :histology_tier1, :select, "Donor code", nil, :select_options => ["Ignore"] + PCAWG.all_histologies(1)
+  - input :histology_tier2, :select, "Donor code", nil, :select_options => ["Ignore"] + PCAWG.all_histologies(2)
+  - input :histology_tier3, :select, "Donor code", nil, :select_options => ["Ignore"] + PCAWG.all_histologies(3)
+  - input :histology_tier4, :select, "Donor code", nil, :select_options => ["Ignore"] + PCAWG.all_histologies(4)
+
+- action_card.require :histology_abbreviation, :histology_tier1, :histology_tier2, :histology_tier3, :histology_tier4
+= action_card_render action_card do
+  - his_vals = {:histology_abbreviation => histology_abbreviation,:histology_tier1 => histology_tier1,:histology_tier2 => histology_tier2,:histology_tier3 => histology_tier3,:histology_tier4 => histology_tier4 }
+  - not_ignored = his_vals.select{|k,v| v != "Ignore"}
+  - if not_ignored.length == 0 
+    - raise ParameterException, "Choose an subset"
+  - if not_ignored.length > 1 
+    - raise ParameterException, "Choose only ononly one subset"
+  - selected_key, selected_value = not_ignored.first
+  - study = [selected_key, selected_value] * ":"
+
+  %a(href='/main/pie') PIE
+  - if defined? study and study
+    - Study.setup(study)
+
+    %dl
+      %dt Donors with #{study}
+      %dd
+        = study.donors * ", "
+
+
+    :sass
+      #plot
+        margin: 1em
+        height: 800px
+        width: 100%
+        border: solid black 1px
+      .gene
+        color: green
+
+    #plot
+      .window
+
+    :ruby
+      graph = {
+        :namespace => "Hsa/feb2014",
+        :entities => {}, 
+        :associations => {}, 
+        :rules => [],
+        :aes_rules => [],
+        :edge_rules => [],
+        :edge_aes_rules => [],
+      }
+
+      recurrent_genes = study.recurrent_genes(:recurrent_threshold => 0.1)
+      
+      graph[:entities]["Donor"] = {:codes => study.donors}
+      graph[:entities]["Gene"] = {:codes => recurrent_genes}
+
+      graph[:rules].push(:property => :name, :entity_type => "Gene")
+      graph[:rules].push(:property => :chromosome, :entity_type => "Gene")
+
+      graph[:aes_rules].push(:aes => :label, :name => :code)
+      graph[:aes_rules].push(:aes => :label, :name => :name, :entity_type => "Gene")
+      graph[:aes_rules].push(:aes => :color, :value => 'red', :entity_type => "Gene")
+
+      associations = []
+      study.sample_genes.select(:broken => "true").through("Sample", ["Ensembl Gene ID"]){|s,vs| d = PCAWG.sample_donor(s); vs.flatten.each{|g| associations << [d,g] * "~" if recurrent_genes.include?(g) }}
+      graph[:associations]["sample_genes"] = {:codes => associations}
+
+    :deferjs
+
+      var gm = #{graph.to_json}
+      rbbt.plots.graph.view_cytoscapejs(gm, $('#plot'))
+
+

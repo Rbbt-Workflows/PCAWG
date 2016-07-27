@@ -1,0 +1,58 @@
+
+- Study.setup(study)
+
+%dl
+  %dt Donors with #{study}
+  %dd
+    = study.donors * ", "
+
+  - recurrent = Gene.setup(study.recurrent_genes, "Ensembl Gene ID", study.organism)
+  %dt 
+    Recurrent genes in donors with #{study}
+    = recurrent.list_link :id, "Recurrent genes in #{ study }"
+  %dd
+    = recurrent.link * ", "
+
+    :sass
+      #plot
+        margin: 1em
+        height: 500px
+        width: 800px
+        border: solid black 1px
+      .gene
+        color: green
+
+    #plot
+      .window
+
+    - associations = ["ENSG00000004846~ENSG00000005206"]
+
+    :deferjs
+
+      var genes = #{recurrent.to_json}
+      var associations = #{associations.to_json}
+
+      var gm = {}
+      gm.entities = {}
+      gm.entities["Gene"] = {}
+      gm.entities["Gene"].codes = genes
+      gm.entities["Gene"].type = "Gene"
+      gm.entities["Gene"].info = {organism: "Hsa/feb2014", format: "Ensembl Gene ID"}
+
+      gm.rules = []
+      gm.rules.push({property: 'name'})
+
+      gm.aes_rules = []
+      gm.aes_rules.push({aes: 'label', name: 'name'})
+
+      gm.associations = {}
+      gm.associations["random"] = {}
+      gm.associations["random"].codes = associations
+
+      rbbt.plots.graph.view_cytoscapejs(gm, $('#plot'))
+
+
+%ul
+  - Study.task_exports.each do |task|
+    %li
+      %a.task(href="/Study/#{ task }?jobname=#{study}")= task.to_s

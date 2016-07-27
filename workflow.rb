@@ -1,13 +1,15 @@
 require 'rbbt-util'
 require 'rbbt/workflow'
+require 'pcawg'
 
-Misc.add_libdir if __FILE__ == $0
+require 'pcawg/sensitive' if false
+
+Misc.add_libdir #if __FILE__ == $0
 
 #require 'rbbt/sources/PCAWG'
 
 module PCAWG
   extend Workflow
-
 
 end
 

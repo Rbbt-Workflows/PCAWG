@@ -2,3 +2,6 @@ pkg
 .source
 .save
 .crap
+var/
+data/
+project/

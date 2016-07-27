@@ -1,12 +1,48 @@
 PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.txt *.conf" {
  workflow.rb
  bin=bin filter="*"{
+  build_project.rb
+  build_project_tsv.rb
+  prepare_prelim_final.sh
  }
  lib=lib {
+  sinatra.rb
+  pcawg.rb
+  pcawg=pcawg{
+   sensitive.rb
+  }
  }
  test=test {
   test_helper.rb
  }
+ www=www{
+  views=views{
+   tasks.haml
+   main=main{
+    pie.haml
+    study.haml
+    study_column.haml
+   }
+   entity_list=entity_list{
+    Gene=Gene{
+     study_column.haml
+    }
+   }
+  }
+ }
  data=data filter="*"{
+  preliminary_final_release=preliminary_final_release{
+   joint_fpkm_uq.tsv.gz
+   merged_to_filter.txt
+   pcawg6_sv_merge-1.00.160601.tar.gz
+   pcawg_brca_pam50_May2016_v2.tsv
+   pcawg_donor_clinical_May2016_v2.tsv
+   pcawg_specimen_histology_May2016_v2.tsv
+   preliminary_final_release.snvs.tgz
+   release_may2016.v1.blacklisted_donors.tsv
+   release_may2016.v1.tsv
+   tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_May.tsv
+  }
+  preliminary_final_release.tar.gz
  }
 }
