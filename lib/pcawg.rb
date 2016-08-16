@@ -1,16 +1,42 @@
 require 'rbbt/resource'
 module PCAWG
   extend Resource
-  self.subdir = 'share/data/project/PCAWG'
+  self.subdir = 'share/data/projects/PCAWG'
 
-  PROJECT_DIR= Rbbt.project.preliminary_final_release.find(:lib)
+  PROJECT_DIR= PCAWG.final
 
   def self.organism
     "Hsa/feb2014"
   end
 
+  PCAWG.claim PROJECT_DIR.genotypes, :proc do |dir|
+    tar = PCAWG.preliminary_final_release['preliminary_final_release.snvs.tgz'].find
+
+    FileUtils.mkdir_p dir unless File.directory? dir
+    TmpFile.with_file do |tmpdir|
+      Path.setup(tmpdir)
+      Misc.in_dir tmpdir do
+        CMD.cmd("tar xvfz #{tar}")
+
+        tmpdir.preliminary_final_release.snv_mnv.glob('*.tbi').each{|f| FileUtils.rm f}
+
+        tmpdir.preliminary_final_release.snv_mnv.glob('*.gz').each do |f| 
+          name = File.basename(f).sub('.annotated.snv_mnv.vcf.gz','.vcf')
+          CMD.cmd("zcat #{f} | grep -v LOWSUPPORT > #{dir[name]}")
+        end
+
+        dir = Path.setup(dir)
+        dir.glob('*.vcf').each do |f|
+          CMD.cmd("gzip #{f}")
+        end
+
+      end
+    end
+
+  end
+
   PCAWG.claim PCAWG.donor_samples, :proc do
-    release = Rbbt.data.preliminary_final_release["release_may2016.v1.tsv"].tsv :header_hash => "", :type => :double, :key_field => 'icgc_donor_id', :sep2 => ','
+    release = PCAWG.preliminary_final_release["release_may2016.v1.tsv"].tsv :header_hash => "", :type => :double, :key_field => 'icgc_donor_id', :sep2 => ','
 
     release.add_field "RNA Seq ID" do |key,values|
       values[81].collect{|id| id.split('.')[1]}
@@ -20,12 +46,12 @@ module PCAWG
   end
 
   PCAWG.claim PCAWG.specimen_histology, :proc do
-    histology = Rbbt.data.preliminary_final_release["pcawg_specimen_histology_May2016_v2.tsv"].tsv :type => :double, :key_field => 'icgc_specimen_id', :sep2 => ','
+    histology = PCAWG.preliminary_final_release["pcawg_specimen_histology_May2016_v2.tsv"].tsv :type => :double, :key_field => 'icgc_specimen_id', :sep2 => ','
     histology.to_s
   end
 
   PCAWG.claim PCAWG.subtype_info, :proc do
-    tsv = Rbbt.data.preliminary_final_release["tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_May.tsv"].tsv :type => :list, :key_field => "Abbreviation"
+    tsv = PCAWG.preliminary_final_release["tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_May.tsv"].tsv :type => :list, :key_field => "Abbreviation"
     ppp tsv.to_s
     tsv.to_s
   end
