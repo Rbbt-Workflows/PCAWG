@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+require 'rbbt-util'
+require 'rbbt/util/simpleopt'
+
+$0 = "rbbt #{$previous_commands*""} #{ File.basename(__FILE__) }" if $previous_commands
+
+options = SOPT.setup <<EOF
+
+Description
+
+$ #{$0} [options] <directory>
+
+-h--help Print this help
+-t--tasks* task to bootstrap
+-rwt--remote_workflow_tasks* Load a yaml file describing remote workflow tasks
+-p--principal 
+-c--coding
+-n--non_synonymous
+-gm--genomic_mutations Express as genomic mutations
+EOF
+
+if options[:help]
+  if defined? rbbt_usage
+    rbbt_usage 
+  else
+    puts SOPT.usage
+  end
+  exit 0
+end
+
+tasks = options[:tasks]
+raise ParameterException, "No tasks specified" unless tasks
+
+directory = ARGV.shift
+raise ParameterException, "No directory specified" unless directory
+
+gm = options[:genomic_mutations]
+
+tasks = tasks.split(/,\s*/)
+
+if options[:remote_workflow_tasks]
+ yaml_text = Open.read(options[:remote_workflow_tasks])
+ remote_workflow_tasks = YAML.load(yaml_text)
+ Workflow.process_remote_tasks(remote_workflow_tasks)
+end
+
+study = Study.setup("PCAWG")
+
+if gm
+  consequence_job = study.genomic_mutation_consequence(:job)
+  consequence_job.produce
+  consequence_file = consequence_job.path
+end
+
+tasks.each do |task|
+  job = study.send(task, :job, options)
+  begin
+    job.produce
+    if consequence_job
+      io = CMD.cmd("tr '|' ';' '#{job.path}'", :pipe => true)
+      TSV.paste_streams [io, consequence_job], :sort => true
+    else
+      FileUtils.cp job.path, File.join(directory, task)
+    end
+  rescue
+  end
+end

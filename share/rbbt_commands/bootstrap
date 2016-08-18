@@ -1,0 +1,57 @@
+#!/usr/bin/env ruby
+
+require 'rbbt-util'
+require 'rbbt/util/simpleopt'
+
+$0 = "rbbt #{$previous_commands*""} #{ File.basename(__FILE__) }" if $previous_commands
+
+options = SOPT.setup <<EOF
+
+Description
+
+$ #{$0} [options] 
+
+-h--help Print this help
+-t--tasks* task to bootstrap
+-rwt--remote_workflow_tasks* Load a yaml file describing remote workflow tasks
+-p--principal 
+-c--coding
+-n--non_synonymous
+EOF
+
+if options[:help]
+  if defined? rbbt_usage
+    rbbt_usage 
+  else
+    puts SOPT.usage
+  end
+  exit 0
+end
+
+tasks = options[:tasks]
+raise ParameterException unless tasks
+
+tasks = tasks.split(/,\s*/)
+
+if options[:remote_workflow_tasks]
+ yaml_text = Open.read(options[:remote_workflow_tasks])
+ remote_workflow_tasks = YAML.load(yaml_text)
+ Workflow.process_remote_tasks(remote_workflow_tasks)
+end
+
+donors = PCAWG.all_donors
+
+tasks.each do |task|
+ Misc.bootstrap(donors) do |donor|
+  donor = Donor.setup(donor)
+  samples = Sample.setup(donor.SNV_sample)
+  samples.each do |sample|
+   job = sample.send(task, :job, options)
+   begin
+   job.produce
+   rescue
+   end
+  end
+  nil
+ end
+end

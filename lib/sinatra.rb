@@ -17,5 +17,3 @@ Entity::REST.setup(Protein)
 Entity::REST.setup(MutatedIsoform)
 
 Entity::REST.setup(Donor)
-
-require 'pcawg/sensitive'

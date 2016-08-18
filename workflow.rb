@@ -4,6 +4,8 @@ require 'pcawg'
 
 require 'pcawg/sensitive' if false
 
+require 'rbbt/entity/pcawg'
+
 Misc.add_libdir #if __FILE__ == $0
 
 #require 'rbbt/sources/PCAWG'
