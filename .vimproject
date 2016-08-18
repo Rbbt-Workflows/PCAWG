@@ -44,10 +44,13 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
  }
  data=data filter="*"{
   final=final{
+   PCAWG multi-tumour list - Selection of representative aliquots (Aug 18).tsv
    final_consensus_12aug_passonly_snv_indel.tgz
    pcawg_brca_pam50_August2016_v1.tsv - pcawg_brca_pam50_August2016_v1.tsv.tsv
    pcawg_donor_clinical_August2016_v1.tsv - pcawg_donor_clinical_August2016_v1.tsv.tsv
    pcawg_specimen_histology_August2016_v1.tsv
+   release_may2016.v1.blacklisted_donors.tsv
+   release_may2016.v1.tsv
    tumour_subtype_consolidation_map.tsv - LIVE Version.tsv
    tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_August.tsv
    }

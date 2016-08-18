@@ -12,7 +12,7 @@ module PCAWG
 
   PROJECT_VAR_DIR = Rbbt.var.PCAWG
 
-  SNV_SAMPLE_FIELD_ORIG = 'dkfz_embl_variant_calling_file_name_prefix'
+  SNV_SAMPLE_FIELD_ORIG = 'tumor_wgs_aliquot_id'
   EXPRESSION_SAMPLE_FIELD_ORIG = 'tumor_rna_seq_star_alignment_bam_file_name'
   NORMAL_EXPRESSION_SAMPLE_FIELD_ORIG = 'normal_rna_seq_star_alignment_bam_file_name'
 
@@ -64,10 +64,6 @@ module PCAWG
 
     release.merge!(release_BL)
 
-    release = release.add_field SNV_SAMPLE_FIELD do |key,values|
-      values[SNV_SAMPLE_FIELD_ORIG]
-    end
-
     release = release.add_field EXPRESSION_SAMPLE_FIELD do |key,values|
       values[EXPRESSION_SAMPLE_FIELD_ORIG].collect{|id| id.split('.')[1]}
     end
@@ -92,9 +88,29 @@ module PCAWG
 
     release.to_s
   end
+  
+  PCAWG.claim PCAWG.preferred_samples, :proc do
+    donor = PCAWG.donor_sample_info.tsv :fields => 'donor_unique_id', :key_field => PCAWG::DONOR_FIELD, :type => :list
+    tsv = PCAWG::DATA_DIR["PCAWG multi-tumour list - Selection of representative aliquots (Aug 18).tsv"].tsv :header_hash => "", :type => :list, :fields => ["tumor_wgs_aliquot_id"] 
+    Log.tsv donor
+    Log.tsv tsv
+    tsv.attach(donor, :fields => PCAWG::DONOR_FIELD).reorder(PCAWG::DONOR_FIELD, ["tumor_wgs_aliquot_id"]).to_single
+  end
 
   PCAWG.claim PCAWG.donor_samples, :proc do
-    tsv = PCAWG.donor_sample_info.tsv :fields => [SPECIMEN_FIELD, SAMPLE_FIELD, SNV_SAMPLE_FIELD, EXPRESSION_SAMPLE_FIELD, NORMAL_EXPRESSION_SAMPLE_FIELD]
+    tsv = PCAWG.donor_sample_info.tsv :fields => [SPECIMEN_FIELD, SAMPLE_FIELD, SNV_SAMPLE_FIELD_ORIG, EXPRESSION_SAMPLE_FIELD, NORMAL_EXPRESSION_SAMPLE_FIELD]
+    preferred_samples = PCAWG.preferred_samples.tsv
+    tsv.add_field SNV_SAMPLE_FIELD do |donor,values|
+      ids = values[SNV_SAMPLE_FIELD_ORIG]
+       if ids.length == 1
+         ids
+       else
+         pref = preferred_samples[donor]
+         good = (ids & [pref]).first
+         iii [donor,ids,pref,good] if good.nil?
+         [good]
+       end
+    end
     tsv.to_s
   end
 

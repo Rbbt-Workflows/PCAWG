@@ -40,11 +40,15 @@ if options[:remote_workflow_tasks]
 end
 
 donors = PCAWG.all_donors
+blacklisted_donors = PCAWG.blacklisted_donors.list
+
+donors = donors - blacklisted_donors
 
 tasks.each do |task|
  Misc.bootstrap(donors) do |donor|
-  donor = Donor.setup(donor)
+  donor = Donor.setup(donor.dup)
   samples = Sample.setup(donor.SNV_sample)
+  raise "Several samples for #{donor}: #{samples}" if samples.length > 1
   samples.each do |sample|
    job = sample.send(task, :job, options)
    begin
