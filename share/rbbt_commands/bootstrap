@@ -14,6 +14,7 @@ $ #{$0} [options]
 -h--help Print this help
 -t--tasks* task to bootstrap
 -rwt--remote_workflow_tasks* Load a yaml file describing remote workflow tasks
+-g--graylist_remove Remove graylist 
 -p--principal 
 -c--coding
 -n--non_synonymous
@@ -39,10 +40,10 @@ if options[:remote_workflow_tasks]
  Workflow.process_remote_tasks(remote_workflow_tasks)
 end
 
-donors = PCAWG.all_donors
-blacklisted_donors = PCAWG.blacklisted_donors.list
+donors = PCAWG.all_donors.uniq
 
-donors = donors - blacklisted_donors
+donors = donors - PCAWG.blacklisted_donors.list
+donors = donors - PCAWG.graylisted_donors.list if options[:graylist_remove]
 
 tasks.each do |task|
  Misc.bootstrap(donors) do |donor|

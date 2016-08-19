@@ -54,15 +54,17 @@ module PCAWG
 
   #end
   PCAWG.claim PCAWG.blacklisted_donors, :proc do
-    tsv = PCAWG::DATA_DIR["release_may2016.v1.blacklisted_donors.tsv"].tsv :header_hash => "", :type => :double, :key_field => DONOR_FIELD, :sep2 => ',', :fields => []
-    tsv.keys * "\n"
+    tsv = PCAWG.donor_sample_info.tsv :key_field => DONOR_FIELD, :fields => ["wgs_white_black_gray"], :type => :single
+    tsv.select{|k,v| v == "Blacklist" }.keys * "\n" + "\n"
+  end
+
+  PCAWG.claim PCAWG.graylisted_donors, :proc do
+    tsv = PCAWG.donor_sample_info.tsv :key_field => DONOR_FIELD, :fields => ["wgs_white_black_gray"], :type => :single
+    tsv.select{|k,v| v == "Graylist" }.keys * "\n" + "\n"
   end
 
   PCAWG.claim PCAWG.donor_sample_info, :proc do
-    release = PCAWG::DATA_DIR["release_may2016.v1.tsv"].tsv :header_hash => "", :type => :double, :key_field => DONOR_FIELD, :sep2 => ','
-    release_BL = PCAWG::DATA_DIR["release_may2016.v1.blacklisted_donors.tsv"].tsv :header_hash => "", :type => :double, :key_field => DONOR_FIELD, :sep2 => ','
-
-    release.merge!(release_BL)
+    release = PCAWG::DATA_DIR["release_may2016.v1.2.tsv"].tsv :header_hash => "", :type => :double, :key_field => DONOR_FIELD, :sep2 => ','
 
     release = release.add_field EXPRESSION_SAMPLE_FIELD do |key,values|
       values[EXPRESSION_SAMPLE_FIELD_ORIG].collect{|id| id.split('.')[1]}
@@ -165,7 +167,8 @@ module PCAWG
     specimens = specimens_with_histology(*args)
     donors = specimens.collect{|specimen| PCAWG.specimen_donor(specimen)}.uniq
     @@blacklisted_donors ||= PCAWG.blacklisted_donors.read.split("\n")
-    donors = donors - @@blacklisted_donors
+    @@greylisted_donors ||= PCAWG.graylisted_donors.read.split("\n")
+    donors = donors - @@blacklisted_donors - @@greylisted_donors
     Donor.setup(donors)
     donors.extend AnnotatedArray
     donors

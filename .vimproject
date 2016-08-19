@@ -69,8 +69,9 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
   preliminary_final_release.tar.gz
  }
  share=share{
-  rbbt_commands=rbbt_commands{
+  rbbt_commands=rbbt_commands filter="*"{
    bootstrap
+   format_for_nuria
    pcawg
   }
  }

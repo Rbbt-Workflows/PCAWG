@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+
+require 'rbbt-util'
+require 'rbbt/util/simpleopt'
+
+$0 = "rbbt #{$previous_commands*""} #{ File.basename(__FILE__) }" if $previous_commands
+
+options = SOPT.setup <<EOF
+
+Prepare for Nuria
+
+$ #{$0} [options] directory/ genomic_mutation_consequence
+
+-h--help Print this help
+
+EOF
+if options[:help]
+  if defined? rbbt_usage
+    rbbt_usage 
+  else
+    puts SOPT.usage
+  end
+  exit 0
+end
+
+directory, consequence = ARGV
+
+raise ParameterException, "No directory or no valid" if directory.nil? or not File.directory? directory
+raise ParameterException, "No consequence file or not valid" if consequence.nil? or not File.exists? consequence
+
+principal = Appris::PRINCIPAL_ISOFORMS
+
+files = Dir.glob(File.join(directory, '*')).reject{|f| f.include? '.info'}
+files.reject!{|file| File.size(file) == 0}
+
+TmpFile.with_file do |merged|
+  TSV.traverse files, :type => :array, :bar => "Processing files" do |file|
+    `grep "ENSP" #{ file } >> #{ merged }.tmp`
+  end
+  `head -n 2 #{files.first} |tail -n 1 > #{merged}`
+  `cat #{ merged }.tmp|sort -u >> #{merged}`
+
+  tsv = TSV.open merged
+  Log.tsv tsv
+
+  dumper = TSV::Dumper.new :key_field => "Genomic Mutation", :fields => ["Mutated Isoform", "Principal"] + tsv.fields, :type => :double, :namespace => "Hsa/feb2014"
+  dumper.init
+  TSV.traverse consequence, :into => dumper, :bar => "Processing PCAWG mutations" do |mut,mis|
+    mut = mut.first if Array === mut
+    values = []
+    mis.uniq.each do |mi|
+      next unless tsv.include? mi
+      p = principal.include? mi.partition(":").first
+      values << [mi, p] + tsv[mi].collect{|v| v * ";"}
+    end
+    next if values.empty?
+    [mut, Misc.zip_fields(values)]
+  end
+  Misc.consume_stream(dumper.stream, false, STDOUT)
+end
