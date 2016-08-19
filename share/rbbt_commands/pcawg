@@ -43,6 +43,8 @@ if options[:remote_workflow_tasks]
  yaml_text = Open.read(options[:remote_workflow_tasks])
  remote_workflow_tasks = YAML.load(yaml_text)
  Workflow.process_remote_tasks(remote_workflow_tasks)
+else
+ require 'pcawg/sensitive'
 end
 
 study = Study.setup("PCAWG")

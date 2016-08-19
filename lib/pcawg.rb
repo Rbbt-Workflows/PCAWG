@@ -8,9 +8,9 @@ module PCAWG
 
   PROJECT_DIR= PCAWG.final
 
-  DATA_DIR=Rbbt.data.final
+  DATA_DIR=Rbbt.root["data"].final
 
-  PROJECT_VAR_DIR = Rbbt.var.PCAWG
+  PROJECT_VAR_DIR = Rbbt.root.var.PCAWG
 
   SNV_SAMPLE_FIELD_ORIG = 'tumor_wgs_aliquot_id'
   EXPRESSION_SAMPLE_FIELD_ORIG = 'tumor_rna_seq_star_alignment_bam_file_name'
@@ -92,8 +92,6 @@ module PCAWG
   PCAWG.claim PCAWG.preferred_samples, :proc do
     donor = PCAWG.donor_sample_info.tsv :fields => 'donor_unique_id', :key_field => PCAWG::DONOR_FIELD, :type => :list
     tsv = PCAWG::DATA_DIR["PCAWG multi-tumour list - Selection of representative aliquots (Aug 18).tsv"].tsv :header_hash => "", :type => :list, :fields => ["tumor_wgs_aliquot_id"] 
-    Log.tsv donor
-    Log.tsv tsv
     tsv.attach(donor, :fields => PCAWG::DONOR_FIELD).reorder(PCAWG::DONOR_FIELD, ["tumor_wgs_aliquot_id"]).to_single
   end
 
