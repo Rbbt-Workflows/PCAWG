@@ -90,6 +90,12 @@ module PCAWG
 
     release.to_s
   end
+
+  PCAWG.claim PCAWG.donor_clinical, :proc do
+    tsv = PCAWG::DATA_DIR["pcawg_donor_clinical_August2016_v1.tsv - pcawg_donor_clinical_August2016_v1.tsv.tsv"].tsv
+    tsv.key_field = tsv.key_field.sub(/^\s*/,'')
+    tsv.to_s
+  end
   
   PCAWG.claim PCAWG.preferred_samples, :proc do
     donor = PCAWG.donor_sample_info.tsv :fields => 'donor_unique_id', :key_field => PCAWG::DONOR_FIELD, :type => :list

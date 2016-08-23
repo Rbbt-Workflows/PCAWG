@@ -49,6 +49,7 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    pcawg_brca_pam50_August2016_v1.tsv - pcawg_brca_pam50_August2016_v1.tsv.tsv
    pcawg_donor_clinical_August2016_v1.tsv - pcawg_donor_clinical_August2016_v1.tsv.tsv
    pcawg_specimen_histology_August2016_v1.tsv
+   release_may2016.v1.2.tsv
    release_may2016.v1.blacklisted_donors.tsv
    release_may2016.v1.tsv
    tumour_subtype_consolidation_map.tsv - LIVE Version.tsv
