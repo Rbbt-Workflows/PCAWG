@@ -104,7 +104,7 @@ module Study
   def self.matrix_file(study, matrix)
     if study.expression_samples.any?
       file = PCAWG::PROJECT_VAR_DIR.matrices[study].find
-      Persist.persist study, :tsv, :file => file, :persist => true, :no_load => true do 
+      Persist.persist study, :tsv, :file => file, :dir => PCAWG::PROJECT_VAR_DIR.matrices, :persist => true, :no_load => true do 
         orig_file = Rbbt.data.preliminary_final_release["joint_fpkm_uq.tsv"].find
         fields = TSV.parse_header(orig_file, :header_hash => '').fields
         study = Study.setup(study.dup)
@@ -139,7 +139,9 @@ module Study
   end
 
   property :sample_extended_info => :single do
-    nil
+    donors = self.donors
+    tsv = PCAWG.donor_clinical.tsv 
+    tsv.select(PCAWG::DONOR_FIELD => donors).attach(PCAWG.donor_samples, :fields => [PCAWG::SNV_SAMPLE_FIELD]).reorder(PCAWG::SNV_SAMPLE_FIELD)
   end
   
   property :cnv_samples => :single do

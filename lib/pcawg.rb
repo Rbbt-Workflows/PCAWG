@@ -113,7 +113,6 @@ module PCAWG
        else
          pref = preferred_samples[donor]
          good = (ids & [pref]).first
-         iii [donor,ids,pref,good] if good.nil?
          [good]
        end
     end
@@ -121,7 +120,7 @@ module PCAWG
   end
 
   PCAWG.claim PCAWG.specimen_histology, :proc do
-    histology = PCAWG::DATA_DIR["pcawg_specimen_histology_August2016_v1.tsv"].tsv :type => :double, :key_field => 'icgc_specimen_id', :sep2 => ',', :header_hash => '# '
+    histology = PCAWG::DATA_DIR["pcawg_specimen_histology_August2016_v1.tsv"].tsv :type => :double, :key_field => 'icgc_specimen_id', :sep2 => /,\s*/, :header_hash => '# '
     histology.to_s
   end
 
@@ -140,9 +139,13 @@ module PCAWG
 
   def self.specimens_with_histology(h, key = nil)
     return all_specimens if h == "PCAWG"
-    key, h = h.split ":" if h.include?(":") and key.nil?
+    key, h = h.split "=" if h.include?("=") and key.nil?
     key ||= 'histology_abbreviation'
-    PCAWG.specimen_histology.tsv.select(key => h, :persist => true, :persist_dir => PCAWG::PROJECT_VAR_DIR.cache).keys
+    if key == 'dcc_project_code'
+      PCAWG.donor_sample_info.tsv.select(key => h, :persist => true, :persist_dir => PCAWG::PROJECT_VAR_DIR.cache).keys
+    else
+      PCAWG.specimen_histology.tsv.select(key => h, :persist => true, :persist_dir => PCAWG::PROJECT_VAR_DIR.cache).keys
+    end
   end
 
   def self.all_specimens
@@ -158,7 +161,7 @@ module PCAWG
   end
 
   def self.specimen_donor(specimen)
-    @@index ||= PCAWG.donor_samples.index :target => DONOR_FIELD, :persist => true, :persist_dir => PCAWG::PROJECT_VAR_DIR.cache, :data_persist => true
+    @@index ||= PCAWG.donor_samples.index :target => DONOR_FIELD, :persist => true, :persist_dir => PCAWG::PROJECT_VAR_DIR.cache, :data_persist => true, :data_persist_dir => PCAWG::PROJECT_VAR_DIR.cache
     donor = @@index[specimen]
     raise "No donor for specimen: #{ specimen }" if donor.nil?
     donor
