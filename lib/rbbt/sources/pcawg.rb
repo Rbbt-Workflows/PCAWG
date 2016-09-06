@@ -12,7 +12,7 @@ module PCAWG
   RNA_NORMAL_SAMPLE = 'RNA_normal_sample'
 
 
-  DATA_DIR=Rbbt.root.share.data.projects.PCAWG[".source"]
+  DATA_DIR = Rbbt.root.share.data.projects.PCAWG[".source"]
 
   PROJECT_VAR_DIR = Rbbt.root.var.PCAWG
 
@@ -21,7 +21,7 @@ module PCAWG
   end
 
   PCAWG.claim PCAWG.selected_donor_samples, :proc do |filename|
-    list = TSV.traverse DATA_DIR["aliquot_donor_tumor.whitelist.tsv.gz"], :into => [], :type => :array do |line|
+    list = TSV.traverse DATA_DIR["aliquot_donor_tumor.whitelist.tsv.gz"].find, :into => [], :type => :array do |line|
       next if line =~ /DONOR_UNIQ/
       line.split("\t")[1]
     end
