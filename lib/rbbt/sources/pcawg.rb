@@ -12,7 +12,7 @@ module PCAWG
   RNA_NORMAL_SAMPLE = 'RNA_normal_sample'
 
 
-  DATA_DIR=Rbbt.root.share.data.projects.PCAWG[".source"].tap{|o| o.resource = PCAWG}
+  DATA_DIR=Rbbt.root.share.data.projects.PCAWG[".source"]
 
   PROJECT_VAR_DIR = Rbbt.root.var.PCAWG
 
@@ -66,7 +66,7 @@ module PCAWG
     tsv.to_s
   end
 
-  PCAWG.claim DATA_DIR['joint_fpkm_uq.tsv.gz'], :proc do |filename|
+  PCAWG.claim DATA_DIR['joint_fpkm_uq.tsv.gz'].tap{|o| o.resource = PCAWG}, :proc do |filename|
     raise "Please place the file joint_fpkm_uq.tsv.gz into #{ filename }"
   end
 
@@ -84,7 +84,7 @@ module PCAWG
     end
   end
 
-  PCAWG.claim DATA_DIR['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'], :proc do |filename|
+  PCAWG.claim DATA_DIR['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'].tap{|o| o.resource = PCAWG}, :proc do |filename|
     raise "You do not have permission to view Genomic Mutations in this server. Otherwise, please place the file final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz into #{ filename }"
   end
 
