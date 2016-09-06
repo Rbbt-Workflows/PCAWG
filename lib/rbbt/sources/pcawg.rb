@@ -12,7 +12,7 @@ module PCAWG
   RNA_NORMAL_SAMPLE = 'RNA_normal_sample'
 
 
-  DATA_DIR=Rbbt.root.share.PCAWG[".source"]
+  DATA_DIR=Rbbt.root.share.data.projects.PCAWG[".source"].tap{|o| o.resource = PCAWG}
 
   PROJECT_VAR_DIR = Rbbt.root.var.PCAWG
 
@@ -66,12 +66,12 @@ module PCAWG
     tsv.to_s
   end
 
-  PCAWG.claim PCAWG.root['joint_fpkm_uq.tsv.gz'], :proc do |filename|
+  PCAWG.claim DATA_DIR['joint_fpkm_uq.tsv.gz'], :proc do |filename|
     raise "Please place the file joint_fpkm_uq.tsv.gz into #{ filename }"
   end
 
   PCAWG.claim PCAWG.matrices.gene_expression, :proc do 
-    TSV.traverse PCAWG.root["joint_fpkm_uq.tsv.gz"].find, :type => :array, :into => :stream, :bar => true do |line|
+    TSV.traverse DATA_DIR["joint_fpkm_uq.tsv.gz"].find, :type => :array, :into => :stream, :bar => true do |line|
       if line =~ /^feature/
         fields = line.split("\t")
         fields[0] = "Ensembl Gene ID"
@@ -84,7 +84,7 @@ module PCAWG
     end
   end
 
-  PCAWG.claim PCAWG.root['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'], :proc do |filename|
+  PCAWG.claim DATA_DIR['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'], :proc do |filename|
     raise "You do not have permission to view Genomic Mutations in this server. Otherwise, please place the file final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz into #{ filename }"
   end
 
@@ -98,7 +98,7 @@ module PCAWG
       FileUtils.mkdir_p directory 
       last_donor = nil
       io = nil
-      TSV.traverse PCAWG.root['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'], :type => :array, :bar => true do |line|
+      TSV.traverse DATA_DIR['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'], :type => :array, :bar => true do |line|
         next if line =~ /^Tumor_Sample_Barcode/
         parts = line.split("\t")
         ali, chr, start, eend, ref, alt, alt2  = parts.values_at 0,3,4,5,10,11
