@@ -12,7 +12,7 @@ module PCAWG
   RNA_NORMAL_SAMPLE = 'RNA_normal_sample'
 
 
-  DATA_DIR=Rbbt.root["data"].final_update
+  DATA_DIR=Rbbt.root.share.PCAWG[".source"]
 
   PROJECT_VAR_DIR = Rbbt.root.var.PCAWG
 
@@ -66,8 +66,12 @@ module PCAWG
     tsv.to_s
   end
 
+  PCAWG.claim PCAWG.root['joint_fpkm_uq.tsv.gz'], :proc do |filename|
+    raise "Please place the file joint_fpkm_uq.tsv.gz into #{ filename }"
+  end
+
   PCAWG.claim PCAWG.matrices.gene_expression, :proc do 
-    TSV.traverse DATA_DIR["joint_fpkm_uq.tsv.gz"].find, :type => :array, :into => :stream, :bar => true do |line|
+    TSV.traverse PCAWG.root["joint_fpkm_uq.tsv.gz"].find, :type => :array, :into => :stream, :bar => true do |line|
       if line =~ /^feature/
         fields = line.split("\t")
         fields[0] = "Ensembl Gene ID"
@@ -84,43 +88,47 @@ module PCAWG
     raise "You do not have permission to view Genomic Mutations in this server. Otherwise, please place the file final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz into #{ filename }"
   end
 
-  PCAWG.claim PCAWG.genotypes, :proc do |directory|
-    aliquote2donor = PCAWG.donor_wgs_samples.tsv :key_field => 'tumor_wgs_aliquot_id', :type => :single
-    if Open.exists? directory
-      FileUtils.rm_rf directory.find
-    end
-    FileUtils.mkdir_p directory 
-    last_donor = nil
-    io = nil
-    TSV.traverse PCAWG.root['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'], :type => :array, :bar => true do |line|
-      next if line =~ /^Tumor_Sample_Barcode/
-      parts = line.split("\t")
-      ali, chr, start, eend, ref, alt, alt2  = parts.values_at 0,3,4,5,10,11
-
-      donor = aliquote2donor[ali]
-      next if donor.nil?
-      start = start.to_i
-      eend = eend.to_i
-
-      _muts = ([alt, alt2].compact.uniq - [ref])
-      _mut  = _muts.first
-
-      pos, muts = Misc.correct_vcf_mutation start, ref, _mut
-      mutations = muts.collect{|m| [chr, pos, m] * ":"}
-
-      if last_donor != donor
-        io.close if io
-        if File.exists?(directory[donor])
-          io = Open.open(directory[donor], :mode => 'a')
-        else
-          io = Open.open(directory[donor], :mode => 'w')
-        end
-        io.puts(mutations * "\n")
-      else
-        io.puts(mutations * "\n")
+  PCAWG.claim PCAWG.genotypes, :proc do |real|
+    TmpFile.with_file do |directory|
+      Path.setup(directory)
+      aliquote2donor = PCAWG.donor_wgs_samples.tsv :key_field => 'tumor_wgs_aliquot_id', :type => :single
+      if Open.exists? directory
+        FileUtils.rm_rf directory.find
       end
+      FileUtils.mkdir_p directory 
+      last_donor = nil
+      io = nil
+      TSV.traverse PCAWG.root['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'], :type => :array, :bar => true do |line|
+        next if line =~ /^Tumor_Sample_Barcode/
+        parts = line.split("\t")
+        ali, chr, start, eend, ref, alt, alt2  = parts.values_at 0,3,4,5,10,11
+
+        donor = aliquote2donor[ali]
+        next if donor.nil?
+        start = start.to_i
+        eend = eend.to_i
+
+        _muts = ([alt, alt2].compact.uniq - [ref])
+        _mut  = _muts.first
+
+        pos, muts = Misc.correct_vcf_mutation start, ref, _mut
+        mutations = muts.collect{|m| [chr, pos, m] * ":"}
+
+        if last_donor != donor
+          io.close if io
+          if File.exists?(directory[donor])
+            io = Open.open(directory[donor], :mode => 'a')
+          else
+            io = Open.open(directory[donor], :mode => 'w')
+          end
+          io.puts(mutations * "\n")
+        else
+          io.puts(mutations * "\n")
+        end
+      end
+      io.close
+      FileUtils.mv directory.find, real.find
     end
-    io.close
     nil
   end
 end

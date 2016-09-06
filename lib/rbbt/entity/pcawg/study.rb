@@ -76,14 +76,7 @@ module Study
     if study.expression_samples.any?
       file = PCAWG::PROJECT_VAR_DIR.matrices[study].find
       Persist.persist study, :tsv, :file => file, :dir => PCAWG::PROJECT_VAR_DIR.matrices, :persist => true, :no_load => true do 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
         orig_file = PCAWG.matrices.gene_expression.find
-=======
->>>>>>> Stashed changes
-        orig_file = Rbbt.data.preliminary_final_release["joint_fpkm_uq.tsv"].find
->>>>>>> 9064932c6cd3e5d5f05227a3bb65843aeeec9f21
         fields = TSV.parse_header(orig_file, :header_hash => '').fields
         study = Study.setup(study.dup)
         pos = study.expression_samples.collect{|s| fields.index s}.compact.collect{|i| i + 2}

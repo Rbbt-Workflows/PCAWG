@@ -19,8 +19,8 @@ module Sample
     PCAWG.organism
   end
 
-  task :_genomic_mutations => :array do
-    raise "Genomic Mutations not accessible for #{clean_name} due to access limitations" 
+  task :genomic_mutations => :array do
+    Misc.sort_mutations PCAWG.genotypes.produce[clean_name.split(":").last].open
   end
 
   property :expression_samples => :array do

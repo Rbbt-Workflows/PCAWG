@@ -29,12 +29,11 @@ if options[:help]
   exit 0
 end
 
-tasks = options[:tasks]
+tasks = options[:tasks] || "firestar,kinmut"
+
 raise ParameterException unless tasks
 
 tasks = tasks.split(/,\s*/)
-
-PCAWG.genotypes.produce
 
 if options[:remote_workflow_tasks]
  yaml_text = Open.read(options[:remote_workflow_tasks])
@@ -43,22 +42,27 @@ if options[:remote_workflow_tasks]
 end
 
 donors = PCAWG.all_donors.uniq
-
-donors = donors - PCAWG.blacklisted_donors.list
-donors = donors - PCAWG.graylisted_donors.list if options[:graylist_remove]
+abbrs = PCAWG.all_abbreviations
 
 tasks.each do |task|
  Misc.bootstrap(donors) do |donor|
-  donor = Donor.setup(donor.dup)
-  samples = Sample.setup(donor.SNV_sample)
-  raise "Several samples for #{donor}: #{samples}" if samples.length > 1
-  samples.each do |sample|
+  sample = Sample.setup(donor)
+  begin
    job = sample.send(task, :job, options)
-   begin
    job.produce
-   rescue
-   end
+  rescue
+  end
+  nil
+ end
+
+ Misc.bootstrap(abbrs) do |abbr|
+  study = Study.setup(abbr)
+  begin
+   job = study.send(task, :job, options)
+   job.produce
+  rescue
   end
   nil
  end
 end
+
