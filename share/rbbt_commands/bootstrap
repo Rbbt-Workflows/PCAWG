@@ -34,6 +34,8 @@ raise ParameterException unless tasks
 
 tasks = tasks.split(/,\s*/)
 
+PCAWG.genotypes.produce
+
 if options[:remote_workflow_tasks]
  yaml_text = Open.read(options[:remote_workflow_tasks])
  remote_workflow_tasks = YAML.load(yaml_text)

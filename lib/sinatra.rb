@@ -15,5 +15,3 @@ require 'rbbt/rest/client'
 Entity::REST.setup(Gene)
 Entity::REST.setup(Protein)
 Entity::REST.setup(MutatedIsoform)
-
-Entity::REST.setup(Donor)

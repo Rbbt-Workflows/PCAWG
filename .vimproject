@@ -7,15 +7,24 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
  }
  lib=lib {
   sinatra.rb
-  pcawg.rb
+  pcawg.rb.save
   rbbt=rbbt{
+   pcawg=pcawg{
+    structure_annotator.rb
+   }
+   sources=sources{
+    pcawg.rb
+   }
    entity=entity{
     pcawg.rb
+    pcawg.rb.save
     pcawg=pcawg{
+     study.rb
+     sample.rb
+     sample.rb.save
+     study.rb.save
      donor.rb
      specimen.rb
-     sample.rb
-     study.rb
     }
    }
   }
@@ -43,6 +52,21 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
   }
  }
  data=data filter="*"{
+  final_update=final_update{
+   PCAWG Blacklisted Donors_Samples - Blacklist_donors_2016_08_30.tsv
+   PCAWG Blacklisted Donors_Samples - Blacklisted_RNA-Seq_samples_2016_08_30.tsv
+   PCAWG Blacklisted Donors_Samples - Blacklisted_WGS_samples_2016_08_30.tsv
+   PCAWG Graylisted Donors - Graylist_donors_July30_2016.tsv
+   aliquot_donor_tumor.whitelist.tsv.gz
+   final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz
+   joint_fpkm_uq.tsv.gz
+   pcawg_brca_pam50_August2016_v1.tsv - pcawg_brca_pam50_August2016_v1.tsv.tsv
+   pcawg_donor_clinical_August2016_v1.tsv - pcawg_donor_clinical_August2016_v1.tsv.tsv
+   pcawg_specimen_histology_August2016_v1.tsv
+   release_may2016.v1.2.selection.tsv
+   release_may2016.v1.2.tsv
+   tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_August.tsv
+  }
   final=final{
    PCAWG multi-tumour list - Selection of representative aliquots (Aug 18).tsv
    final_consensus_12aug_passonly_snv_indel.tgz

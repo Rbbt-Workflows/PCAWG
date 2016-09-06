@@ -1,0 +1,46 @@
+Tier 2 (organ system)	Abbreviation	Tier 1 (germ layer)	Tier 3 (histological subtype)	Contributing projects	Specimen Count	Color (description)	Color (RGB code)	Comments
+Biliary	Biliary-AdenoCA	ENDODERM	Adenocarcinoma	BTCA-SG,LIRI-JP	35	Kelly Green	#00CD66	
+Bladder	Bladder-TCC	ENDODERM	Transitional cell carcinoma	BLCA-US	23	Gold	#EEAD0E	Not derived from ribbon
+Bone/SoftTissue	Bone-Osteosarc	MESODERM	Sarcoma, bone	BOCA-UK	40	Yellow	#FFD700	
+Bone/SoftTissue	Bone-Leiomyo	MESODERM	Sarcoma, soft tissue	SARC-US	15	Yellow	#FFEC8B	
+Bone/SoftTissue	Bone-Cart	MESODERM	Cartilaginous neoplasm, benign, bone	BOCA-UK	9	Yellow	#F0EE60	Small group; demarcate with black box/circle etc
+Bone/SoftTissue	Bone-Epith	MESODERM	Bone neoplasm, epithelioid	BOCA-UK	9	Yellow	#ADAC44	Small group
+Breast	Breast-AdenoCa	ECTODERM	Adenocarcinoma	BRCA-EU,BRCA-UK,BRCA-US	185	Pink	#CD6090	
+Breast	Breast-LobularCa	ECTODERM	Lobular carcinoma	BRCA-EU,BRCA-UK,BRCA-US	13		#F095BD	
+Cervix	Cervix-SCC	MESODERM	Squamous cell carcinoma	CESC-US	18	Teal	#79CDCD	
+CNS	CNS-Medullo	NEURAL_CREST	Medulloblastoma	PBCA-DE	154	Grey	#D8BFD8	
+CNS	CNS-PiloAstro	NEURAL_CREST	Non-diffuse glioma	PBCA-DE	96	Grey	#B0B0B0	
+CNS	CNS-GBM	NEURAL_CREST	Diffuse glioma	GBM-US	41	Grey	#3D3D3D	Alternative: #4A4A4A (to distinguish from melanoma)
+CNS	CNS-Oligo	NEURAL_CREST	Diffuse glioma	LGG-US	19	Grey	#787878	
+Colon/Rectum	ColoRect-AdenoCA	ENDODERM	Adenocarcinoma	COAD-US,READ-US	62	Dark blue	#191970	
+Esophagus	Eso-AdenoCa	ENDODERM	Adenocarcinoma	ESAD-UK	100	Periwinkle	#1E90FF	
+Head/Neck	Head-SCC	MESODERM	Squamous cell carcinoma	HNSC-US,ORCA-IN	57	Burgundy/white	#8B2323	
+Kidney	Kidney-RCC	MESODERM	Renal cell carcinoma	KIRC-US,RECA-EU	189	Dark orange	#FF4500	
+Kidney	Kidney-ChRCC	MESODERM	Renal cell carcinoma, chromophone	KICH-US	49	Dark orange	#B32F0B	
+Liver	Liver-HCC	ENDODERM	Hepatocellular carcinoma	LICA-FR,LIHC-US,LINC-JP,LIRI-JP	334	Emerald Green	#006400	
+Lung	Lung-SCC	ENDODERM	Squamous cell carcinoma	LUSC-US	48	Ivory	#FDF5E6	demarcate with black box
+Lung	Lung-AdenoCA	ENDODERM	Adenocarcinoma	LUAD-US	42	White	#FFFFFF	demarcate with black box
+Lymphoid	Lymph-BNHL	MESODERM	Mature B-cell lymphoma	DLBC-US,MALY-DE,CLL-ES	202	Lime green	#698B22	
+Myeloid	Myeloid-MPN	MESODERM	Myeloproliferative neoplasm	CMDI-UK	57	Orange	#ffc100	
+Myeloid	Myeloid-AML	MESODERM	Acute myeloid leukemia	CMDI-UK,LAML-KR,LAML-US	52	Orange	#CD6600	
+Ovary	Ovary-AdenoCA	MESODERM	Adenocarcinoma	OV-AU,OV-US	118	Teal	#008B8B	
+Pancreas	Panc-AdenoCA	ENDODERM	Adenocarcinoma	PACA-AU,PACA-CA	245	Purple	#7A378B	
+Pancreas	Panc-Endocrine	ENDODERM	Neuroendocrine tumor	PAEN-AU	31	Purple	#E066FF	
+Prostate	Prost-AdenoCA	ENDODERM	Adenocarcinoma	EOPC-DE,PRAD-CA,PRAD-UK,PRAD-US	295	Light blue	#87CEFA	
+Skin	Skin-Melanoma	NEURAL_CREST	Melanoma	MELA-AU,SKCM-US	108	Black	#000000	
+Stomach	Stomach-AdenoCA	ENDODERM	Adenocarcinoma	STAD-US	39	Periwinkle	#BFEFFF	
+Thyroid	Thy-AdenoCA	ENDODERM	Adenocarcinoma, low grade	THCA-US	31	Lavender	#9370DB	Not derived from ribbon
+Uterus	Uterus-AdenoCA	MESODERM	Adenocarcinoma	UCEC-US	51	Peach	#FF8C69	
+MISSING HISTOLOGY					8			
+				Subtotal	2767			
+								
+Groups that are too small	Very small groups - not sure what to do about these							
+Thyroid	Thy-CCVPTC	ENDODERM	Adenocarcinoma, high grade	THCA-US	1			Group too small
+Myeloid	Myeloid-MDS	MESODERM	Myelodysplastic syndrome	CMDI-UK	2			Group too small
+Myeloid	Myeloid-MDS/MPN	MESODERM	Myelodysplastic/myeloproliferative neoplasm	CMDI-UK	1			Group too small
+Lymphoid	Lymph-NOS	MESODERM	Lymphoma, NOS	MALY-DE	2			Group too small
+Lymphoid	Lymph-PTLD	MESODERM	Post-transplant lymphoproliferative disorder	MALY-DE	1			Group too small
+Cervix	Cervix-AdenoCA	MESODERM	Adenocarcinoma	CESC-US	2			Group too small
+Breast	Breast-DCIS	ECTODERM	In situ adenocarcinoma	BRCA-EU,BRCA-UK	3			Group too small
+				Subtotal	12			
+				TOTAL	2779			

@@ -2,9 +2,6 @@ Workflow.require_workflow "Sample"
 
 module Sample
 
-  extend Entity::Identified
-  add_identifiers PCAWG.donor_samples, PCAWG::DONOR_FIELD
-
   helper :watson do
     true
   end
@@ -13,32 +10,63 @@ module Sample
     PCAWG.organism
   end
 
+  property :sample_code => :single do
+    clean = self.split(":").last
+    "PCAWG:" << clean
+  end
+
   task :organism => :string do
     PCAWG.organism
   end
 
-  task :genomic_mutations => :array do
-    raise "Genomic Mutations not accessible for #{clean_name} due to access limitations"
+  task :_genomic_mutations => :array do
+    raise "Genomic Mutations not accessible for #{clean_name} due to access limitations" 
   end
 
-  property :donor => :array do
-    Donor.setup(PCAWG.sample2donor.chunked_values_at self)
+  property :expression_samples => :array do
+    index = PCAWG.donor_rna_samples.index :target => PCAWG::RNA_TUMOR_SAMPLE
+    samples = index.chunked_values_at(self).compact
+    Sample.setup(samples, :cohort => cohort)
   end
 
-  property :specimen => :array do
-    Specimen.setup(PCAWG.sample2specimen.chunked_values_at self)
+  property :abbr_color => :single do
+    raise "TODO"
+    abbr = PCAWG.donor_histology(self, 'histology_abbreviation')
+    PCAWG.abb_color(abbr)
   end
 
-  property :has_genotype? => :array do
-    donor.has_genotype?
+  property :gene_status => :single2array do |genes|
+    raise "TODO"
+    gms = self.SNV_sample.first.gene_mutation_status
+    gms.chunked_values_at(genes).collect do |values|
+      if values
+        case 
+        when values[:broken] == 'true'
+          :broken
+        when values[:affected] == 'true'
+          :affected
+        when values[:affected] == 'loss'
+          :loss
+        when values[:affected] == 'gain'
+          :gain
+        end
+      else
+        nil
+      end
+    end
+
   end
 
-  property :has_cnv? => :array do
-    donor.has_cnv?
+  property :has_expression? => :single do
+    ! self.expression_samples.nil?
   end
 
-  property :has_expression? => :array do
-    donor.has_expression?
+  property :has_genotype? => :single do
+    true
+  end
+
+  property :has_cnv? => :single do
+    false
   end
 end
 

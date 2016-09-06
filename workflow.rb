@@ -1,9 +1,7 @@
 require 'rbbt-util'
 require 'rbbt/workflow'
-require 'pcawg'
 
-require 'pcawg/sensitive' if false
-
+require 'rbbt/sources/pcawg'
 require 'rbbt/entity/pcawg'
 
 Misc.add_libdir #if __FILE__ == $0
@@ -20,3 +18,4 @@ end
 #require 'rbbt/knowledge_base/PCAWG'
 #require 'rbbt/entity/PCAWG'
 
+#require 'rbbt/pcawg/structure_annotator'
