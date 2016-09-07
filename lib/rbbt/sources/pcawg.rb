@@ -84,6 +84,97 @@ module PCAWG
     end
   end
 
+  PCAWG.claim PCAWG.genotypes_random_Inigo, :proc do |real|
+    TmpFile.with_file do |directory|
+      Path.setup(directory)
+      aliquote2donor = PCAWG.donor_wgs_samples.tsv :key_field => 'tumor_wgs_aliquot_id', :type => :single
+      if Open.exists? directory
+        FileUtils.rm_rf directory.find
+      end
+      FileUtils.mkdir_p directory 
+      last_donor = nil
+      io = nil
+      TSV.traverse DATA_DIR['Inigo_randomized_neutral.6cols'], :type => :array, :bar => true do |line|
+        next if line =~ /^Tumor_Sample_Barcode/
+        parts = line.split("\t")
+        ali, chr, start, ref, alt  = parts
+        alt2 = nil
+
+        donor = aliquote2donor[ali]
+        next if donor.nil?
+        start = start.to_i
+
+        _muts = ([alt, alt2].compact.uniq - [ref])
+        _mut  = _muts.first
+
+        pos, muts = Misc.correct_vcf_mutation start, ref, _mut
+        mutations = muts.collect{|m| [chr, pos, m] * ":"}
+
+        if last_donor != donor
+          io.close if io
+          if File.exists?(directory[donor])
+            io = Open.open(directory[donor], :mode => 'a')
+          else
+            io = Open.open(directory[donor], :mode => 'w')
+          end
+          io.puts(mutations * "\n")
+        else
+          io.puts(mutations * "\n")
+        end
+      end
+      io.close
+      FileUtils.mv directory.find, real.find
+    end
+    nil
+  end
+  PCAWG.claim DATA_DIR['AugustRelease_Simulations_Broad.maf'].tap{|o| o.resource = PCAWG}, :proc do |filename|
+    raise "Please place the file AugustRelease_Simulations_Broad.maf.gz into #{ filename }"
+  end
+
+  PCAWG.claim PCAWG.genotypes_random_Broad, :proc do |real|
+    TmpFile.with_file do |directory|
+      Path.setup(directory)
+      aliquote2donor = PCAWG.donor_wgs_samples.tsv :key_field => 'tumor_wgs_aliquot_id', :type => :single
+      if Open.exists? directory
+        FileUtils.rm_rf directory.find
+      end
+      FileUtils.mkdir_p directory 
+      last_donor = nil
+      io = nil
+      TSV.traverse DATA_DIR['AugustRelease_Simulations_Broad.maf'], :type => :array, :bar => true do |line|
+        next if line =~ /^Tumor_Sample_Barcode/
+        parts = line.split("\t")
+        chr, start, ali, ref, alt  = parts
+        alt2 = nil
+
+        donor = aliquote2donor[ali]
+        next if donor.nil?
+        start = start.to_i
+
+        _muts = ([alt, alt2].compact.uniq - [ref])
+        _mut  = _muts.first
+
+        pos, muts = Misc.correct_vcf_mutation start, ref, _mut
+        mutations = muts.collect{|m| [chr, pos, m] * ":"}
+
+        if last_donor != donor
+          io.close if io
+          if File.exists?(directory[donor])
+            io = Open.open(directory[donor], :mode => 'a')
+          else
+            io = Open.open(directory[donor], :mode => 'w')
+          end
+          io.puts(mutations * "\n")
+        else
+          io.puts(mutations * "\n")
+        end
+      end
+      io.close
+      FileUtils.mv directory.find, real.find
+    end
+    nil
+  end
+
   PCAWG.claim DATA_DIR['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'].tap{|o| o.resource = PCAWG}, :proc do |filename|
     raise "You do not have permission to view Genomic Mutations in this server. Otherwise, please place the file final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz into #{ filename }"
   end

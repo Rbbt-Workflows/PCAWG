@@ -20,7 +20,7 @@ module Sample
   end
 
   task :genomic_mutations => :array do
-    Misc.sort_mutations PCAWG.genotypes.produce[clean_name.split(":").last].open
+    Misc.sort_mutation_stream PCAWG.genotypes.produce[clean_name.split(":").last].open
   end
 
   property :expression_samples => :array do
