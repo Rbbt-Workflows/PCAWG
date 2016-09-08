@@ -58,14 +58,18 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    PCAWG Blacklisted Donors_Samples - Blacklisted_WGS_samples_2016_08_30.tsv
    PCAWG Graylisted Donors - Graylist_donors_July30_2016.tsv
    aliquot_donor_tumor.whitelist.tsv.gz
+   final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.dkfz_randomize_25kbwindow_complete_set.maf.tar.gz
    final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz
    joint_fpkm_uq.tsv.gz
    pcawg_brca_pam50_August2016_v1.tsv - pcawg_brca_pam50_August2016_v1.tsv.tsv
    pcawg_donor_clinical_August2016_v1.tsv - pcawg_donor_clinical_August2016_v1.tsv.tsv
+   pcawg_donor_clinical_August2016_v3.tsv
    pcawg_specimen_histology_August2016_v1.tsv
+   pcawg_specimen_histology_August2016_v3.tsv
    release_may2016.v1.2.selection.tsv
    release_may2016.v1.2.tsv
    tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_August.tsv
+   tumour_type_summary_August2016_v3.tsv - tumour_type_summary_August2016_v3.tsv.tsv
   }
   final=final{
    PCAWG multi-tumour list - Selection of representative aliquots (Aug 18).tsv
@@ -94,6 +98,15 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
   preliminary_final_release.tar.gz
  }
  share=share{
+  source=data/projects/PCAWG/.source filter="*"{
+   AugustRelease_Simulations_Broad.maf.gz
+   Inigo_randomized_neutral.6cols.gz
+   aliquot_donor_tumor.whitelist.tsv.gz
+   pcawg_donor_clinical_August2016_v3.tsv
+   pcawg_specimen_histology_August2016_v3.tsv
+   release_may2016.v1.2.tsv
+   tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_August.tsv
+  }
   rbbt_commands=rbbt_commands filter="*"{
    bootstrap
    format_for_nuria

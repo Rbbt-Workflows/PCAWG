@@ -20,6 +20,12 @@ module PCAWG
     "Hsa/feb2014"
   end
 
+  PCAWG.claim PCAWG.subtype_info, :proc do
+    file = PCAWG::DATA_DIR["tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_August.tsv"]
+    tsv = file.tsv :type => :list, :key_field => "Abbreviation", :header_hash => '', :grep => "^[[:space:]]\|MISSING", :invert_grep => true
+    tsv.to_s
+  end
+
   PCAWG.claim PCAWG.selected_donor_samples, :proc do |filename|
     list = TSV.traverse DATA_DIR["aliquot_donor_tumor.whitelist.tsv.gz"].find, :into => [], :type => :array do |line|
       next if line =~ /DONOR_UNIQ/
