@@ -57,12 +57,12 @@ module PCAWG
 
   PCAWG.claim PCAWG.donor_histology, :proc do |filename|
     fields = %w(organ_system histology_abbreviation histology_tier1 histology_tier2 histology_tier3 histology_tier4 tumour_histological_code tumour_histological_type tumour_stage tumour_grade specimen_donor_treatment_type)
-    tsv = DATA_DIR['pcawg_specimen_histology_August2016_v1.tsv'].tsv :key_field => 'icgc_donor_id', :fields => fields, :type => :double, :sep2 => /,\s*/
+    tsv = DATA_DIR['pcawg_specimen_histology_August2016_v3.tsv'].tsv :key_field => 'icgc_donor_id', :fields => fields, :type => :double, :sep2 => /,\s*/
   end
 
   PCAWG.claim PCAWG.donor_clinical, :proc do |filename|
     fields = %w(donor_sex donor_vital_status donor_diagnosis_icd10 first_therapy_type first_therapy_response donor_age_at_diagnosis donor_survival_time donor_interval_of_last_followup tobacco_smoking_history_indicator tobacco_smoking_intensity alcohol_history alcohol_history_intensity)
-    tsv = DATA_DIR["pcawg_donor_clinical_August2016_v1.tsv - pcawg_donor_clinical_August2016_v1.tsv.tsv"].tsv :key_field => 'icgc_donor_id', :fields => fields, :type => :list
+    tsv = DATA_DIR["pcawg_donor_clinical_August2016_v3.tsv"].tsv :key_field => 'icgc_donor_id', :fields => fields, :type => :list
     tsv.to_s
   end
 
