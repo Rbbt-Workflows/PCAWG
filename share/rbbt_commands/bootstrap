@@ -47,7 +47,7 @@ abbrs = PCAWG.all_abbreviations
 
 num = options[:concurrent] || "10"
 tasks.each do |task|
- Misc.bootstrap(donors, :cpus => num.to_i) do |donor|
+ Misc.bootstrap(donors, num.to_i) do |donor|
   sample = Sample.setup(donor)
   begin
    job = sample.send(task, :job, options)
