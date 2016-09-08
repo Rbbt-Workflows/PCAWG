@@ -18,6 +18,7 @@ $ #{$0} [options]
 -p--principal 
 -c--coding
 -n--non_synonymous
+--concurrent* Number of concurrent processes
 EOF
 
 if options[:help]
@@ -44,8 +45,9 @@ end
 donors = PCAWG.all_donors.uniq
 abbrs = PCAWG.all_abbreviations
 
+num = options[:concurrent] || "10"
 tasks.each do |task|
- Misc.bootstrap(donors) do |donor|
+ Misc.bootstrap(donors, :cpus => num.to_i) do |donor|
   sample = Sample.setup(donor)
   begin
    job = sample.send(task, :job, options)
