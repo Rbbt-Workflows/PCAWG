@@ -56,6 +56,7 @@ module Study
     @@sample_info ||= {}
     @@sample_info[[study, sample_field]] ||= begin 
                                                info = Persist.persist_tsv nil, study, {}, :dir => PCAWG::PROJECT_VAR_DIR.sample_info, :persist => true do |data|
+                                                 Study.setup(study) unless Study === study
                                                  tsv = PCAWG.donor_wgs_samples.tsv :type => :double
                                                  tsv = tsv.select(study.donors) unless study == "PCAWG"
                                                  tsv = tsv.attach PCAWG.donor_rna_samples

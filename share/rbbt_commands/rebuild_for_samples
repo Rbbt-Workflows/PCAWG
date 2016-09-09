@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+require 'rbbt-util'
+require 'rbbt/util/simpleopt'
+
+$0 = "rbbt #{$previous_commands*""} #{ File.basename(__FILE__) }" if $previous_commands
+
+options = SOPT.setup <<EOF
+
+Prepare for Nuria
+
+$ #{$0} [options] result_file target_dir/ mi_incidence
+
+-h--help Print this help
+
+EOF
+if options[:help]
+  if defined? rbbt_usage
+    rbbt_usage 
+  else
+    puts SOPT.usage
+  end
+  exit 0
+end
+
+result, directory, incidence = ARGV
+
+tsv = TSV.open result
+tsv.unnamed = true
+
+sample_mis = TSV.open(incidence, :key_field => "Sample", :merge => true)
+sample_mis.unnamed = true
+samples = sample_mis.keys
+
+TSV.traverse samples, :type => :array, :bar => "Samples", :cpus => 10 do |sample|
+  mis = sample_mis[sample]
+  target_file = File.join(directory, sample)
+  sample_tsv = tsv.select(mis.flatten)
+  Open.write(target_file, sample_tsv.to_s)
+end

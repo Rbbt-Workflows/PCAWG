@@ -20,9 +20,14 @@ module PCAWG
     "Hsa/feb2014"
   end
 
+  def self.abbr_color(abbr)
+    @@abbr_color ||= PCAWG.subtype_info.tsv :fields => ["Color (RGB code)"], :type => :single
+    @@abbr_color[abbr]
+  end
+
   PCAWG.claim PCAWG.subtype_info, :proc do
     file = PCAWG::DATA_DIR["tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_August.tsv"]
-    tsv = file.tsv :type => :list, :key_field => "Abbreviation", :header_hash => '', :grep => "^[[:space:]]\|MISSING", :invert_grep => true
+    tsv = file.tsv :type => :list, :key_field => "Abbreviation", :header_hash => '', :grep => "^[[:space:]]\|MISSING", :invert_grep => true, :fix => Proc.new{|l| l.gsub(/([a-z]+)CA(\s)/, '\1Ca\2')}
     tsv.to_s
   end
 
@@ -63,12 +68,12 @@ module PCAWG
 
   PCAWG.claim PCAWG.donor_histology, :proc do |filename|
     fields = %w(organ_system histology_abbreviation histology_tier1 histology_tier2 histology_tier3 histology_tier4 tumour_histological_code tumour_histological_type tumour_stage tumour_grade specimen_donor_treatment_type)
-    tsv = DATA_DIR['pcawg_specimen_histology_August2016_v3.tsv'].tsv :key_field => 'icgc_donor_id', :fields => fields, :type => :double, :sep2 => /,\s*/
+    tsv = DATA_DIR['pcawg_specimen_histology_August2016_v3.tsv'].tsv :key_field => 'icgc_donor_id', :fields => fields, :type => :double, :sep2 => /,\s*/, :fix => Proc.new {|l| l.gsub(/([a-z]+)CA(\s)/, '\1Ca\2')}
   end
 
   PCAWG.claim PCAWG.donor_clinical, :proc do |filename|
     fields = %w(donor_sex donor_vital_status donor_diagnosis_icd10 first_therapy_type first_therapy_response donor_age_at_diagnosis donor_survival_time donor_interval_of_last_followup tobacco_smoking_history_indicator tobacco_smoking_intensity alcohol_history alcohol_history_intensity)
-    tsv = DATA_DIR["pcawg_donor_clinical_August2016_v3.tsv"].tsv :key_field => 'icgc_donor_id', :fields => fields, :type => :list
+    tsv = DATA_DIR["pcawg_donor_clinical_August2016_v3.tsv"].tsv :key_field => 'icgc_donor_id', :fields => fields, :type => :list, :fix => Proc.new{|l| l.gsub(/([a-z]+)CA(\s)/, '\1Ca\2')}
     tsv.to_s
   end
 
@@ -133,6 +138,7 @@ module PCAWG
     end
     nil
   end
+
   PCAWG.claim DATA_DIR['AugustRelease_Simulations_Broad.maf'].tap{|o| o.resource = PCAWG}, :proc do |filename|
     raise "Please place the file AugustRelease_Simulations_Broad.maf.gz into #{ filename }"
   end
@@ -152,6 +158,53 @@ module PCAWG
         parts = line.split("\t")
         chr, start, ali, ref, alt  = parts
         alt2 = nil
+
+        donor = aliquote2donor[ali]
+        next if donor.nil?
+        start = start.to_i
+
+        _muts = ([alt, alt2].compact.uniq - [ref])
+        _mut  = _muts.first
+
+        pos, muts = Misc.correct_vcf_mutation start, ref, _mut
+        mutations = muts.collect{|m| [chr, pos, m] * ":"}
+
+        if last_donor != donor
+          io.close if io
+          if File.exists?(directory[donor])
+            io = Open.open(directory[donor], :mode => 'a')
+          else
+            io = Open.open(directory[donor], :mode => 'w')
+          end
+          io.puts(mutations * "\n")
+        else
+          io.puts(mutations * "\n")
+        end
+      end
+      io.close
+      FileUtils.mv directory.find, real.find
+    end
+    nil
+  end
+
+  PCAWG.claim DATA_DIR['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.dkfz_randomize_25kbwindow_complete_set.maf'].tap{|o| o.resource = PCAWG}, :proc do |filename|
+    raise "Please place the file final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.dkfz_randomize_25kbwindow_complete_set.maf into #{ filename }"
+  end
+
+  PCAWG.claim PCAWG.genotypes_random_DKFZ, :proc do |real|
+    TmpFile.with_file do |directory|
+      Path.setup(directory)
+      aliquote2donor = PCAWG.donor_wgs_samples.tsv :key_field => 'tumor_wgs_aliquot_id', :type => :single
+      if Open.exists? directory
+        FileUtils.rm_rf directory.find
+      end
+      FileUtils.mkdir_p directory 
+      last_donor = nil
+      io = nil
+      TSV.traverse DATA_DIR['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.dkfz_randomize_25kbwindow_complete_set.maf'], :type => :array, :bar => true do |line|
+        next if line =~ /^Tumor_Sample_Barcode/
+        parts = line.split("\t")
+        ali, chr, start, eend, ref, alt, alt2  = parts.values_at 0, 3,4,5,9,10,11
 
         donor = aliquote2donor[ali]
         next if donor.nil?
