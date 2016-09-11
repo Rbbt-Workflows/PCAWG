@@ -17,14 +17,9 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    }
    entity=entity{
     pcawg.rb
-    pcawg.rb.save
     pcawg=pcawg{
      study.rb
      sample.rb
-     sample.rb.save
-     study.rb.save
-     donor.rb
-     specimen.rb
     }
    }
   }
