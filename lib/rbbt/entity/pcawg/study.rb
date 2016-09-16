@@ -120,17 +120,6 @@ module Study
     donors.select(:has_cnv?)
   end
 
-  task :test => :boolean do
-    study = clean_name.dup
-    study = Study.setup(study)
-    iii study.expression_samples
-    raise "STOP"
-    Log.tsv Study.sample_info(study)
-    study.genotyped_samples.each{|s|
-      iif [s, s.donor.expression_samples]
-    }
-    raise "Stop"
-  end
 end
 
 Study.update_task_properties
