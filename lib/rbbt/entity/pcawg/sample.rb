@@ -15,6 +15,18 @@ module Sample
     "PCAWG:" << clean
   end
 
+  task :homozygous => :array do
+    []
+  end
+
+  task :homozygous_genes => :array do
+    []
+  end
+
+  task :extended_vcf => :tsv do
+    nil
+  end
+
   task :organism => :string do
     PCAWG.organism
   end
