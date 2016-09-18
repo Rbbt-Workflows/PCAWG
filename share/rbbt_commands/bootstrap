@@ -32,6 +32,9 @@ end
 
 tasks = options[:tasks] || "firestar,kinmut"
 
+Workflow.require_workflow "MutSig"
+Workflow.require_workflow "Pandrugs"
+
 raise ParameterException unless tasks
 
 tasks = tasks.split(/,\s*/)

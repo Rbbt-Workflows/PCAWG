@@ -9,7 +9,7 @@ module PCAWG
 
   def self.donors_with_histology(s)
     if s.include? "="
-      key, value = s.split(":")
+      key, value = s.split("=")
     else
       key, value = 'histology_abbreviation', s
     end
@@ -20,7 +20,9 @@ module PCAWG
       @@good_donors
     else
       @@donor_histology ||= PCAWG.donor_histology.tsv 
-      @@donor_histology.select(key => value).keys & @@good_donors
+      donors = @@good_donors
+      donors &= @@donor_histology.select(key => value).keys 
+      donors
     end
   end
 
