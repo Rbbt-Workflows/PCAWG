@@ -11,7 +11,6 @@ module PCAWG
   RNA_TUMOR_SAMPLE = 'RNA_tumor_sample'
   RNA_NORMAL_SAMPLE = 'RNA_normal_sample'
 
-
   DATA_DIR = Rbbt.root.share.data.projects.PCAWG[".source"]
 
   PROJECT_VAR_DIR = Rbbt.root.var.PCAWG
@@ -29,6 +28,16 @@ module PCAWG
     file = PCAWG::DATA_DIR["tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_August.tsv"]
     tsv = file.tsv :type => :list, :key_field => "Abbreviation", :header_hash => '', :grep => "^[[:space:]]\|MISSING", :invert_grep => true, :fix => Proc.new{|l| l.gsub(/([a-z]+)CA(\s)/, '\1Ca\2')}
     tsv.to_s
+  end
+
+  PCAWG.claim PCAWG.enhancer_ranges, :proc do
+    file = PCAWG::DATA_DIR.annotations["map.enhancer.gene"]
+    TSV.traverse file, :type => :array, :into => :stream do |line|
+      range, genes = line.split("\t")
+      chr,start,eend = range.split(/:|-/)
+      chr.sub!('chr','')
+      [chr, start, eend, genes.split(";").uniq*";"] * "\t"
+    end
   end
 
   PCAWG.claim PCAWG.selected_donor_samples, :proc do |filename|

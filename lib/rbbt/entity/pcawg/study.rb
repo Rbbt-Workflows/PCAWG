@@ -13,6 +13,23 @@ module Study
     []
   end
 
+  dep Sample, :genes_with_enhancer_mutations, :compute => :bootstrap do |jobname,options|
+    study = Study.setup(jobname.dup)
+    study.genotyped_samples.collect{|s| s.genes_with_enhancer_mutations(:job) }
+  end
+  task :enhancer_mutation_incidence => :tsv do
+    counts = TSV.setup({}, :key_field => "Ensembl Gene ID", :fields => ["Sample"], :type => :flat)
+    dependencies.each do |dep|
+      sample = dep.clean_name
+      TSV.traverse dep, :type => :array do |gene|
+        counts[gene] ||= []
+        counts[gene] << sample
+      end
+    end
+    counts
+  end
+
+
   property :organism => :single do
     PCAWG.organism
   end

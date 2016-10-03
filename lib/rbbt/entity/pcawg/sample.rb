@@ -35,6 +35,20 @@ module Sample
     Misc.sort_mutation_stream PCAWG.genotypes.produce[clean_name.split(":").last].open
   end
 
+  dep :genomic_mutations
+  dep Sequence, :intersect_bed, :positions => :genomic_mutations
+  task :intersect_bed => :tsv do
+    TSV.get_stream step(:intersect_bed)
+  end
+
+  dep :intersect_bed, :bed_file => PCAWG.enhancer_ranges.produce
+  task :genes_with_enhancer_mutations => :array do
+    TSV.traverse step(:intersect_bed), :type => :array, :into => :stream do |line|
+      genes = line.split("\t")[1].split(":")[3].split(";")
+      genes.extend MultipleResult
+    end
+  end
+
   property :expression_samples => :array do
     index = PCAWG.donor_rna_samples.index :target => PCAWG::RNA_TUMOR_SAMPLE
     samples = index.chunked_values_at(self).compact
