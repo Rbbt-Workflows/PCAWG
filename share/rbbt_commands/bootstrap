@@ -32,8 +32,15 @@ end
 
 tasks = options[:tasks] || "firestar,kinmut"
 
-Workflow.require_workflow "MutSig"
-Workflow.require_workflow "Pandrugs"
+begin
+ Workflow.require_workflow "MutSig"
+rescue
+end
+
+begin
+ Workflow.require_workflow "Pandrugs"
+rescue
+end
 
 raise ParameterException unless tasks
 
