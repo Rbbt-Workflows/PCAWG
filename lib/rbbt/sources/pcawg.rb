@@ -324,5 +324,3 @@ module PCAWG
     nil
   end
 end
-
-PCAWG.SV.produce
