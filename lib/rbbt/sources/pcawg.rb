@@ -266,7 +266,7 @@ module PCAWG
       TSV.traverse DATA_DIR['October_2016_whitelist_2583.snv_mnv_indel.maf.gz'], :type => :array, :bar => true do |line|
         next if line =~ /^Tumor_Sample_Barcode/
         parts = line.split("\t")
-        ali, chr, start, eend, ref, alt, alt2  = parts.values_at 0,3,4,5,10,11
+        chr, start, eend, ref, alt, alt2, ali  = parts.values_at 1,2,3,7,8,9,12
 
         donor = aliquote2donor[ali]
         next if donor.nil?
