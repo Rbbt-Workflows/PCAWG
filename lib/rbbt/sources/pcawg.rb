@@ -48,6 +48,12 @@ module PCAWG
     list * "\n" + "\n"
   end
 
+  PCAWG.claim PCAWG.donor_specimens, :proc do |filename|
+    tsv = DATA_DIR['release_may2016.v1.2.tsv'].tsv :key_field => DONOR_FIELD, :fields => %w(normal_wgs_icgc_specimen_id tumor_wgs_icgc_specimen_id normal_rna_seq_icgc_specimen_id tumor_rna_seq_icgc_specimen_id), :header_hash => '', :sep2 => ','
+    tsv.fields = ["Normal WGS Specimen", "Tumor WGS Specimen", "Normal RNA Specimen", "Tumor RNA Specimen"]
+    tsv.to_s
+  end
+
   PCAWG.claim PCAWG.donor_wgs_samples, :proc do |filename|
     tsv = DATA_DIR['release_may2016.v1.2.tsv'].tsv :key_field => WGS_SAMPLE_FIELD, :fields => [DONOR_FIELD], :header_hash => '', :sep2 => ','
     selected_donor_samples = PCAWG.selected_donor_samples.list
@@ -243,8 +249,8 @@ module PCAWG
     nil
   end
 
-  PCAWG.claim DATA_DIR['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'].tap{|o| o.resource = PCAWG}, :proc do |filename|
-    raise "You do not have permission to view Genomic Mutations in this server. Otherwise, please place the file final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz into #{ filename }"
+  PCAWG.claim DATA_DIR['October_2016_whitelist_2583.snv_mnv_indel.maf.gz'].tap{|o| o.resource = PCAWG}, :proc do |filename|
+    raise "You do not have permission to view Genomic Mutations in this server. Otherwise, please place the file October_2016_whitelist_2583.snv_mnv_indel.maf.gz into #{ filename }"
   end
 
   PCAWG.claim PCAWG.genotypes, :proc do |real|
@@ -257,7 +263,7 @@ module PCAWG
       FileUtils.mkdir_p directory 
       last_donor = nil
       io = nil
-      TSV.traverse DATA_DIR['final_consensus_12aug_passonly_whitelist_31aug_snv_indel_v3.maf.gz'], :type => :array, :bar => true do |line|
+      TSV.traverse DATA_DIR['October_2016_whitelist_2583.snv_mnv_indel.maf.gz'], :type => :array, :bar => true do |line|
         next if line =~ /^Tumor_Sample_Barcode/
         parts = line.split("\t")
         ali, chr, start, eend, ref, alt, alt2  = parts.values_at 0,3,4,5,10,11
@@ -290,4 +296,33 @@ module PCAWG
     end
     nil
   end
+
+  PCAWG.claim PCAWG.SV, :proc do |real|
+    file = DATA_DIR['pcawg_consensus_1.5.160912.somatic.sv.tar.gz'].find
+    TmpFile.with_file do |directory|
+      FileUtils.mkdir_p directory
+      Misc.in_dir directory do
+        CMD.cmd("tar xvfz '#{file}'")
+        Path.setup(directory)
+
+        sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
+        directory.glob("*.bedpe").each do |file|
+          sample = File.basename(file).split(".").first
+          donor = sample2donor[sample]
+          next if donor.nil?
+          stream = TSV.traverse Open.open(file), :type => :array, :into => :stream do |line|
+            next if line.include? 'chrom'
+            chr1, pos1, _pos1, chr2, pos2, _pos2, _id, support, strand1, strand2, sv_class = line.split("\t")
+            [chr1, pos1, sv_class,chr2,pos2] * ":"
+          end
+
+          Open.write(real[donor].find, stream.read)
+        end
+      end
+    end
+    FileUtils.rm_rf directory
+    nil
+  end
 end
+
+PCAWG.SV.produce

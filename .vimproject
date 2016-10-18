@@ -1,26 +1,29 @@
 PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.txt *.conf" {
  workflow.rb
+
  bin=bin filter="*"{
   build_project.rb
   build_project_tsv.rb
   prepare_prelim_final.sh
  }
+
  lib=lib {
   sinatra.rb
-  pcawg.rb.save
   rbbt=rbbt{
-   pcawg=pcawg{
-    structure_annotator.rb
-   }
    sources=sources{
     pcawg.rb
    }
+
    entity=entity{
     pcawg.rb
     pcawg=pcawg{
      study.rb
      sample.rb
     }
+   }
+
+   pcawg=pcawg{
+    structure_annotator.rb
    }
   }
   pcawg=pcawg{
