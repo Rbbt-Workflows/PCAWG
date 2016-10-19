@@ -31,7 +31,7 @@ module PCAWG
   end
 
   PCAWG.claim PCAWG.enhancer_ranges, :proc do
-    file = PCAWG::DATA_DIR.annotations["map.enhancer.gene"]
+    file = PCAWG::DATA_DIR.annotations["map.enhancer.gene"].find
     TSV.traverse file, :type => :array, :into => :stream do |line|
       range, genes = line.split("\t")
       chr,start,eend = range.split(/:|-/)
