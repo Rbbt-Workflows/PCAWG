@@ -133,7 +133,8 @@ module Sample
 
   property :expression_samples => :array do
     index = PCAWG.donor_rna_samples.index :target => PCAWG::RNA_TUMOR_SAMPLE
-    samples = index.chunked_values_at(self).compact
+    codes = self.collect{|s| s.split(":").last}
+    samples = index.chunked_values_at(codes).collect{|v| (v.nil? or v.empty?) ? nil : v }
     Sample.setup(samples, :cohort => cohort)
   end
 

@@ -18,6 +18,11 @@ module PCAWG
 
     if s == "PCAWG"
       @@good_donors
+    elsif key == "meta"
+      @@donor_meta ||= PCAWG.donor_meta_cohort.tsv 
+      donors = @@good_donors
+      donors &= @@donor_meta.select("Meta Cohort" => value).keys 
+      donors
     else
       @@donor_histology ||= PCAWG.donor_histology.tsv 
       donors = @@good_donors
@@ -28,6 +33,10 @@ module PCAWG
 
   def self.all_abbreviations
     PCAWG.donor_histology.tsv(:key_field => "histology_abbreviation", :fields => [], :persist => true, :persist_dir => PCAWG::PROJECT_VAR_DIR.cache).keys
+  end
+
+  def self.all_meta
+    PCAWG.donor_meta_cohort.tsv.values.flatten.compact.uniq
   end
 
   def self.all_histologies(tier = 1)

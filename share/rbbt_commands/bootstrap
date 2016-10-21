@@ -54,6 +54,7 @@ end
 
 donors = PCAWG.all_donors.uniq
 abbrs = PCAWG.all_abbreviations
+meta = PCAWG.all_meta
 
 num = options[:concurrent] || "10"
 tasks.each do |task|
@@ -67,7 +68,7 @@ tasks.each do |task|
   nil
  end
 
- Misc.bootstrap(abbrs, num.to_i) do |abbr|
+ Misc.bootstrap(abbrs + meta.collect{|m| "meta=" << m}, num.to_i) do |abbr|
   study = Study.setup(abbr)
   begin
    job = study.send(task, :job, options)

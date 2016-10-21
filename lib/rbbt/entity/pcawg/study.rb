@@ -61,6 +61,14 @@ module Study
     counts
   end
 
+  task :expression_samples => :array do
+    donors = study.donors
+    samples = Sample.setup(donors.collect{|donor| donor.expression_samples}.compact.flatten)
+    samples.extend AnnotatedArray
+    samples.cohort = "PCAWG"
+    samples
+  end
+
 
   property :organism => :single do
     PCAWG.organism
@@ -76,13 +84,6 @@ module Study
 
   property :genotyped_samples => :single do
     donors
-  end
-
-  property :expression_samples => :single do
-    samples = Sample.setup(donors.collect{|donor| donor.expression_samples}.compact.flatten)
-    samples.extend AnnotatedArray
-    samples.cohort = "PCAWG"
-    samples
   end
 
   property :has_cnv? => :single do

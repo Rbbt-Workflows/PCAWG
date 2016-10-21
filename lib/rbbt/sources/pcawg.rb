@@ -81,6 +81,21 @@ module PCAWG
     tsv.to_list.to_s
   end
 
+  PCAWG.claim PCAWG.donor_meta_cohort, :proc do |filename|
+    sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
+    donor_groups = TSV.setup({}, :key_field => PCAWG::DONOR_FIELD, :fields => ["Meta Cohort"], :type => :flat)
+    DATA_DIR.meta_tumor_cohorts.glob("*").each do |file|
+      name = File.basename(file).sub(".txt",'')
+      samples = Open.read(file).split("\n").collect{|l| l.split("\t").first}
+      donors = sample2donor.values_at *samples
+      donors.compact.each do |donor|
+        donor_groups[donor] ||= []
+        donor_groups[donor] << name
+      end
+    end
+    donor_groups.to_s
+  end
+
   PCAWG.claim PCAWG.donor_histology, :proc do |filename|
     fields = %w(organ_system histology_abbreviation histology_tier1 histology_tier2 histology_tier3 histology_tier4 tumour_histological_code tumour_histological_type tumour_stage tumour_grade specimen_donor_treatment_type)
     tsv = DATA_DIR['pcawg_specimen_histology_August2016_v3.tsv'].tsv :key_field => 'icgc_donor_id', :fields => fields, :type => :double, :sep2 => /,\s*/, :fix => Proc.new {|l| l.gsub(/([a-z]+)CA(\s)/, '\1Ca\2')}
