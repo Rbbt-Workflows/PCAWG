@@ -19,6 +19,7 @@ $ #{$0} [options]
 -c--coding
 -n--non_synonymous
 --concurrent* Number of concurrent processes
+-W--workflows* Load a list of workflows
 EOF
 
 if options[:help]
@@ -43,6 +44,15 @@ rescue
 end
 
 raise ParameterException unless tasks
+
+if options[:workflows]
+  require 'rbbt/workflow'
+  workflows = options[:workflows].split(',')
+  workflows.each do |workflow|
+    workflow.strip!
+    Workflow.require_workflow workflow
+  end
+end
 
 tasks = tasks.split(/,\s*/)
 

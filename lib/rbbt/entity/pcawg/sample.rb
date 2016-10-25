@@ -49,6 +49,7 @@ module Sample
     end
   end
 
+  returns "StructuralVariant"
   task :SV => :array do
     file = PCAWG.SV.produce[clean_name.split(":").last]
     if file.exists?
@@ -74,9 +75,9 @@ module Sample
       boundaries
     end
 
-    dumper = TSV::Dumper.new(:key_field => "SV", :fields => ["Ensembl Gene ID before left boundary", "Ensembl Gene ID after left boundary","Ensembl Gene ID before right boundary","Ensembl Gene ID after right boundary"], :organism => organism, :type => :double)
+    dumper = TSV::Dumper.new(:key_field => "Structural Variant", :fields => ["Ensembl Gene ID before left boundary", "Ensembl Gene ID after left boundary","Ensembl Gene ID before right boundary","Ensembl Gene ID after right boundary"], :namespace => organism, :type => :double)
     dumper.init
-    TSV.traverse Sequence.job(:genes_at_ranges, clean_name, :ranges => stream, :organism => organism).produce(true), :into => dumper do |range, genes|
+    TSV.traverse Sequence.job(:genes_at_ranges, clean_name, :ranges => stream, :namespace => organism).produce(true), :into => dumper do |range, genes|
       range = range.first if Array === range
       parts = range.split(":")
       chr1, left, right, loc, pos1, *line = parts
@@ -102,7 +103,9 @@ module Sample
   
     stream = TSV.collapse_stream(dumper, :zipped => false)
     TSV.traverse stream, :into => :stream, :type =>:array do |line|
-      line.split("\t").collect{|v| v.split("|").reject{|v| v.empty?} * "|" } * "\t"
+      parts = line.split("\t").collect{|v| v.split("|").reject{|v| v.empty?} * "|" } 
+      next if parts.length == 1
+      parts * "\t"
     end
   end
 
@@ -116,8 +119,9 @@ module Sample
       left = index.values_at *left if translate
       right = (values[2..3] || []).flatten.compact.uniq
       right = index.values_at *right if translate
-      next if left.empty? or right.empty?
+      next if left.compact.empty? or right.compact.empty?
       pairs = left.collect{|l| right.collect{|r| l == r ? nil : [l,r].sort * "-" } }.flatten.compact
+      next if pairs.empty?
       pairs * "\n"
     end
     CMD.cmd('sort -u', :in => stream, :pipe => true, :no_fail => true)

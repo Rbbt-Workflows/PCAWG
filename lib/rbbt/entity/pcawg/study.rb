@@ -49,10 +49,11 @@ module Study
     study = Study.setup(jobname.dup)
     study.genotyped_samples.collect{|s| s.SV_candidate_fusions(:job, options) }
   end
+
   task :SV_candidate_fusion_incidence => :tsv do
     counts = TSV.setup({}, :key_field => "Ensembl Gene ID - Ensembl Gene ID", :fields => ["Sample"], :type => :flat)
     dependencies.each do |dep|
-      sample = dep.clean_name
+      sample = dep.clean_name.split(":").last
       TSV.traverse dep, :type => :array do |gene|
         counts[gene] ||= []
         counts[gene] << sample
@@ -114,8 +115,8 @@ module Study
                                                  tsv = tsv.attach PCAWG.donor_clinical
                                                  data.serializer = :double
                                                  data.merge! tsv
-                                                 data.filename = "Sample info #{study}"
                                                  tsv.annotate data
+                                                 data.filename = "Sample info #{study}"
                                                  data
                                                end
                                                info.entity_options = {:cohort => "PCAWG"}
@@ -154,6 +155,7 @@ module Study
 
   def self.matrix(study, matrix, format = nil)
     file = matrix_file(study, matrix)
+    return nil if file.nil?
     sample_info = sample_info(study)
     value_type = study_info(study)[:expression_type]
     organism = study_info(study)[:organism]
