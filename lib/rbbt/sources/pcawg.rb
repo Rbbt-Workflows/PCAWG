@@ -24,6 +24,10 @@ module PCAWG
     @@abbr_color[abbr]
   end
 
+  def self.abbr_colors
+    PCAWG.subtype_info.tsv :fields => ["Color (RGB code)"], :type => :single
+  end
+
   PCAWG.claim PCAWG.subtype_info, :proc do
     file = PCAWG::DATA_DIR["tumour_subtype_consolidation_map.tsv - Unique List of Tumour Types_August.tsv"]
     tsv = file.tsv :type => :list, :key_field => "Abbreviation", :header_hash => '', :grep => "^[[:space:]]\|MISSING", :invert_grep => true, :fix => Proc.new{|l| l.gsub(/([a-z]+)CA(\s)/, '\1Ca\2')}

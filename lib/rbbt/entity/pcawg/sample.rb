@@ -119,6 +119,9 @@ module Sample
       left = index.values_at *left if translate
       right = (values[2..3] || []).flatten.compact.uniq
       right = index.values_at *right if translate
+      common = left & right
+      left -= common
+      right -= common
       next if left.compact.empty? or right.compact.empty?
       pairs = left.collect{|l| right.collect{|r| l == r ? nil : [l,r].sort * "-" } }.flatten.compact
       next if pairs.empty?

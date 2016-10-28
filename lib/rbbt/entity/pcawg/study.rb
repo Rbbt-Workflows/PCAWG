@@ -62,6 +62,87 @@ module Study
     counts
   end
 
+  task :SV_summary => :tsv do
+    matrix = study.matrix :gene_expression
+
+    fields = []
+    fields << "Associated Gene Name 1"
+    fields << "Associated Gene Name 2"
+    fields << "Fusion donors"
+    fields << "Expression for Gene 1 in fusion donors"
+    fields << "Expression for Gene 1 in rest of donors"
+    fields << "Expression for Gene 2 in fusion donors"
+    fields << "Expression for Gene 2 in rest of donors"
+    fields << "Barcode for Gene 1 level in fusion donors"
+    fields << "Barcode for Gene 1 level in rest of donors"
+    fields << "Barcode for Gene 2 level in fusion donors"
+    fields << "Barcode for Gene 2 level in rest of donors"
+    fields << "Fisher p-value for gene 1"
+    fields << "Fisher p-value for gene 2"
+    fields << "Best Fisher p-value"
+
+
+    tsv = TSV.setup({}, :key_field => "Candidate fusion", :fields => fields, :namespace => organism, :type => :double)
+
+    if not matrix.nil?
+      all_rna_samples = matrix.samples
+
+      barcode = matrix.to_barcode_ruby.tsv
+      mat_values = matrix.tsv
+
+      ensg2name = Organism.identifiers(organism).index :target => "Associated Gene Name", :persist => true
+      donor2sample = PCAWG.donor_rna_samples.index :target => PCAWG::RNA_TUMOR_SAMPLE
+
+      TSV.traverse study.SV_candidate_fusion_incidence, :bar => true, :into => tsv, :cpus => 10 do |fusion,donors|
+        fusion = fusion.first if Array === fusion
+        ens1, ens2 = fusion.split"-"
+        next if ens1 == ens2
+        next if donors.length < 3
+
+        donors = donors.collect{|d| d.split(":").last }
+        Sample.setup(donors, :cohort => study)
+
+        samples = donor2sample.values_at *donors
+        rna_seq_samples = all_rna_samples & samples
+
+        barcode1 = barcode[ens1]
+        barcode2 = barcode[ens2]
+        next if barcode1.nil? or barcode2.nil?
+
+        ens1_barcode_true = barcode1.values_at(*rna_seq_samples)
+        ens1_barcode_false = barcode1.values_at(*(all_rna_samples - rna_seq_samples))
+        ens2_barcode_true = barcode2.values_at(*rna_seq_samples)
+        ens2_barcode_false = barcode2.values_at(*(all_rna_samples - rna_seq_samples))
+
+        fusion_classes = all_rna_samples.collect{|s| samples.include?(s) ? 1 : 0 }
+        expression_classes1 = all_rna_samples.collect{|s| barcode1[s] }
+        expression_classes2 = all_rna_samples.collect{|s| barcode2[s] }
+        pvalue1 = Fisher.test_classification(fusion_classes, expression_classes1)
+        pvalue2 = Fisher.test_classification(fusion_classes, expression_classes2)
+
+        name1, name2 = ensg2name.values_at ens1, ens2
+
+        values = []
+        values << [name1]
+        values << [name2]
+        values << donors
+        values << mat_values[ens1].values_at(*(rna_seq_samples))
+        values << mat_values[ens1].values_at(*(all_rna_samples - rna_seq_samples))
+        values << mat_values[ens2].values_at(*(rna_seq_samples))
+        values << mat_values[ens2].values_at(*(all_rna_samples - rna_seq_samples))
+        values << barcode[ens1].values_at(*(rna_seq_samples))
+        values << barcode[ens1].values_at(*(all_rna_samples - rna_seq_samples))
+        values << barcode[ens2].values_at(*(rna_seq_samples))
+        values << barcode[ens2].values_at(*(all_rna_samples - rna_seq_samples))
+        values << [pvalue1]
+        values << [pvalue2]
+        values << [[pvalue2, pvalue1].min]
+
+        [fusion, values]
+      end
+    end
+    tsv
+  end
   task :expression_samples => :array do
     donors = study.donors
     samples = Sample.setup(donors.collect{|donor| donor.expression_samples}.compact.flatten)
