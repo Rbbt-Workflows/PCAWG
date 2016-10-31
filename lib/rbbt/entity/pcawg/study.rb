@@ -63,6 +63,8 @@ module Study
   end
 
   task :SV_summary => :tsv do
+    require 'rbbt/matrix/barcode'
+
     matrix = study.matrix :gene_expression
 
     fields = []
