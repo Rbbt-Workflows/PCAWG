@@ -64,6 +64,7 @@ module Study
 
   task :SV_summary => :tsv do
     require 'rbbt/matrix/barcode'
+    require 'rbbt/statistics/fisher'
 
     matrix = study.matrix :gene_expression
 
