@@ -22,6 +22,11 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
     }
    }
 
+   knowledge_base=knowledge_base{
+    PCAWG.rb
+   }
+
+
    pcawg=pcawg{
     structure_annotator.rb
    }

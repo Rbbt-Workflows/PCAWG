@@ -69,8 +69,8 @@ module Study
     matrix = study.matrix :gene_expression
 
     fields = []
-    fields << "Associated Gene Name 1"
-    fields << "Associated Gene Name 2"
+    fields << "Gene 1 (Associated Gene Name)"
+    fields << "Gene 2 (Associated Gene Name)"
     fields << "Fusion donors"
     fields << "Expression for Gene 1 in fusion donors"
     fields << "Expression for Gene 1 in rest of donors"

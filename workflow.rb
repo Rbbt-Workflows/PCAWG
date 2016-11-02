@@ -15,7 +15,7 @@ end
 
 #require 'PCAWG/tasks/basic.rb'
 
-#require 'rbbt/knowledge_base/PCAWG'
+require 'rbbt/knowledge_base/PCAWG'
 #require 'rbbt/entity/PCAWG'
 
 #require 'rbbt/pcawg/structure_annotator'

@@ -75,7 +75,7 @@ module Sample
       boundaries
     end
 
-    dumper = TSV::Dumper.new(:key_field => "Structural Variant", :fields => ["Ensembl Gene ID before left boundary", "Ensembl Gene ID after left boundary","Ensembl Gene ID before right boundary","Ensembl Gene ID after right boundary"], :namespace => organism, :type => :double)
+    dumper = TSV::Dumper.new(:key_field => "Structural Variant", :fields => ["Gene (Ensembl Gene ID) before left boundary", "Gene (Ensembl Gene ID) after left boundary","Gene (Ensembl Gene ID) before right boundary","Gene (Ensembl Gene ID) after right boundary"], :namespace => organism, :type => :double)
     dumper.init
     TSV.traverse Sequence.job(:genes_at_ranges, clean_name, :ranges => stream, :namespace => organism).produce(true), :into => dumper do |range, genes|
       range = range.first if Array === range
