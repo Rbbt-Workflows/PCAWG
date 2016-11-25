@@ -114,6 +114,8 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    bootstrap
    format_for_nuria
    rebuild_for_samples
+   enrichment
+   compare_vcf
    pcawg
   }
  }

@@ -10,6 +10,33 @@ module Sample
     PCAWG.organism
   end
 
+  helper :cnv_status do |info|
+    total, mj, mn, stars = info
+    statuses = []
+    case total.to_i
+    when 0
+      'complete_loss'
+    when 1
+      'loss'
+    when 2
+      if mj == '2'
+        'LOH'
+      else
+        nil
+      end
+    when 3
+      'gain'
+    else
+      if total.to_i > 3
+        'big_gain'
+      elsif total.to_i < 0
+        'complete_loss'
+      else
+        raise "Unknown CNV: #{ total }"
+      end
+    end
+  end
+
   property :sample_code => :single do
     clean = self.split(":").last
     "PCAWG:" << clean
@@ -33,6 +60,10 @@ module Sample
 
   task :genomic_mutations => :array do
     Misc.sort_mutation_stream PCAWG.genotypes.produce[clean_name.split(":").last].open
+  end
+
+  task :cnvs => :array do
+    Misc.sort_mutation_stream PCAWG.CNV.produce[clean_name.split(":").last].open
   end
 
   dep :genomic_mutations
@@ -182,7 +213,7 @@ module Sample
   end
 
   property :has_cnv? => :single do
-    false
+    PCAWG.CNV.produce[self].exists?
   end
 end
 

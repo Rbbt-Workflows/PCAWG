@@ -171,8 +171,12 @@ module Study
     donors
   end
 
+  property :cnv_samples => :single do
+    donors.select(:has_cnv?)
+  end
+
   property :has_cnv? => :single do
-    false
+    cnv_samples.any?
   end
 
   property :condition => :single do
@@ -252,10 +256,6 @@ module Study
     tsv.select(PCAWG::DONOR_FIELD => donors)
   end
   
-  property :cnv_samples => :single do
-    donors.select(:has_cnv?)
-  end
-
 end
 
 Study.update_task_properties
