@@ -19,7 +19,6 @@
 2aeaab9f-4459-4be8-91e7-e0746cbd671c	CNS-Oligo
 2c2e5f87-bd22-4a5e-be71-3bcc2aefaf74	CNS-PiloAstro
 2c71d542-1653-4d97-8752-f2fd05c7e75d	CNS-GBM
-2ce48f01-2f61-49d9-a56a-7438bf4a37d7	CNS-GBM
 2fdab641-d73b-4f9a-aa4c-c1944f131a69	CNS-GBM
 36160be6-368f-4cdb-b1ee-9ed5b64462fa	CNS-PiloAstro
 363d3a59-dce3-408d-a736-5c29ba9f9b6d	CNS-PiloAstro
@@ -68,7 +67,6 @@
 7cae6c0b-36fe-411b-bbba-093a4c846d84	CNS-GBM
 7f9382a5-f6da-4fe8-93ad-6adc91f508fa	CNS-PiloAstro
 82d7fa2d-19cd-41b7-8ed1-ea9fb9a544c6	CNS-GBM
-841eb82b-347d-4d7f-805f-3f3701a2983d	CNS-GBM
 85d915b8-0184-4ec7-93ad-e9ffa2f5743b	CNS-Oligo
 86386b36-2950-4479-b79f-4b347053c8bc	CNS-Oligo
 86cbb7ad-b22b-414f-a122-77d38c77207d	CNS-PiloAstro

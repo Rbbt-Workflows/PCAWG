@@ -18,7 +18,6 @@
 05780d48-80e7-4d70-b00c-081f8a9519f2	ColoRect-AdenoCA
 062e96d4-c623-11e3-bf01-24c6515278c0	Liver-HCC
 06ecd127-6c24-422d-a7fb-bf5aee1b8b7b	Liver-HCC
-072f4146-c623-11e3-bf01-24c6515278c0	Liver-HCC
 079bcb09-a075-4313-9a3e-dd67734a8c5d	Panc-AdenoCA
 080ecc31-756a-4a1b-a51e-d632ac8219f7	ColoRect-AdenoCA
 0831e45e-c623-11e3-bf01-24c6515278c0	Liver-HCC
@@ -41,7 +40,6 @@
 0eeafcd6-c623-11e3-bf01-24c6515278c0	Liver-HCC
 0ef92ff8-829f-425a-91d8-c594b6e22a2b	Eso-AdenoCa
 0efb6e20-236d-4640-9373-6fc03e67d090	Eso-AdenoCa
-0efee3f3-313b-44eb-b3b0-af975a1ded82	Panc-AdenoCA
 0fa9cfba-0f49-47d0-ab54-9dd2144e0a73	Stomach-AdenoCA
 0fbd94b1-bb34-4620-841b-861a0b5e0c12	Panc-AdenoCA
 0fc63b79-7fff-441d-88fc-922d53c787ab	Panc-AdenoCA
@@ -49,7 +47,6 @@
 1021b60d-f7b2-43b0-b2cc-f282d619d533	Stomach-AdenoCA
 10ad692b-4c3d-42de-9b5e-4968441388b3	ColoRect-AdenoCA
 10cb8ac6-c622-11e3-bf01-24c6515278c0	Liver-HCC
-10db2142-c623-11e3-bf01-24c6515278c0	Liver-HCC
 1127b561-ea40-4d5e-95df-daa0a5ebc1e4	Liver-HCC
 11473a98-d953-45f9-abf5-709b68a4bae8	Liver-HCC
 1168944c-5451-4a18-8758-88bf5723bdd9	Panc-AdenoCA
@@ -90,7 +87,6 @@
 1c28e44a-6e6c-44ed-b58a-e3262c0e6759	Panc-AdenoCA
 1c9fbe26-1447-4335-aaab-06d6bb3e2741	Panc-AdenoCA
 1cb25b72-3726-4f12-9e22-f5c7e4b05681	Liver-HCC
-1d0617e8-2725-4411-b50f-e46ea1d43242	Stomach-AdenoCA
 1d2d355a-8409-4c8a-9f07-ac62885e228d	Stomach-AdenoCA
 1dbdbb2c-c623-11e3-bf01-24c6515278c0	Liver-HCC
 1df8939c-c622-11e3-bf01-24c6515278c0	Liver-HCC
@@ -104,7 +100,6 @@
 20d1b88b-3ff6-4201-a748-6a993500c652	Panc-AdenoCA
 2102558b-87b0-447b-bb9a-e4ae9df8b75e	Panc-AdenoCA
 2109e1d4-c623-11e3-bf01-24c6515278c0	Biliary-AdenoCA
-2182ce2c-5941-4b65-9419-fc7966d5e6d5	ColoRect-AdenoCA
 21b1a37f-e91e-4ce1-83cf-bb89b8d0fb35	Panc-AdenoCA
 221d0290-c623-11e3-bf01-24c6515278c0	Liver-HCC
 228fb827-c05e-494c-8a21-e1d925e100cb	Panc-AdenoCA
@@ -121,7 +116,6 @@
 25c99312-bf63-4654-a73a-03c3c1cd50b6	Eso-AdenoCa
 25cf7449-8c5b-403e-aa75-e2af158598e8	Panc-AdenoCA
 25f07374-313a-4100-9a60-3d21d2988fca	Stomach-AdenoCA
-26de406e-c623-11e3-bf01-24c6515278c0	Liver-HCC
 27b56bf2-7a9d-4061-98d4-61fe2761578c	Eso-AdenoCa
 27fcccdc-c622-11e3-bf01-24c6515278c0	Liver-HCC
 2828e5e6-c623-11e3-bf01-24c6515278c0	Liver-HCC
@@ -133,7 +127,6 @@
 29b92b51-7ba3-42a9-97d3-6a9b5e43f928	Liver-HCC
 2b3837b3-ee29-4a08-848e-1206404da986	Panc-AdenoCA
 2b41746a-95c0-4875-afb5-c6d3d3ad30d9	Eso-AdenoCa
-2b569b88-c622-11e3-bf01-24c6515278c0	Liver-HCC
 2b6d4d66-7f0b-4bc0-b3d6-171956a937c5	Panc-AdenoCA
 2bd56bba-c623-11e3-bf01-24c6515278c0	Liver-HCC
 2bd9ccca-3fae-4b66-a762-6f30d6276222	Panc-AdenoCA
@@ -151,14 +144,12 @@
 2ecd8358-c622-11e3-bf01-24c6515278c0	Liver-HCC
 2f149d78-c623-11e3-bf01-24c6515278c0	Liver-HCC
 2fdfb06c-0d2f-4e1d-9756-bcb08a7f90af	Panc-AdenoCA
-303abbe5-4155-4a0d-bc3b-f8995261ca52	ColoRect-AdenoCA
 305a5074-5384-45a0-985d-289b178d09f6	Liver-HCC
 30a8f292-c623-11e3-bf01-24c6515278c0	Liver-HCC
 30b9ab02-60f2-4974-85a9-874f247ae932	Stomach-AdenoCA
 31bcfd64-c622-11e3-bf01-24c6515278c0	Liver-HCC
 31c0c8f8-c623-11e3-bf01-24c6515278c0	Liver-HCC
 31c75873-abb4-4d88-9e2f-07497a6c892d	Panc-AdenoCA
-31e63f89-a6a9-40fb-823d-f41587bd73d8	ColoRect-AdenoCA
 31f02f48-44a4-445e-ac3d-e9bf3d8d25a2	ColoRect-AdenoCA
 31f3ff14-7d74-447c-a5da-9ad8336c3f3f	Eso-AdenoCa
 32be40fa-c623-11e3-bf01-24c6515278c0	Liver-HCC
@@ -214,7 +205,6 @@
 3e68233a-c623-11e3-bf01-24c6515278c0	Liver-HCC
 3e6a17f9-c249-41b6-ba49-55aaa39d21c5	Eso-AdenoCa
 3ed783cf-2248-44a1-a2a2-d6b6519b91ef	Panc-AdenoCA
-3f99ae0e-c623-11e3-bf01-24c6515278c0	Liver-HCC
 3faeb03e-c622-11e3-bf01-24c6515278c0	Liver-HCC
 3fb8f017-576f-4901-b8bf-3a58e5d43de3	Panc-AdenoCA
 3fba4880-cb7b-4ac5-ab5f-728614faa1ea	Panc-AdenoCA
@@ -282,19 +272,15 @@
 51458c86-0fdd-470e-b059-1ffbffc92a7f	Panc-AdenoCA
 51800588-c622-11e3-bf01-24c6515278c0	Liver-HCC
 5187e77d-f412-4303-8049-11d1aa1a0235	Panc-AdenoCA
-520b8ab2-c623-11e3-bf01-24c6515278c0	Liver-HCC
 5255d645-d3d2-422e-8449-046cd21f4935	Panc-AdenoCA
-526b3796-2cbd-4eec-8273-064b41456279	Eso-AdenoCa
 52d8ccfc-c623-11e3-bf01-24c6515278c0	Liver-HCC
 52f43b72-15ea-40a0-a3b4-4bf22bc0bf25	Panc-AdenoCA
 532259b8-c622-11e3-bf01-24c6515278c0	Liver-HCC
 532bec86-b8d3-41a1-ba17-913a7d378f66	Eso-AdenoCa
 53534b3c-cd15-4d68-a9b1-6902bb234c45	Panc-AdenoCA
-536dedba-46c4-4a21-b112-13c030b13069	Panc-AdenoCA
 53df19a8-c623-11e3-bf01-24c6515278c0	Liver-HCC
 53e6a756-bdcc-4217-afe7-27d776159544	Panc-AdenoCA
 54195db3-94a9-4538-8bb8-9953d936acd4	Panc-AdenoCA
-541f91bd-7e9d-4348-9e78-45b948d8967e	Panc-AdenoCA
 54354d24-c622-11e3-bf01-24c6515278c0	Liver-HCC
 54cfd4b0-c623-11e3-bf01-24c6515278c0	Liver-HCC
 55345803-83d4-4fdb-b0ee-328753801da1	ColoRect-AdenoCA
@@ -335,9 +321,7 @@
 6012cb02-c623-11e3-bf01-24c6515278c0	Liver-HCC
 6051f40a-99e5-4461-9255-0e70d757b4d5	ColoRect-AdenoCA
 60525b38-c34b-479b-86d3-013c7e567b8f	Eso-AdenoCa
-606111e3-6b7d-42a6-b7d0-9d6c3e33acd6	Stomach-AdenoCA
 60aff7a0-4960-4ed1-922b-3233ccbfdba1	Panc-AdenoCA
-60c33e32-7e19-4e71-b075-a63fcf27e660	Panc-AdenoCA
 60e78c80-41a5-456a-9a81-9007d18fd72c	Panc-AdenoCA
 60f81dba-c623-11e3-bf01-24c6515278c0	Biliary-AdenoCA
 6172ca02-c622-11e3-bf01-24c6515278c0	Liver-HCC
@@ -346,7 +330,6 @@
 627823ec-c623-11e3-bf01-24c6515278c0	Liver-HCC
 6297aa77-37a0-4f46-987b-32bd8653c0c2	Panc-AdenoCA
 631ab9d0-5400-400c-b0bc-c3e576bcfe06	Panc-AdenoCA
-632f3eb0-c623-11e3-bf01-24c6515278c0	Liver-HCC
 63adc09c-e1b1-40dd-9c35-2f8276b656fc	Liver-HCC
 63bc376e-5a3d-44fd-8d77-686dfc41e458	ColoRect-AdenoCA
 63f5bb12-1b20-49d4-9e98-570e368f947d	Stomach-AdenoCA
@@ -370,7 +353,6 @@
 68509ede-3dcf-4a6e-9af0-4a9bb4dfa567	Stomach-AdenoCA
 6867811f-ac89-47da-b5dc-1270033c36e7	Panc-AdenoCA
 68ba1105-569a-4209-9b45-0e2d64931806	Panc-AdenoCA
-690e481c-c623-11e3-bf01-24c6515278c0	Liver-HCC
 69c3c88c-d51e-4e03-b96b-ec4f1a0faa2d	Eso-AdenoCa
 69f37546-c622-11e3-bf01-24c6515278c0	Liver-HCC
 6a0d0c42-1884-4c6a-936a-678a822c0936	Eso-AdenoCa
@@ -384,7 +366,6 @@
 6bdf00f6-670f-466e-87fb-e853e41f000e	Panc-AdenoCA
 6c306cbe-c623-11e3-bf01-24c6515278c0	Liver-HCC
 6ca5c1bb-275b-4d05-948a-3c6c7d03fab9	ColoRect-AdenoCA
-6ce66be0-c623-11e3-bf01-24c6515278c0	Liver-HCC
 6d9d7ffc-c622-11e3-bf01-24c6515278c0	Liver-HCC
 6dac8ca0-f776-4ea2-85c4-aefba4966be7	Stomach-AdenoCA
 6dbac113-d4cf-4db5-97c9-50fa400bb47e	Stomach-AdenoCA
@@ -399,13 +380,11 @@
 70c2f91e-c622-11e3-bf01-24c6515278c0	Liver-HCC
 70dd8453-11d3-4105-a8d0-6a755c52495d	Panc-AdenoCA
 7116cc90-f465-4e7e-aa27-48a83ed258e9	Stomach-AdenoCA
-711c8a16-3cf8-42d8-b29e-fd1e9ef1c82b	ColoRect-AdenoCA
 712e5f3c-c623-11e3-bf01-24c6515278c0	Liver-HCC
 71ef8379-03a0-4b81-92c9-1ba666fe4d7a	Panc-AdenoCA
 7260f57c-c623-11e3-bf01-24c6515278c0	Liver-HCC
 7266ec7b-4824-4b88-910e-e9bfb848d55f	Panc-AdenoCA
 72a5e569-99d4-47bc-be1b-6296a5025080	Panc-AdenoCA
-72c22a8c-c622-11e3-bf01-24c6515278c0	Liver-HCC
 72f82fbd-9838-4082-b605-bc3d80226f16	Panc-AdenoCA
 73058c80-607e-4b55-b112-8f8f6775d014	Panc-AdenoCA
 73afad06-c623-11e3-bf01-24c6515278c0	Liver-HCC
@@ -477,14 +456,12 @@
 82aefe8e-c622-11e3-bf01-24c6515278c0	Liver-HCC
 83d57c5c-c622-11e3-bf01-24c6515278c0	Liver-HCC
 8454fe53-869d-41c8-b0c8-a7929d00eec3	Panc-AdenoCA
-84a0bc36-9f29-4b23-aee1-bf5ff71f697b	Liver-HCC
 84a6ea88-eeb8-4060-a90c-e4abac013ad4	Panc-AdenoCA
 84fe77b4-f6cc-49bf-a6b9-1621ec9394f8	Liver-HCC
 850389d4-c622-11e3-bf01-24c6515278c0	Liver-HCC
 85e29049-a5e8-49fa-a576-e113c7b2c2e3	ColoRect-AdenoCA
 8659a35e-c622-11e3-bf01-24c6515278c0	Liver-HCC
 87671312-c622-11e3-bf01-24c6515278c0	Liver-HCC
-8853cbee-7931-49a6-b063-a806943a10ad	ColoRect-AdenoCA
 8867bdef-3a8d-433e-b10f-d752e2cbb022	Stomach-AdenoCA
 88bc38ba-ad1d-431e-a67e-0a5a23678386	Panc-AdenoCA
 88d5a8b2-daba-45ce-90bf-480fac85bf1d	Panc-AdenoCA
@@ -513,7 +490,6 @@
 91b6fd6b-547a-47e4-8ecb-a6f1826ccfd3	Panc-AdenoCA
 9258860c-a336-4075-996d-2ee0c18b281c	Eso-AdenoCa
 926a04de-ef57-4271-91db-e90de8aa8a1a	Eso-AdenoCa
-92dc0e0c-842f-40de-9c39-486b491ea80a	Panc-AdenoCA
 931b24da-5d6d-4c2d-8de9-ef32d6eb8565	Stomach-AdenoCA
 9321341c-c622-11e3-bf01-24c6515278c0	Liver-HCC
 93a49462-4bd3-4efa-87a5-69006abba5a0	Liver-HCC
@@ -576,7 +552,6 @@ a5346247-3f30-470a-b4ab-732180786291	Panc-AdenoCA
 a5d5c238-0447-47fa-9a81-3b823cbdcea6	Panc-AdenoCA
 a612b654-c622-11e3-bf01-24c6515278c0	Liver-HCC
 a64000df-16e5-4b88-865f-5c680adf60eb	ColoRect-AdenoCA
-a6ebe0c0-8aab-4b9f-8328-4b795895a77d	Panc-AdenoCA
 a7314730-c622-11e3-bf01-24c6515278c0	Liver-HCC
 a7a56d67-1bd7-4d69-9237-34c2d261261b	Panc-AdenoCA
 a846f5e8-c622-11e3-bf01-24c6515278c0	Liver-HCC
@@ -635,7 +610,6 @@ bbbc531a-dd41-40b7-ae59-e35508aea0c7	Panc-AdenoCA
 bbdd7393-024b-4073-b5bc-ef7a68c15b8a	Panc-AdenoCA
 bbff7954-95ec-455c-b0bc-92f67a09ee77	Panc-AdenoCA
 bc0dee07-de20-44d6-be65-05af7e63ac96	Stomach-AdenoCA
-bc395326-1656-4ef2-bb19-0cb29194b91c	Panc-AdenoCA
 bcc74a5e-c622-11e3-bf01-24c6515278c0	Biliary-AdenoCA
 bcef0b6c-6584-4090-9d28-ef784a7e5fbb	Panc-AdenoCA
 bd2f8133-3e71-4c5e-998f-0c1a9fdfb75f	Stomach-AdenoCA
@@ -659,7 +633,6 @@ c4e048de-1d43-4fbd-8289-9279b16c8a3a	Stomach-AdenoCA
 c5ad7238-c622-11e3-bf01-24c6515278c0	Liver-HCC
 c612570a-881d-421f-98b9-0e4563133744	Stomach-AdenoCA
 c6bb32f0-c622-11e3-bf01-24c6515278c0	Liver-HCC
-c73f3f82-3091-46dd-b667-e96a1d8c501c	Stomach-AdenoCA
 c741fb12-8160-43a7-bc70-2c545ea0031d	Panc-AdenoCA
 c79ce3d3-4758-4f52-9da1-38f994c99f4e	Stomach-AdenoCA
 c7d798b8-c622-11e3-bf01-24c6515278c0	Liver-HCC
@@ -673,7 +646,6 @@ ca5ded1c-c622-11e3-bf01-24c6515278c0	Liver-HCC
 cafe9603-a804-48fb-9217-e2d1c3c346c5	Panc-AdenoCA
 cb381d49-4546-400c-af02-f877083caa0a	Eso-AdenoCa
 cb4608a7-6aec-4cba-b20f-489e214c9dbd	Panc-AdenoCA
-cb573c96-f6d4-4897-8919-9827f623b6a7	Liver-HCC
 cb753e6f-5ea3-4b58-9db3-7a62d15c8b2e	Eso-AdenoCa
 cb86fbb6-c622-11e3-bf01-24c6515278c0	Liver-HCC
 cba4de91-cce7-4edc-8450-d0a52c959586	Panc-AdenoCA
@@ -697,7 +669,6 @@ d252f328-4583-4e97-9a71-bb2885f06f73	Liver-HCC
 d2b7bb0a-c622-11e3-bf01-24c6515278c0	Liver-HCC
 d333b55b-8bac-4a99-9d23-3cc0c25057bf	Panc-AdenoCA
 d3ad5b5a-c622-11e3-bf01-24c6515278c0	Liver-HCC
-d3aff5d3-23c0-43ae-9c01-8ddd776b530b	ColoRect-AdenoCA
 d3b72600-a888-4ef6-ac5d-661c105405dd	Liver-HCC
 d3d65db3-36f9-41c7-8e5e-1683ce94dfcb	ColoRect-AdenoCA
 d3daf373-1485-455e-a0a1-8e33d215d623	ColoRect-AdenoCA
@@ -723,16 +694,12 @@ da1ed4b9-f428-48aa-834d-1d9673999044	Panc-AdenoCA
 da5b9926-c622-11e3-bf01-24c6515278c0	Biliary-AdenoCA
 da910f22-126e-41dc-be6b-47c8f69ad106	Eso-AdenoCa
 db2a1df8-487d-4dad-a347-5c5ed539d5ad	Panc-AdenoCA
-dbd834cb-b14f-4380-9741-f96551268447	Stomach-AdenoCA
 dbfa4e8a-c622-11e3-bf01-24c6515278c0	Liver-HCC
-dc107863-2c7d-4b19-8afb-666c7798f0da	Stomach-AdenoCA
 dc537fcf-d910-4c4b-8af9-e7da429f2633	Stomach-AdenoCA
 dc856038-f5f7-4dfc-a0a4-3e3a6b8d160f	Panc-AdenoCA
 dcf45005-7e6d-4c26-9994-f973da7e814f	Liver-HCC
 dd2e7b3c-c622-11e3-bf01-24c6515278c0	Liver-HCC
-dd4fdb6a-8067-4b64-ab74-bbb0fec34ca9	Panc-AdenoCA
 dd7d623b-b9af-4147-9aa6-e09793691f10	Eso-AdenoCa
-dd9d2e9e-02dc-40fc-842b-c5b9707fca56	Stomach-AdenoCA
 de4f520c-c622-11e3-bf01-24c6515278c0	Liver-HCC
 de581588-be15-4bf4-95d1-aa5478b53ab6	Eso-AdenoCa
 ded2689b-8e37-480c-b37c-acc538e54ddf	Panc-AdenoCA
@@ -772,11 +739,9 @@ eb588266-c622-11e3-bf01-24c6515278c0	Liver-HCC
 eb59b79f-bd36-4bf4-83e3-2af73bd1d30a	Stomach-AdenoCA
 ec23a354-e339-4466-9a1b-8e886ef627e6	Liver-HCC
 ec399861-7a56-4ffd-8619-700b6e3a4367	Biliary-AdenoCA
-ec43c4b5-fb72-4a4a-af03-10c2d05ff159	ColoRect-AdenoCA
 ec474dfa-527c-44f3-9224-bf1c858cabfc	Eso-AdenoCa
 ec5e2990-c622-11e3-bf01-24c6515278c0	Liver-HCC
 ec646623-6d33-4fbd-888e-89f55d82eb11	Panc-AdenoCA
-ec77847e-48fd-4ba5-bc3e-3cd1b149b552	Panc-AdenoCA
 ecf4e05a-0912-4b93-ad66-323002f0c845	ColoRect-AdenoCA
 ecfe388a-99f5-44b9-9226-a6ae6d892538	Panc-AdenoCA
 ed52e836-c622-11e3-bf01-24c6515278c0	Liver-HCC
@@ -788,7 +753,6 @@ ee7b8074-c622-11e3-bf01-24c6515278c0	Liver-HCC
 ee8ba991-8c96-476e-b096-49f3aaaffc2f	Panc-AdenoCA
 ef002c3d-358f-4fc0-98f3-2f8b89de4374	Panc-AdenoCA
 ef3a0ccd-85bc-4e5f-a8c6-5a2e2d9e6717	Panc-AdenoCA
-ef78f09c-c622-11e3-bf01-24c6515278c0	Liver-HCC
 efacd7d6-56cf-4f6a-87f0-1a7ab6b1a643	Panc-AdenoCA
 efc39172-083c-4297-b922-3f58df781332	Panc-AdenoCA
 f064f762-c622-11e3-bf01-24c6515278c0	Liver-HCC
@@ -807,7 +771,6 @@ f4025b40-a249-487f-8e93-7a140bcf57c1	Liver-HCC
 f410b432-c622-11e3-bf01-24c6515278c0	Liver-HCC
 f48c3c82-bebe-4b8e-909e-e1a51a7142ec	Eso-AdenoCa
 f4ada7a2-c4ac-4f89-ada7-4645861002cb	Panc-AdenoCA
-f4b9d98f-7b76-4eaa-9595-10b0973d5ff7	ColoRect-AdenoCA
 f4e673a9-5b85-46e7-bcac-2ce6e1026896	Panc-AdenoCA
 f4e926fd-006e-4c85-b71c-1433c325acb0	Panc-AdenoCA
 f4f48342-c622-11e3-bf01-24c6515278c0	Liver-HCC
@@ -831,5 +794,4 @@ fdf9a814-c622-11e3-bf01-24c6515278c0	Liver-HCC
 fe96d91c-3686-4125-af71-b8703a011ad4	Panc-AdenoCA
 feccee20-a62d-4152-b832-b9fdaca87a61	Stomach-AdenoCA
 ffad9288-c622-11e3-bf01-24c6515278c0	Liver-HCC
-ffb4f42b-58e9-40c3-8963-11804f041375	Stomach-AdenoCA
 ffe4bb51-e98a-41a7-a4e1-c3970386889c	Panc-AdenoCA

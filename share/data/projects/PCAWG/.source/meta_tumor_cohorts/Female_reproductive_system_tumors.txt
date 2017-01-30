@@ -6,7 +6,6 @@
 0448206f-3ade-4087-b1a9-4fb2d14e1367	Breast-AdenoCa
 047f9e4d-86b5-4943-aef5-68199bf29e8c	Cervix-SCC
 052665d1-ab75-4f40-be5a-b88154c8beed	Ovary-AdenoCA
-0664753b-7566-41e0-8006-7009c6735406	Ovary-AdenoCA
 06dad93a-4b67-49b3-8fa5-f2546e22bae7	Cervix-SCC
 07b5141f-ac79-439b-883b-b0183bbe7ff5	Breast-AdenoCa
 07d20658-3db4-47e7-877b-66536266edfc	Cervix-SCC
@@ -16,7 +15,6 @@
 0c39c03a-ec84-42c6-be69-8e98bc7a9f5a	Uterus-AdenoCA
 0d0793c1-df1b-4db1-ba36-adcb960cc0f5	Ovary-AdenoCA
 0d31a44f-1fc5-43a2-9633-36c4e650d3d2	Cervix-SCC
-0ead45d8-d785-4404-8319-2ef951e02e03	Ovary-AdenoCA
 0f6b355e-3898-4be6-be97-da0c3840a4ed	Cervix-SCC
 105a51c4-cc7e-4d0f-9cf8-e4d64a31d14d	Uterus-AdenoCA
 110b5f05-ded7-45ec-b0f6-a941c92d77dd	Breast-AdenoCa
@@ -64,7 +62,6 @@
 3585e133-b3c1-4d90-b5f2-2b867e0ae0ec	Breast-AdenoCa
 35ceba07-0759-4fbe-b076-af821a528cf0	Ovary-AdenoCA
 36d1a85e-a09b-4537-86e0-eaf1eb03aed8	Breast-AdenoCa
-37522f18-77b2-4414-8df8-3c2c8048adba	Ovary-AdenoCA
 3a5eaed6-fcfd-437a-b61c-fd3725c64717	Ovary-AdenoCA
 3a6bce45-0431-49d8-82df-b1d9a738e5a6	Ovary-AdenoCA
 3c2b1509-1eb9-4b79-9569-57810f291499	Ovary-AdenoCA
@@ -93,7 +90,6 @@
 5533240d-8fed-440d-b781-6092785a77ce	Ovary-AdenoCA
 554b9439-7e11-43ec-8bc3-448c59100b9e	Uterus-AdenoCA
 55ada396-0878-4724-8ebe-00da367eed3d	Uterus-AdenoCA
-577d5c9e-fbda-41d5-b0b3-cdb733453ea5	Uterus-AdenoCA
 58faf969-bf37-4180-8807-2f44f2cc8eda	Ovary-AdenoCA
 5a535c49-d42e-43c6-9d32-dc76f28d4f0f	Breast-AdenoCa
 5b560f4c-d2a3-43fa-b394-abef78bdefc1	Ovary-AdenoCA
@@ -101,7 +97,6 @@
 5cc7c966-499e-49e3-b509-4eeb00ee03d4	Ovary-AdenoCA
 5d922e48-aa70-454d-9417-c9af686feebc	Ovary-AdenoCA
 5dbf3203-ce73-41e4-bf9a-32fc856f73f5	Breast-AdenoCa
-638e80c7-9a6e-4a32-a621-fc4168e72343	Uterus-AdenoCA
 65f9a820-f026-4a10-8bb7-1fbc3b38321e	Uterus-AdenoCA
 669f0e01-28f6-4ed8-bdb5-73f84ea28f78	Ovary-AdenoCA
 6764e0a2-7a78-45c1-9189-6001c6518ce4	Breast-AdenoCa
@@ -157,7 +152,6 @@
 92126163-00c3-41f2-9ce6-7aad5f621407	Uterus-AdenoCA
 941fcb56-e059-403d-aab1-0692a3ecc45e	Ovary-AdenoCA
 945e6808-2887-4f32-ac32-8f9e00353bf6	Cervix-SCC
-950486ad-14f8-480a-b079-9cc3cd842090	Uterus-AdenoCA
 95e8d38a-122e-494c-a304-bef4275fed7e	Uterus-AdenoCA
 95fc38ac-2b36-4c46-abbf-8d2d52ff9626	Ovary-AdenoCA
 96f337d2-cec4-4484-87cd-ab2109d2bf50	Uterus-AdenoCA
@@ -169,7 +163,6 @@
 9a5bb831-8cb8-4de0-b94b-088cb38def1a	Ovary-AdenoCA
 9aecfc8f-62ea-4acf-aa00-d1f0fe6c6556	Ovary-AdenoCA
 9c70688d-6e43-4520-9262-eaae4e4d597d	Breast-AdenoCa
-9d2671b9-bd30-4e3c-aa74-01e31dd2531e	Uterus-AdenoCA
 9ddf2119-a222-4fa5-a9f3-0bec7eeea36b	Breast-AdenoCa
 9e6806c4-d331-4025-abee-2f576e3bf182	Ovary-AdenoCA
 9ff21093-58d7-4b69-aade-c242a383ea56	Cervix-SCC
@@ -184,7 +177,6 @@ a85cf239-ff51-46e7-9b88-4c2cb49c66b9	Breast-AdenoCa
 a876398c-5b1d-444f-a360-5fe2db697480	Breast-AdenoCa
 aa58c09a-7799-4675-8310-d270224b163e	Breast-AdenoCa
 aacaba97-ecde-440b-aae0-0e9c608c4b24	Breast-AdenoCa
-accfc45b-eae0-4991-a488-e217cdb46655	Uterus-AdenoCA
 acd510de-b732-4a1a-8b72-6d22e763540b	Ovary-AdenoCA
 ae82fead-2671-4335-a342-67bb69935ad9	Ovary-AdenoCA
 af96db5a-684f-41d1-a910-5a5193393d9c	Uterus-AdenoCA
@@ -201,9 +193,7 @@ b9d1a64e-d445-4174-a5b4-76dd6ea69419	Cervix-AdenoCA
 bbb2cf2f-8f32-43d4-846c-d1020e6329ec	Ovary-AdenoCA
 bbe59385-5f83-43f6-a485-517c860bef6f	Ovary-AdenoCA
 bc9b66f5-fcb8-4545-ab2d-438bb810edc0	Ovary-AdenoCA
-bcf858fd-cc3b-4fde-ab10-eb96216f4366	Uterus-AdenoCA
 bff518fb-6da7-4dfc-ae4c-bd3f641028e2	Ovary-AdenoCA
-c082dc34-457e-40ec-8258-e11e8ed362c2	Uterus-AdenoCA
 c2ec7f57-8510-4bbf-a2e9-dbd9ce8dcad1	Ovary-AdenoCA
 c61ded54-f80e-4da8-b1d8-e22551c96118	Breast-AdenoCa
 c67409b2-ac25-42a0-8543-4636ef132fe4	Breast-AdenoCa
@@ -260,7 +250,6 @@ f393baf9-2710-9203-e040-11ac0d484504	Breast-AdenoCa
 f393bafd-1baa-e5f4-e040-11ac0d48450b	Breast-AdenoCa
 f393bafe-7503-5c45-e040-11ac0d484511	Breast-AdenoCa
 f393bafe-c99f-3725-e040-11ac0d484514	Breast-AdenoCa
-f393bb00-888d-710f-e040-11ac0d484518	Breast-AdenoCa
 f393bb01-6ed7-9533-e040-11ac0d484521	Breast-AdenoCa
 f393bb05-53c2-f80a-e040-11ac0d484528	Breast-AdenoCa
 f393bb05-c737-4cc3-e040-11ac0d48452a	Breast-AdenoCa
@@ -327,7 +316,6 @@ fc806c50-2f6e-418d-e040-11ac0d485f01	Breast-AdenoCa
 fc8130df-18fe-c74d-e040-11ac0d485df2	Breast-AdenoCa
 fc8130df-1bc2-c537-e040-11ac0d485de6	Breast-AdenoCa
 fc8130df-1cdd-cade-e040-11ac0d485dec	Breast-AdenoCa
-fc8130df-1e8f-c879-e040-11ac0d485df4	Breast-AdenoCa
 fc8130df-1f21-c8f9-e040-11ac0d485dfc	Breast-AdenoCa
 fc8130df-2211-cfcc-e040-11ac0d485dde	Breast-AdenoCa
 fc8130df-24d9-32f1-e040-11ac0d485df0	Breast-AdenoCa
@@ -359,7 +347,6 @@ fc8130e0-0bc1-bba7-e040-11ac0c483289	Breast-AdenoCa
 fc8130e0-0c53-b432-e040-11ac0c483283	Breast-AdenoCa
 fc8130e0-0d25-b475-e040-11ac0c483277	Breast-AdenoCa
 fc8130e0-0db6-b568-e040-11ac0c483281	Breast-AdenoCa
-fc8130e0-0dcf-b558-e040-11ac0c483285	Breast-AdenoCa
 fc8130e0-0e1f-b54d-e040-11ac0c48326c	Breast-AdenoCa
 fc8130e0-0f1a-b6eb-e040-11ac0c48328f	Breast-AdenoCa
 fc8130e0-0fde-b756-e040-11ac0c48328b	Breast-LobularCa

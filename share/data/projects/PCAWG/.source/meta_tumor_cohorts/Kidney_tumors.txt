@@ -28,7 +28,6 @@
 2ccd028d-e7e0-4f77-a512-f658a31819a4	Kidney-ChRCC
 2deb8f9a-9e0a-46d1-bcb5-902db3b5c8ac	Kidney-RCC
 2e8ad1cd-d5d5-4bb4-8bbd-e9bef45088da	Kidney-RCC
-322f0b01-2118-4dbe-aba1-3875a54ee71b	Kidney-ChRCC
 3232f77f-b745-4232-a802-6699b6356efd	Kidney-RCC
 33b7e799-ad10-498f-9948-8ce433311539	Kidney-RCC
 33bf46dd-16b3-49c6-80d7-76caf27aa0f4	Kidney-RCC
@@ -71,7 +70,6 @@
 6d3551d6-b5f4-4fd1-b8d7-8e5931096c19	Kidney-RCC
 7087a2b6-7fc4-45b0-8c48-248864f03deb	Kidney-ChRCC
 715f59dd-a80f-422d-988c-f73f4b987baf	Kidney-ChRCC
-72293a70-9dc8-4e4a-acdc-c74587a90420	Kidney-RCC
 72a27124-24b9-41f7-a065-774fdf5f7d19	Kidney-RCC
 741c4656-0fd0-416e-86c8-f6533b6c96f4	Kidney-RCC
 759e20be-6a2b-4c54-aca0-6d358598d6f5	Kidney-RCC
@@ -96,7 +94,6 @@
 9a90f951-ad96-4883-b97f-ac43395dae5d	Kidney-ChRCC
 9ae0744a-9bc1-4cd7-b7cf-c6569ed9e4aa	Kidney-RCC
 9c181313-5b4c-41c5-9ad5-a5a86fe609aa	Kidney-RCC
-9d29543e-8601-4fd0-8e76-3df3de465cab	Kidney-ChRCC
 9d3b0b87-5fc5-4d09-9c63-4d5fc4bc46d0	Kidney-ChRCC
 9dfcbabf-2bc0-43a2-bdde-d0b2aaca3f6b	Kidney-ChRCC
 9fb73d89-f7c4-47b2-810b-3ce37cd8a3c9	Kidney-ChRCC

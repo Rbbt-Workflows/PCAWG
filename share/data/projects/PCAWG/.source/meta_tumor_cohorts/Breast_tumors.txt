@@ -86,7 +86,6 @@ f393baf9-2710-9203-e040-11ac0d484504	Breast-AdenoCa
 f393bafd-1baa-e5f4-e040-11ac0d48450b	Breast-AdenoCa
 f393bafe-7503-5c45-e040-11ac0d484511	Breast-AdenoCa
 f393bafe-c99f-3725-e040-11ac0d484514	Breast-AdenoCa
-f393bb00-888d-710f-e040-11ac0d484518	Breast-AdenoCa
 f393bb01-6ed7-9533-e040-11ac0d484521	Breast-AdenoCa
 f393bb05-53c2-f80a-e040-11ac0d484528	Breast-AdenoCa
 f393bb05-c737-4cc3-e040-11ac0d48452a	Breast-AdenoCa
@@ -146,7 +145,6 @@ fc806c50-2f6e-418d-e040-11ac0d485f01	Breast-AdenoCa
 fc8130df-18fe-c74d-e040-11ac0d485df2	Breast-AdenoCa
 fc8130df-1bc2-c537-e040-11ac0d485de6	Breast-AdenoCa
 fc8130df-1cdd-cade-e040-11ac0d485dec	Breast-AdenoCa
-fc8130df-1e8f-c879-e040-11ac0d485df4	Breast-AdenoCa
 fc8130df-1f21-c8f9-e040-11ac0d485dfc	Breast-AdenoCa
 fc8130df-2211-cfcc-e040-11ac0d485dde	Breast-AdenoCa
 fc8130df-24d9-32f1-e040-11ac0d485df0	Breast-AdenoCa
@@ -178,7 +176,6 @@ fc8130e0-0bc1-bba7-e040-11ac0c483289	Breast-AdenoCa
 fc8130e0-0c53-b432-e040-11ac0c483283	Breast-AdenoCa
 fc8130e0-0d25-b475-e040-11ac0c483277	Breast-AdenoCa
 fc8130e0-0db6-b568-e040-11ac0c483281	Breast-AdenoCa
-fc8130e0-0dcf-b558-e040-11ac0c483285	Breast-AdenoCa
 fc8130e0-0e1f-b54d-e040-11ac0c48326c	Breast-AdenoCa
 fc8130e0-0f1a-b6eb-e040-11ac0c48328f	Breast-AdenoCa
 fc8130e0-0fde-b756-e040-11ac0c48328b	Breast-LobularCa
