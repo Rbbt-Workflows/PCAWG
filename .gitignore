@@ -5,3 +5,5 @@ var/
 data/
 project/
 *.save
+driver_enrichment
+result*/

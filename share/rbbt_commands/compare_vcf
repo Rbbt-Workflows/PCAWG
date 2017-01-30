@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+
+require 'rbbt-util'
+require 'rbbt/util/simpleopt'
+
+$0 = "rbbt #{$previous_commands*""} #{ File.basename(__FILE__) }" if $previous_commands
+
+options = SOPT.setup <<EOF
+
+Description
+
+$ rbbt workflow cmd PCAWG compare_vcf <DONOR> <filename.vcf> <caller>
+
+Takes a VCF file as produced by any of the dockers being tested and compares it with
+the corresponding VCF from preliminary_final_release.snvs.tgz, taking care of translating
+to the aliquote id. The variable `caller` must be one of `broad,dkfz,muse,sanger`
+
+-h--help Print this help
+
+EOF
+if options[:help]
+  if defined? rbbt_usage
+    rbbt_usage 
+  else
+    puts SOPT.doc
+  end
+  exit 0
+end
+
+donor, file, method = ARGV
+
+raise ParameterException, "No donor specified" if  donor.nil?
+raise ParameterException, "No VCF file specified" if  file.nil?
+
+Workflow.require_workflow "PCAWG"
+
+aliquote_id = PCAWG.donor_wgs_samples.tsv(:type => :single)[donor]
+tarfile = Rbbt.root["data/preliminary_final_release/preliminary_final_release.snvs.tgz"].find :lib
+
+raise ParameterException, "No aliquote fuond for donor #{ donor }" if  aliquote_id.nil?
+
+TmpFile.with_file do |filename|
+  filename = filename + '.vcf'
+  vcf_file = "preliminary_final_release/snv_mnv/" << aliquote_id << ".annotated.snv_mnv.vcf.gz"
+
+  CMD.cmd("tar xvfz '#{tarfile}' '#{vcf_file}' -O | zcat | grep '#\\|#{method}'  > #{ filename }")
+  iif Open.read(filename)
+
+  orig_mutations = Sequence.job(:genomic_mutations, nil, :vcf_file => filename).run.uniq
+
+  this = Sequence.job(:genomic_mutations, nil, :vcf_file => CMD.cmd("zcat #{file} | grep '#\\|PASS'", :pipe => true)).run.uniq
+
+  common = (orig_mutations & this)
+  missing = (orig_mutations - this)
+  extra = (this - orig_mutations)
+
+  puts "Comparison"
+  puts "----------"
+  puts "Total original (#{method}): #{orig_mutations.length}"
+  puts "Total this: #{this.length}"
+  puts "Common: #{ common.length }"
+  puts "Missing: #{ missing.length }. Example: #{missing[0..3] * ", "}"
+  puts "Extra: #{ extra.length }. Example: #{extra[0..3] * ", "}"
+  FileUtils.rm filename
+end

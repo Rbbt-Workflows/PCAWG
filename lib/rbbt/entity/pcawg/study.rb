@@ -1,6 +1,11 @@
 Workflow.require_workflow "Study"
 module Study
 
+  property :donors => :single do
+    samples = PCAWG.donors_with_histology(self)
+    Sample.setup(samples, :cohort => "PCAWG")
+  end
+  
   helper :organism do
     PCAWG.organism
   end
@@ -87,10 +92,10 @@ module Study
 
     tsv = TSV.setup({}, :key_field => "Candidate fusion", :fields => fields, :namespace => organism, :type => :double)
 
-    if not matrix.nil?
+    if not matrix.nil? and matrix.samples and matrix.samples.any?
       all_rna_samples = matrix.samples
 
-      barcode = matrix.to_barcode_ruby.tsv
+      barcode =  matrix.to_barcode_ruby.tsv 
       mat_values = matrix.tsv
 
       ensg2name = Organism.identifiers(organism).index :target => "Associated Gene Name", :persist => true
@@ -159,24 +164,48 @@ module Study
     PCAWG.organism
   end
 
-  property :donors => :single do
-    Sample.setup(PCAWG.donors_with_histology(self), :cohort => "PCAWG")
-  end
-  
   property :samples => :single do
     donors
   end
 
   property :genotyped_samples => :single do
-    donors
+    samples
   end
 
   property :cnv_samples => :single do
     donors.select(:has_cnv?)
   end
 
+  property :sv_samples => :single do
+    donors.select(:has_sv?)
+  end
+
+
   property :has_cnv? => :single do
     cnv_samples.any?
+  end
+
+  property :has_sv? => :single do
+    sv_samples.any?
+  end
+
+  property :has_drivers? => :single do
+    !! PCAWG.driver_dir(self)
+  end
+
+  property :drivers => :single do |type,threshold=nil|
+    threshold = 0.01 if threshold.nil?
+    if has_drivers?
+      if type == "enhancer"
+        drivers = PCAWG.driver_dir(self)[type].tsv.select("p-value"){|p| p.to_f < threshold.to_f }.keys.collect{|g| g.split("::")[1].sub('-',':') }
+        ChromosomeRange.setup(drivers, PCAWG.organism)
+      else
+        drivers = PCAWG.driver_dir(self)[type].tsv.select("p-value"){|p| p.to_f < threshold.to_f }.keys.collect{|g| g.split("::").last.gsub(/\.\d+$/,'') }
+        Gene.setup(drivers, "Ensembl Gene ID", PCAWG.organism)
+      end
+    else
+      nil
+    end
   end
 
   property :condition => :single do
@@ -255,6 +284,7 @@ module Study
     tsv = PCAWG.donor_clinical.tsv 
     tsv.select(PCAWG::DONOR_FIELD => donors)
   end
+
   
 end
 

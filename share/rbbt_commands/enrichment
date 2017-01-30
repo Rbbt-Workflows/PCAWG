@@ -1,0 +1,91 @@
+#!/usr/bin/env ruby
+
+require 'rbbt-util'
+require 'rbbt/util/simpleopt'
+
+$0 = "rbbt #{$previous_commands*""} #{ File.basename(__FILE__) }" if $previous_commands
+
+options = SOPT.setup <<EOF
+
+Description
+
+$ #{$0} [options] 
+
+-h--help Print this help
+-t--tasks* task to bootstrap
+-rwt--remote_workflow_tasks* Load a yaml file describing remote workflow tasks
+-g--graylist_remove Remove graylist 
+-p--principal 
+-d--databases Annotation databases
+-c--coding
+-n--non_synonymous
+-nh--no_hyper Ignore hypermutated samples
+--concurrent* Number of concurrent processes
+-W--workflows* Load a list of workflows
+EOF
+
+if options[:help]
+  if defined? rbbt_usage
+    rbbt_usage 
+  else
+    puts SOPT.usage
+  end
+  exit 0
+end
+
+tasks = options[:tasks] || "recurrent_gene_enrichment,significant_gene_enrichment,damage_biased_gene_enrichment,significance_rank_enrichment,damage_bias_rank_enrichment,sample_enrichment,mutation_enrichment"
+
+databases = options[:databases] || "kegg,nature,reactome,corum"
+
+options[:no_hyper] = true if options[:no_hyper].nil?
+begin
+ Workflow.require_workflow "MutSig"
+rescue
+end
+
+begin
+ Workflow.require_workflow "Pandrugs"
+rescue
+end
+
+raise ParameterException unless tasks
+
+if options[:workflows]
+  require 'rbbt/workflow'
+  workflows = options[:workflows].split(',')
+  workflows.each do |workflow|
+    workflow.strip!
+    Workflow.require_workflow workflow
+  end
+end
+
+tasks = tasks.split(/,\s*/)
+databases = databases.split(/,\s*/)
+
+if options[:remote_workflow_tasks]
+ yaml_text = Open.read(options[:remote_workflow_tasks])
+ remote_workflow_tasks = YAML.load(yaml_text)
+ Workflow.process_remote_tasks(remote_workflow_tasks)
+end
+
+abbrs = PCAWG.all_abbreviations
+meta = PCAWG.all_meta
+
+num = options[:concurrent] || "20"
+TSV.traverse tasks, :bar => "Processing tasks" do |task|
+  Misc.bootstrap(meta.collect{|m| "meta=" << m} + abbrs, num.to_i) do |study|
+    study = study + '.NOHYPER' if options[:no_hyper]
+    study = Study.setup(study.dup)
+    next if study =~ /arcino/
+
+    databases.each do |database|
+      begin
+        job = study.send(task, :job, options.merge(:database => database))
+        job.produce
+      rescue
+      end
+      nil
+    end
+  end
+end
+

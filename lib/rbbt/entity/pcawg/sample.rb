@@ -169,6 +169,28 @@ module Sample
     CMD.cmd('sort -u', :in => stream, :pipe => true, :no_fail => true)
   end
 
+  input :limit_to_tumor_type, :boolean, "Consider only genes considered drivers in tumor type", true
+  input :use_cnv, :boolean, "Consider gene in CNV as drivers", false
+  task :driver_genes => :array do |limit,cnv|
+    s = sample.split(":").last
+    sample = Sample.setup(s)
+    abbr = sample.abbr
+    genes = limit ? PCAWG.abbr_driver_genes[abbr] : PCAWG.all_driver_genes
+
+    raise RbbtException, "Abbreviation #{abbr} not in driver list - #{[abbr, sample, limit, cnv]}" if genes.nil?
+
+    affected_genes = sample.get_genes(:affected)
+
+
+    affected_drivers_abbr = affected_genes & genes
+
+    if cnv 
+      (affected_drivers_abbr + (sample.get_genes(:gained) & genes & PCAWG.activating_driver_genes) + (sample.get_genes(:lost) & genes & PCAWG.lof_driver_genes)).uniq
+    else
+      affected_drivers_abbr
+    end
+  end
+
   property :expression_samples => :array do
     index = PCAWG.donor_rna_samples.index :target => PCAWG::RNA_TUMOR_SAMPLE
     codes = self.collect{|s| s.split(":").last}
@@ -176,10 +198,13 @@ module Sample
     Sample.setup(samples, :cohort => cohort)
   end
 
+  property :abbr => :single do
+    (@@donor_histology_abbr ||= PCAWG.donor_histology.tsv(:fields => ["histology_abbreviation"], :type => :single))[self]
+  end
+
   property :abbr_color => :single do
     raise "TODO"
-    abbr = PCAWG.donor_histology(self, 'histology_abbreviation')
-    PCAWG.abb_color(abbr)
+    PCAWG.abb_color(self.abbr)
   end
 
   property :gene_status => :single2array do |genes|
@@ -215,6 +240,12 @@ module Sample
   property :has_cnv? => :single do
     PCAWG.CNV.produce[self].exists?
   end
+
+  property :has_sv? => :single do
+    PCAWG.SV.produce[self].exists?
+  end
+  
+  
 end
 
 Sample.update_task_properties
