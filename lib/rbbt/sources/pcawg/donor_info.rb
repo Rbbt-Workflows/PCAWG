@@ -28,18 +28,7 @@ module PCAWG
   end
   
   PCAWG.claim PCAWG.donor_rna_samples, :proc do |filename|
-    tsv = DATA_DIR['release_may2016.v1.4.tsv'].tsv :key_field => DONOR_FIELD, :fields => %w(tumor_rna_seq_star_alignment_bam_file_name normal_rna_seq_star_alignment_bam_file_name), :header_hash => '', :sep2 => ','
-    tsv.process "tumor_rna_seq_star_alignment_bam_file_name" do |names|
-      names.collect{|name|
-        name.split(".")[1]
-      }
-    end
-    
-    tsv.process "normal_rna_seq_star_alignment_bam_file_name" do |names|
-      names.collect{|name|
-        name.split(".")[1]
-      }
-    end
+    tsv = DATA_DIR['release_may2016.v1.4.tsv'].tsv :key_field => DONOR_FIELD, :fields => %w(tumor_rna_seq_aliquot_id normal_rna_seq_aliquot_id), :header_hash => '', :sep2 => ','
 
     tsv.fields = [RNA_TUMOR_SAMPLE, RNA_NORMAL_SAMPLE]
 

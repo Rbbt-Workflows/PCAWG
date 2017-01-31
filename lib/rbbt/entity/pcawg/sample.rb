@@ -192,10 +192,13 @@ module Sample
   end
 
   property :expression_samples => :array do
-    index = PCAWG.donor_rna_samples.index :target => PCAWG::RNA_TUMOR_SAMPLE
-    codes = self.collect{|s| s.split(":").last}
-    samples = index.chunked_values_at(codes).collect{|v| (v.nil? or v.empty?) ? nil : v }
-    Sample.setup(samples, :cohort => cohort)
+    index = PCAWG.donor_rna_samples.tsv :fields => [PCAWG::RNA_TUMOR_SAMPLE], :type => :flat
+    self.collect do |donor|
+      code = donor.split(":").last
+      s = index[code]
+      Sample.setup(s, :cohort => cohort)
+      s
+    end
   end
 
   property :abbr => :single do

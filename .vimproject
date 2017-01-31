@@ -22,6 +22,7 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
      copy_number.rb
      regions.rb
      drivers.rb
+     drugs.rb
      misc.rb
     }
    }

@@ -19,6 +19,7 @@ require 'rbbt/sources/pcawg/structural_variants'
 require 'rbbt/sources/pcawg/copy_number'
 require 'rbbt/sources/pcawg/regions'
 require 'rbbt/sources/pcawg/drivers'
+require 'rbbt/sources/pcawg/drugs'
 require 'rbbt/sources/pcawg/misc'
 
 module PCAWG

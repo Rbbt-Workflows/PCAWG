@@ -153,9 +153,8 @@ module Study
   end
   task :expression_samples => :array do
     donors = study.donors
-    samples = Sample.setup(donors.collect{|donor| donor.expression_samples}.compact.flatten)
+    samples = Sample.setup(donors.expression_samples.flatten.compact, :cohort => "PCAWG")
     samples.extend AnnotatedArray
-    samples.cohort = "PCAWG"
     samples
   end
 

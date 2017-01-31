@@ -63,4 +63,23 @@ module PCAWG
     end
     nil
   end
+
+  PCAWG.claim PCAWG.donor_drivers, :proc do |real|
+    file = Rbbt.data.final['pcawg_whitelist_coding_drivers_v1_sep302016.txt.gz'].find
+    
+    sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
+
+    fields = []
+    fields << "Genomic Mutation"
+    fields << "Ensembl Gene ID"
+    dumper = TSV::Dumper.new :key_field => "icgc_donor_id", :fields => fields, :type => :double, :namespace => PCAWG.organism
+    dumper.init
+    TSV.traverse file, :header_hash => "", :into => dumper do |sample, values|
+      tumor_id, chr, pos, ref, alt, gene, protein, protein_change, consequence, driver_mutation_status, driver_mutation_statement, driver_gene, driver_gene_status, driver_gene_source = values
+
+      donor = sample2donor[sample]
+      [donor, [mutation, gene, protein, protein_change, driver_gene, driver_gene_status, driver_gene_source]]
+    end
+  end
+
 end
