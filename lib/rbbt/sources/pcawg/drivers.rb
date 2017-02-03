@@ -71,14 +71,25 @@ module PCAWG
 
     fields = []
     fields << "Genomic Mutation"
-    fields << "Ensembl Gene ID"
+    fields << "Associated Gene Name"
+    fields << "Protein change"
+    fields << "Driver gene"
+    fields << "Validated"
+    fields << "Source"
     dumper = TSV::Dumper.new :key_field => "icgc_donor_id", :fields => fields, :type => :double, :namespace => PCAWG.organism
     dumper.init
-    TSV.traverse file, :header_hash => "", :into => dumper do |sample, values|
+    TSV.traverse file, :header_hash => "", :type => :list, :into => dumper do |sample, values|
       tumor_id, chr, pos, ref, alt, gene, protein, protein_change, consequence, driver_mutation_status, driver_mutation_statement, driver_gene, driver_gene_status, driver_gene_source = values
-
+      pos, muts = Misc.correct_vcf_mutation pos.to_i, ref, alt
+      res = []
       donor = sample2donor[sample]
-      [donor, [mutation, gene, protein, protein_change, driver_gene, driver_gene_status, driver_gene_source]]
+      muts.each do |mut|
+        mutation = [chr, pos.to_s, mut] * ":"
+
+        res << [donor, [mutation, gene, protein, driver_gene, driver_gene_status, driver_gene_source]]
+      end
+      res.extend MultipleResult
+      res
     end
   end
 

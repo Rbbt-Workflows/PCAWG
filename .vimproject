@@ -151,6 +151,8 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    rebuild_for_samples
    compare_vcf
    pcawg
+
+   prepare_kb.rb
   }
  }
 }
