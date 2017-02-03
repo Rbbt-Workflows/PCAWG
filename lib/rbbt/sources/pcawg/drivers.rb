@@ -38,7 +38,7 @@ module PCAWG
   end
 
   PCAWG.claim PCAWG.drivers_AD, :proc do |real|
-    file = Rbbt.root.data.final['ActiveDriver2_AllScores_240117.tgz'].find
+    file = DATA_DIR['ActiveDriver2_AllScores_240117.tgz'].find
     TmpFile.with_file do |directory|
       FileUtils.mkdir_p directory
       Misc.in_dir directory do
@@ -65,7 +65,7 @@ module PCAWG
   end
 
   PCAWG.claim PCAWG.donor_drivers, :proc do |real|
-    file = Rbbt.root.data.final['pcawg_whitelist_coding_drivers_v1_sep302016.txt.gz'].find
+    file = DATA_DIR['pcawg_whitelist_coding_drivers_v1_sep302016.txt.gz'].find
     
     sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
 
