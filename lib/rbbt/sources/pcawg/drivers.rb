@@ -38,7 +38,7 @@ module PCAWG
   end
 
   PCAWG.claim PCAWG.drivers_AD, :proc do |real|
-    file = DATA_DIR['ActiveDriver2_AllScores_240117.tgz'].find
+    file = Rbbt.root.data.final['ActiveDriver2_AllScores_240117.tgz'].find
     TmpFile.with_file do |directory|
       FileUtils.mkdir_p directory
       Misc.in_dir directory do
