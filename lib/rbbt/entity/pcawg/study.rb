@@ -192,14 +192,17 @@ module Study
     !! PCAWG.driver_dir(self)
   end
 
-  property :drivers => :single do |type,threshold=nil|
-    threshold = 0.01 if threshold.nil?
+  property :drivers => :single do |type,threshold=nil,fdr=nil|
+    threshold = 0.1 if threshold.nil?
+    fdr = true if fdr.nil?
     if has_drivers?
+      tsv = PCAWG.driver_dir(self)[type].tsv :type => :list, :cast => :to_f
+      tsv = FDR.adjust_hash!(tsv) if fdr
       if type == "enhancer"
-        drivers = PCAWG.driver_dir(self)[type].tsv.select("p-value"){|p| p.to_f < threshold.to_f }.keys.collect{|g| g.split("::")[1].sub('-',':') }
+        drivers = tsv.select("p-value"){|p| p.to_f < threshold.to_f }.keys.collect{|g| g.split("::")[1].sub('-',':') }
         ChromosomeRange.setup(drivers, PCAWG.organism)
       else
-        drivers = PCAWG.driver_dir(self)[type].tsv.select("p-value"){|p| p.to_f < threshold.to_f }.keys.collect{|g| g.split("::").last.gsub(/\.\d+$/,'') }
+        drivers = tsv.select("p-value"){|p| p.to_f < threshold.to_f }.keys.collect{|g| g.split("::").last.gsub(/\.\d+$/,'') }
         Gene.setup(drivers, "Ensembl Gene ID", PCAWG.organism)
       end
     else
