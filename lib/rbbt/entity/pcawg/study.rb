@@ -3,7 +3,7 @@ module Study
 
   property :donors => :single do
     samples = PCAWG.donors_with_histology(self)
-    Sample.setup(samples, :cohort => "PCAWG")
+    Sample.setup(samples, :cohort => self)
   end
   
   helper :organism do
@@ -153,7 +153,7 @@ module Study
   end
   task :expression_samples => :array do
     donors = study.donors
-    samples = Sample.setup(donors.expression_samples.flatten.compact, :cohort => "PCAWG")
+    samples = Sample.setup(donors.expression_samples.flatten.compact, :cohort => self)
     samples.extend AnnotatedArray
     samples
   end
@@ -235,7 +235,7 @@ module Study
                                                  data.filename = "Sample info #{study}"
                                                  data
                                                end
-                                               info.entity_options = {:cohort => "PCAWG"}
+                                               info.entity_options = {:cohort => study}
                                                info
                                              end
   end
