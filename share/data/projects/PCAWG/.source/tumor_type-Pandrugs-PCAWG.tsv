@@ -1,0 +1,133 @@
+#: :sep2=/, */#:type=:double
+#tumor_PanDrugs	tumor_PCAWG
+acute lymphoblastic leukemia	
+acute lymphoblastic leukemia in pediatric patients	
+acute lymphocytic and myelocytic leukemias	Myeloid-AML
+acute myeloid leukemia	Myeloid-AML
+acute nonlymphocytic leukemias	
+acute promyelocytic leukemia	Myeloid-AML
+acute promyelocytic leukemia (APL)	Myeloid-AML
+advanced breast cancer in postmenopausal women	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+advanced colorectal cancer, primary tumor	ColoRect-AdenoCa,ColoRect-AdenoCa
+advanced (metastatic) breast cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+advanced ovarian cancer	Ovary-AdenoCa
+advanced prostate cancer	Prost-AdenoCa
+advanced prostate cancer not responding to hormone treatment, acute myelogenous leukemia, breast cancer and non-Hodgkin's lymphoma	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa,Myeloid-AML,Prost-AdenoCa
+advanced refractory metastatic non-small cell lung cancer	Lung-AdenoCa,Lung-SCC
+advanced renal cell carcinoma	Kidney-RCC
+AIDS-related Kaposi's sarcoma	
+ALK+ non-small cell lung cancer, metastatic ROS1+ non-small cell lung cancer	Lung-AdenoCa,Lung-SCC
+basal cell carcinoma	
+B-cell chronic lymphocytic leukemia	
+BRAF + melanoma	Skin-Melanoma
+brain tumors	CNS-GBM,CNS-Oligo
+breast cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+breast cancer and postmenopausal women with locally advanced or metastatic breast cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+breast, head and neck, leukemia, lymphoma, lung, osteosarcoma, bladder, and trophoblastic neoplasms	Bladder-TCC,Breast-AdenoCa,Breast-DCIS,Breast-LobularCa,Head-SCC,Lung-AdenoCa,Lung-SCC,Myeloid-AML
+cancers that have spread to the liver	
+carcinoid tumors and pancreatic cancer	Panc-AdenoCa,Panc-Endocrine
+CD20 positive, follicular, non-Hodgkin's lymphoma following chemotherapy relapse	
+CG-refractory carcinoma in situ (CIS) of the urinary bladder	Bladder-TCC
+chronic lymphocytic leukaemia (CLL), acute myeloid leukaemia (AML) and some types of non-Hodgkin lymphoma	Myeloid-AML
+chronic lymphocytic leukemia	
+chronic lymphocytic leukemia, follicular lymphoma	
+chronic lymphocytic leukemia, non-Hodgkin's lymphoma and Hodgkin's disease	
+chronic myelogenous leukemia	Myeloid-AML
+chronic myeloid leukemia	Myeloid-AML
+chronic myeloid leukemia and Philadelphia chromosome positive acute lymphoblastic leukemia	Myeloid-AML
+chronic myelomonocytic leukemia	Myeloid-AML
+chronic or accelerated phase chronic myeloid leukemia	Myeloid-AML
+chronic or accelerated phase chronic myeloid leukemia 	Myeloid-AML
+colon or rectal cancer and metastatic colorectal cancer	ColoRect-AdenoCa,ColoRect-AdenoCa
+colorectal cancer	ColoRect-AdenoCa,ColoRect-AdenoCa
+cutaneous T-cell lymphoma	
+EGFR-expressing, metastatic colorectal cancer	ColoRect-AdenoCa,ColoRect-AdenoCa
+first-line treatment of HER2+ metastatic breast cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+gastric cancer	Stomach-AdenoCa
+gastric cancer and metastatic breast cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa,Stomach-AdenoCa
+gastrointestinal stromal tumor and previously treated patients with metastatic colorectal cancer	ColoRect-AdenoCa,ColoRect-AdenoCa
+generalized Hodgkin’s disease, lymphocytic lymphoma, histiocytic lymphoma, mycosis fungoides, advanced carcinoma of the testis, Kaposi’s sarcoma, Letterer-Siwe disease, choriocarcinoma, carcinoma of the breast	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+germ cell testicular cancer	
+giant cell tumor of bone and bone metastases from solid tumors	
+hairy cell leukaemia	
+hairy cell leukemia	
+HER2-positive metastatic breast cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+HER2-POSITIVE, METASTATIC BREAST CANCER	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+Hodgkin lymphoma and anaplastic large cell lymphoma	
+Hodgkin lymphoma, melanoma and soft tissue sarcoma	Skin-Melanoma
+Hodgkin's lymphoma and certain brain cancers	CNS-GBM,CNS-Oligo
+hood acute lymphoblastic leukemia	
+hormone-related breast cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+imatinib-resistant chronic myeloid leukemia	Myeloid-AML
+inoperable adrenal cortical carcinoma	
+late-stage (metastatic) non-small cell lung cancer	Lung-AdenoCa,Lung-SCC
+leukemia	Myeloid-AML
+leukemias, lymphomas, and childhood cancers	Myeloid-AML
+locally advanced or metastatic breast cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+lung cancer and pancreatic cancer	Lung-AdenoCa,Lung-SCC,Panc-AdenoCa,Panc-Endocrine
+malignant lymphomas: Hodgkin's disease, lymphocytic lymphoma, mixed-cell type lymphoma, histiocytic lymphoma, Burkitt's lymphoma; multiple myeloma, leukemias, mycosis fungoides, neuroblastoma, adenocarcinoma of ovary, retinoblastoma, breast carcinoma	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa,Myeloid-AML,Ovary-AdenoCa
+malignant pleural mesothelioma	
+mantle cell lymphoma and chronic lymphocytic leukemia	
+melanoma	Skin-Melanoma
+metastatic breast cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+metastatic breast cancer, locally advanced or metastatic non-small cell lung cancer, metastatic adenocarcinoma of the pancreas, advanced carcinoma of the ovary	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa,Lung-AdenoCa,Lung-SCC,Ovary-AdenoCa,Panc-AdenoCa
+metastatic breast cancer with estrogen-receptor positive	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa
+metastatic carcinoma of the prostate	Prost-AdenoCa
+metastatic castration-resistant prostate cancer	Prost-AdenoCa
+metastatic colorectal cancer	ColoRect-AdenoCa,ColoRect-AdenoCa
+metastatic medullary thyroid cancer	Thy-AdenoCa
+metastatic melanoma	Skin-Melanoma
+metastatic nonseminomatous testicular cancer, Ewing's sarcoma, gestational trophoblastic neoplasia, regional perfusion in locally recurrent and locoregional solid malignancies	
+metastatic non small cell lung cancer	Lung-AdenoCa,Lung-SCC
+metastatic non-small cell lung cancer with EGFR mutations	Lung-AdenoCa,Lung-SCC
+metastatic squamous non-small cell lung cancer	Lung-AdenoCa,Lung-SCC
+multiple myeloma	
+multiple myeloma and mantle cell lymphoma	
+multiple myeloma, Hodgkin's lymphoma and non-Hodgkin's lymphoma	
+multiple myeloma, ovarian, breast and prostate cancer	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa,Ovary-AdenoCa,Prost-AdenoCa
+multiple myeloma patients who have received at least two prior therapies	
+myelofibrosis	
+neuroblastoma in children	
+non-hodgkin's lymphoma	
+non-Hodgkin's lymphoma	
+non-hodgkin's lymphoma	
+non-Hodgkin's lymphoma	
+non-hodgkin's lymphoma	
+non-Hodgkin's lymphoma	
+non-hodgkin's lymphoma	
+non-Hodgkin's lymphoma	
+non-hodgkin's lymphoma	
+non-Hodgkin's lymphoma	
+non-hodgkin's lymphoma	
+non-Hodgkin's lymphoma and surgery in subjects at high risk for systemic recurrence of malignant melanoma	Skin-Melanoma
+non-small cell lung cancer	Lung-AdenoCa,Lung-SCC
+non-small cell lung cancer and AIDS-related Kaposi's Sarcoma	Lung-AdenoCa,Lung-SCC
+ovarian cancer	Ovary-AdenoCa
+ovarian cancer, cervical cancer, and small cell lung cancer	Cervix-AdenoCa,Cervix-SCC,Ovary-AdenoCa
+ovarian, lung, and other cancers	Lung-AdenoCa,Lung-SCC,Ovary-AdenoCa
+pancreatic neuroendocrine tumors, kidney cancer and gastrointestinal stromal tumors	Kidney-RCC,Panc-Endocrine
+peripheral T-cell lymphoma	
+Ph+ chronic myelogenous leukemia	Myeloid-AML
+pheochromocytoma	
+Philadelphia chromosome-negative precursor B-cell acute lymphoblastic leukemia	
+progressive, differentiated thyroid cancer	Thy-AdenoCa
+prostate cancer	Prost-AdenoCa
+relapsed chronic lymphocytic leukemia, relapsed follicular B-cell non-Hodgkin lymphoma, relapsed small lymphocytic lymphoma	
+renal angiomyolipoma, hormone receptor-positive, HER2-negative breast cancer, advanced pancreatic neuroendocrine tumors, renal cell carcinoma, neuroendocrine tumors of gastrointestinal or lung origin with metastatic disease	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa,Lung-AdenoCa,Lung-SCC,Panc-Endocrine,Kidney-RCC
+renal cell carcinoma	Kidney-RCC
+renal cell carcinoma and metastatic carcinoma of the colon or rectum	ColoRect-AdenoCa,ColoRect-AdenoCa,Kidney-RCC
+second-line treatment of non-small-cell lung cancer	Lung-AdenoCa,Lung-SCC
+soft tissue sarcoma and renal cell carcinoma	Kidney-RCC
+squamous cell cancers, melanoma, sarcoma, testicular cancer, Hodgkin's and non-Hodgkin's lymphoma	Skin-Melanoma,Lung-SCC
+stomach, colon, rectal, and pancreatic cancers	ColoRect-AdenoCa,Panc-AdenoCa,Panc-Endocrine,ColoRect-AdenoCa,Stomach-AdenoCa
+superficial basal cell carcinoma	
+T-cell acute lymphoblastic leukemia and T-cell lymphoblastic lymphoma	
+testicular cancer or small cell lung cancer	
+thyroid cancer	Thy-AdenoCa
+treatment of metastatic colorectal cancer and advanced breast cancer tumors	Breast-AdenoCa,Breast-DCIS,Breast-LobularCa,ColoRect-AdenoCa,ColoRect-AdenoCa
+unresectable melanoma who are no longer responding to other drugs	Skin-Melanoma
+unresectable or metastatic melanoma	Skin-Melanoma
+unresectable or metastatic melanoma with a BRAF V600E or V600K mutation	Skin-Melanoma
+unresectable or metastatic melanoma with BRAF V600E mutation	Skin-Melanoma
+unresectable or metastatic melanoma with BRAF V600E or V600K mutations	Skin-Melanoma
+unresectable, well - or moderately - differentiated, locally advanced or metastatic gastroenteropancreatic neuroendocrine tumor	Panc-Endocrine

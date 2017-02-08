@@ -248,6 +248,23 @@ module Sample
     PCAWG.SV.produce[self].exists?
   end
   
+  task :pandrugs => :tsv do 
+    assoc_fields = %w(affected_gene gscore alteration target_marker resistance relation gene_symbol source)
+    associations = PCAWG.pandrugs[sample].tsv :type => :double, :merge => true, :sep2 => '--NONE--', :key_field => 'show_drug_name', :fields => assoc_fields
+
+    ppp associations.to_s
+    Log.tsv associations
+
+    info_fields = %w(score status pathology cancer extra extra2)
+    drug_info = PCAWG.pandrugs[sample].tsv :type => :double, :merge => true, :sep2 => '--NONE--', :key_field => 'show_drug_name', :fields => info_fields
+
+    ppp drug_info.to_s
+    Log.tsv drug_info
+
+    raise 
+
+
+  end
   
 end
 
