@@ -28,8 +28,9 @@ module PCAWG
         current = nil
         stream = nil
         seen = Set.new
-        file = DATA_DIR['pandrugs.tsv.gz'].find
+        file = DATA_DIR['pandrugs.tsv'].find
         TSV.traverse file, :type => :array, :bar => "Processing Pandrugs" do |line|
+          line = Misc.fixutf8(line)
           if line =~ /^#/
             header = "#" << line.split("\t")[2..-1] * "\t"
             next
