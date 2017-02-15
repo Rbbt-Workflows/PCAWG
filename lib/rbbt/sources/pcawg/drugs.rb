@@ -62,7 +62,6 @@ module PCAWG
 
   PCAWG.claim PCAWG.abbr2pandrugs, :proc do 
     tsv = DATA_DIR["tumor_type-Pandrugs-PCAWG.tsv"].tsv :sep2 => /, */, :type => :flat, :merge => true, :key_field => "tumor_PCAWG"
-    ppp tsv.to_s
     tsv.to_s
   end
 end
