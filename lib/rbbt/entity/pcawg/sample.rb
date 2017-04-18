@@ -262,10 +262,27 @@ module Sample
     Log.tsv drug_info
 
     raise 
-
-
   end
-  
+
+  input :gain_cnv_threshold, :float, "Copy number threshold to consider the gene", 1
+  task :gained_GISTIC => :array do |threshold|
+    donor = sample
+    begin
+      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f).select(donor){|v| v > threshold}.keys
+    rescue
+      []
+    end
+  end
+
+  input :loss_cnv_threshold, :float, "Copy number threshold to consider the gene", -1
+  task :lost_GISTIC => :array do |threshold|
+    donor = sample
+    begin
+      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f).select(donor){|v| v < threshold}.keys
+    rescue
+      []
+    end
+  end
 end
 
 Sample.update_task_properties

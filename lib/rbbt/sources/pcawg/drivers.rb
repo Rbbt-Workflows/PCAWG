@@ -12,7 +12,7 @@ module PCAWG
   end
 
   PCAWG.claim PCAWG.drivers, :proc do |real|
-    file = DATA_DIR['autoremoval_final_submission_pkg.tar.gz'].find
+    file = DATA_DIR['final_integration_results_2017_03_16.tar.gz'].find
     TmpFile.with_file do |directory|
       FileUtils.mkdir_p directory
       Misc.in_dir directory do
@@ -20,11 +20,12 @@ module PCAWG
         Path.setup(directory)
 
         sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
-        directory.glob("*/*.automatic_method_removal.txt").each do |file|
+        directory.glob("**/*.automatic_method_removal.txt").each do |file|
           cohort, type, *rest = File.basename(file).split(".")
           dumper = TSV::Dumper.new :key_field => "Element", :fields => ["p-value"], :type => :single, :namespace => PCAWG.organism
           dumper.init
           TSV.traverse Open.open(file), :type => :single, :header_hash => "", :into => dumper, :fields => [DRIVER_CALL_FIELD] do |elem, pvalue|
+            pvalue = nil if pvalue == "NA"
             [elem, [pvalue]]
           end
 

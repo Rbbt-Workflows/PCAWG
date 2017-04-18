@@ -97,17 +97,26 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    tumour_type_summary_August2016_v3.tsv - tumour_type_summary_August2016_v3.tsv.tsv
   }
   final=final{
+   ActiveDriver2_AllScores_240117.tgz
    October_2016_whitelist_2583.snv_mnv_indel.maf.gz
    aliquot_donor_tumor.whitelist.tsv.gz
+   all_data_by_genes.rmcnv.pt_170207.txt.gz
+   autoremoval_final_submission_pkg.tar.gz
    consensus.20161103.purity.ploidy.txt.gz
    consensus.20161103.somatic.cna.tar.gz
+   consensus.20170119.purity.ploidy.annotated.txt.gz
+   consensus.20170119.somatic.cna.annotated.tar.gz
    donor_biomarker.all_projects.tsv.gz
+   final_integration_results_2017_03_16.tar.gz
    joint_fpkm_uq.tsv.gz
    meta_tumor_cohorts.v2.tar.gz
+   pandrugs.tsv.gz
    pcawg_consensus_1.6.161116.somatic_svs.tar.gz
    pcawg_donor_clinical_August2016_v7.tsv
    pcawg_specimen_histology_August2016_v6.tsv
+   pcawg_whitelist_coding_drivers_v1_sep302016.txt.gz
    release_may2016.v1.4.tsv
+   tumor_type-Pandrugs-PCAWG.tsv
    }
   preliminary_final_release=preliminary_final_release{
    joint_fpkm_uq.tsv.gz
