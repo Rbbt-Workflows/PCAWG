@@ -278,7 +278,7 @@ module Study
     sample_info = sample_info(study)
     value_type = study_info(study)[:expression_type]
     organism = study_info(study)[:organism]
-    Matrix.new file.find, nil, value_type, format, organism
+    RbbtMatrix.new file.find, nil, value_type, format, organism
   end
 
   property :sample_extended_info => :single do

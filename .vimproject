@@ -20,6 +20,8 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
      genotype.rb
      structural_variants.rb
      copy_number.rb
+     signatures.rb
+     clonality.rb
      regions.rb
      drivers.rb
      drugs.rb
@@ -154,7 +156,6 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    driver_enrichment.rb
    driver_enrichment_format.rb
 
-   pcawg_5.rb
 
    format_for_nuria
    rebuild_for_samples
@@ -162,6 +163,8 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    pcawg
 
    prepare_kb.rb
+
+   pcawg_5.rb
   }
  }
 }

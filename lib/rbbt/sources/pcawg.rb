@@ -21,6 +21,8 @@ require 'rbbt/sources/pcawg/regions'
 require 'rbbt/sources/pcawg/drivers'
 require 'rbbt/sources/pcawg/drugs'
 require 'rbbt/sources/pcawg/misc'
+require 'rbbt/sources/pcawg/signatures'
+require 'rbbt/sources/pcawg/clonality'
 
 module PCAWG
   def self.organism

@@ -103,11 +103,8 @@ module PCAWG
 
   PCAWG.claim PCAWG.donor_other_cohorts["PANCANCER_no_melanoma_lymph"], :proc do 
     all_donors = PCAWG.all_donors.sort
-    iif all_donors
     lymph = PCAWG.donors_with_histology("meta=Lymph_tumors")
-    iif lymph
     mela = PCAWG.donors_with_histology("Skin-Melanoma")
-    iif mela
     all_donors - lymph - mela
   end
 

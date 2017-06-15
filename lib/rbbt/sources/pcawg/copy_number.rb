@@ -27,33 +27,39 @@ module PCAWG
     nil
   end
 
-  PCAWG.claim PCAWG.CNV_GISTIC, :proc do |real|
-    file = DATA_DIR['all_data_by_genes.rmcnv.pt_170207.txt.gz'].find
-    TmpFile.with_file do |directory|
-      FileUtils.mkdir_p directory
-      Misc.in_dir directory do
-        tsv = file.tsv :header_hash => '', :type => :list, :cast => :to_f
-        sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
-        tsv.fields.each do |aliq|
-          donor = sample2donor[aliq]
-          raise "Donor not found for aliq: #{ aliq }" if donor.nil?
-          stream = TSV.traverse Open.open(file), :type => :array, :into => :stream do |line|
-            next if line.include? 'chrom'
-            chr1, start, eend, total, minor, major, stars = line.split("\t")
-            next if stars == "NA"
-            [chr1, start, eend, total, minor, major, stars] * ":"
-          end
-
-          Open.write(real[donor].find, stream.read)
-        end
-      end
-      FileUtils.rm_rf directory
-    end
-    nil
-  end
-
   PCAWG.claim PCAWG.matrices.copy_number, :proc do 
     file = DATA_DIR['all_data_by_genes.rmcnv.pt_170207.txt.gz'].produce
+    sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
+    donors = [] 
+    pos = []
+    TSV.traverse file, :type => :array, :into => :stream, :bar => true do |line|
+      if line =~ /^Gene Symb/
+        fields = line.split("\t")
+        fields[0] = "Associated Gene Name"
+        aliqs = fields
+        fields.each_with_index do |aliq,i| 
+          donor = sample2donor[aliq]; 
+          if donor
+            donors << donor
+            pos << i
+          end
+        end
+        "#: organism=" << PCAWG.organism + "\n" +
+        "#" + (["Associated Gene Name"] + donors) * "\t"
+      else
+        all_values = line.split("\t")
+        values = all_values.values_at *pos
+        
+        gene = all_values.first
+        gene = gene.split("|chr").first
+
+        ([gene] + values) * "\t"
+      end
+    end
+  end
+
+  PCAWG.claim PCAWG.matrices.copy_number_focal, :proc do 
+    file = DATA_DIR['focal_data_by_genes.rmcnv.pt_170207.txt.gz'].produce
     sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
     donors = [] 
     pos = []

@@ -72,6 +72,62 @@ module Sample
     TSV.get_stream step(:intersect_bed)
   end
 
+  dep :genomic_mutations, :compute => :produce
+  dep Sequence, :intersect_bed, :sorted => true, :positions => :genomic_mutations do |jobname, options|
+    PCAWG.regions.produce.glob("*").collect do |file|
+      inputs = {:bed_file => "" + file.find.to_s}.merge(options)
+      {:workflow => Sequence, :task => :intersect_bed, :jobname => jobname, :inputs => inputs}
+    end
+  end
+  task :bed_region_mutations => :tsv do
+    ios = []
+    names = []
+    dependencies.each do |dep|
+      next unless dep.task_name == :intersect_bed
+      name = File.basename dep.recursive_inputs.to_hash[:bed_file]
+      io = Misc.collapse_stream(TSV.get_stream(dep))
+      ios << io
+      names << name
+    end
+    
+    dumper = TSV::Dumper.new :key_field => "Genomic Mutation", :fields => names, :type => :double, :namespace => PCAWG.namespace
+    dumper.init 
+
+    TSV.traverse TSV.paste_streams(ios, :sort => false), :type => :array, :into => dumper, :bar => "Merging intersections with BED files" do |line|
+      next if line =~ /^#/
+      key, *values = line.split("\t")
+      
+      [key, values]
+    end
+  end
+
+  dep :bed_region_mutations
+  task :gene_bed_intersections => :tsv do
+    parser = TSV::Parser.new step(:bed_region_mutations)
+    fields = parser.fields
+    dumper = TSV::Dumper.new(:key_field => "Ensembl Gene ID", :fields => ["Region type"], :type => :flat, :namespace => PCAWG.organism)
+    dumper.init
+    TSV.traverse parser, :into => dumper do |mutation, values|
+      res = []
+      fields.zip(values).each do |field, list|
+        next if list.nil?
+        genes = list.collect{|e| e.split("::").select{|_e| _e =~ /ENSG/}.first }.compact
+        genes = genes.collect{|e| e.split(".").first }
+        genes.each do |gene|
+          res << [gene, [field]]
+        end
+      end
+      next if res.empty?
+      res.extend MultipleResult
+      res
+    end
+
+    io = TSV.collapse_stream dumper.stream
+    TSV.traverse io, :into => :stream, :type => :array do |line|
+      line.gsub('|', "\t")
+    end
+  end
+
   dep :intersect_bed, :bed_file => PCAWG.enhancer_ranges.produce
   task :genes_with_enhancer_mutations => :array do
     TSV.traverse step(:intersect_bed), :type => :array, :into => :stream do |line|
@@ -282,6 +338,13 @@ module Sample
     rescue
       []
     end
+  end
+
+  property :pcawg_mutation_signature do
+    donor = self
+    tsv = PCAWG.mutation_signature.assignments.tsv
+    raise "No signature for donor #{ donor }" unless tsv.include?(donor)
+    tsv.select(donor)
   end
 end
 

@@ -1,6 +1,5 @@
 module PCAWG
 
-  #PCAWG.claim DATA_DIR['joint_fpkm_uq.tsv.gz'].tap{|o| o.resource = PCAWG}, :proc do |filename|
   Rbbt.claim DATA_DIR['joint_fpkm_uq.tsv.gz'].tap{|o| o.resource = PCAWG}, :proc do |filename|
     raise "Please place the file joint_fpkm_uq.tsv.gz into #{ filename }"
   end
