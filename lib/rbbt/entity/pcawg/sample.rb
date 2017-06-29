@@ -10,6 +10,10 @@ module Sample
     PCAWG.organism
   end
 
+  helper :clean_donor do
+    sample.split(":").last
+  end
+
   helper :cnv_status do |info|
     total, mj, mn, stars = info
     statuses = []
@@ -322,22 +326,50 @@ module Sample
 
   input :gain_cnv_threshold, :float, "Copy number threshold to consider the gene", 1
   task :gained_GISTIC => :array do |threshold|
-    donor = sample
-    begin
-      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f).select(donor){|v| v > threshold}.keys
+    name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
+    donor = clean_donor
+    genes = begin
+      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
     rescue
       []
     end
+    name2ensg.values_at(*genes).compact
   end
 
   input :loss_cnv_threshold, :float, "Copy number threshold to consider the gene", -1
   task :lost_GISTIC => :array do |threshold|
-    donor = sample
-    begin
-      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f).select(donor){|v| v < threshold}.keys
+    name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
+    donor = clean_donor
+    genes = begin
+      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
     rescue
       []
     end
+    name2ensg.values_at(*genes).compact
+  end
+
+  input :gain_cnv_threshold, :float, "Copy number threshold to consider the gene", 1
+  task :gained_focal_GISTIC => :array do |threshold|
+    name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
+    donor = clean_donor
+    genes = begin
+      PCAWG.matrices.copy_number_focal.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
+    rescue
+      []
+    end
+    name2ensg.values_at(*genes).compact
+  end
+
+  input :loss_cnv_threshold, :float, "Copy number threshold to consider the gene", -1
+  task :lost_focal_GISTIC => :array do |threshold|
+    name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
+    donor = clean_donor
+    genes = begin
+      PCAWG.matrices.copy_number_focal.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
+    rescue
+      []
+    end
+    name2ensg.values_at(*genes).compact
   end
 
   property :pcawg_mutation_signature do
@@ -346,6 +378,71 @@ module Sample
     raise "No signature for donor #{ donor }" unless tsv.include?(donor)
     tsv.select(donor)
   end
+
+  dep :lost_focal_GISTIC, :compute => :produce
+  dep :gained_focal_GISTIC, :compute => :produce
+  dep :bed_region_mutations
+  task :gene_extra_status => :tsv do
+    lost = step(:lost_focal_GISTIC).load
+    gained = step(:gained_focal_GISTIC).load
+
+    parser = TSV::Parser.new step(:bed_region_mutations)
+    fields = parser.fields
+    all_fields = fields + ["Focal GISTIC Lost", "Focal GISTIC Gained"]
+
+    all_fields = all_fields.reject{|f| f.include? 'enhanc' }
+    all_fields = all_fields.reject{|f| f == 'gc19_pc.cds.bed' }
+
+    tsv = TSV.setup({}, :key_field => "Ensembl Gene ID", :fields => all_fields, :type => :double, :namespace => PCAWG.organism)
+
+    lost_pos = all_fields.index "Focal GISTIC Lost"
+    lost.each do |gene|
+      val = ['false'] * all_fields.length
+      val[lost_pos] = 'true'
+      tsv.zip_new gene, val
+    end
+
+    gained_pos = all_fields.index "Focal GISTIC Gained"
+    gained.each do |gene|
+      val = ['false'] * all_fields.length
+      val[gained_pos] = 'true'
+      tsv.zip_new gene, val
+    end
+
+
+    TSV.traverse parser, :into => tsv do |mutation,values_list|
+      gene_matches = {}
+      fields.zip(values_list).each do |field, values|
+        next if values.nil? or values.empty?
+        genes = values.collect{|v| v.split("::").select{|v| v =~ /ENSG/}}.flatten.uniq
+        genes.each do |gene|
+          gene.sub!(/\.\d+/,'')
+          gene_matches[gene] ||= []
+          gene_matches[gene] << field
+        end
+      end
+      res = []
+      gene_matches.each do |gene,matches|
+        r = all_fields.collect do |field|
+          matches.include?(field) ? 'true' : 'false'
+        end
+        res << [gene, r]
+      end
+      res.extend MultipleResult
+
+      res
+    end
+
+    dumper2 = TSV::Dumper.new :key_field => "Ensembl Gene ID", :fields => all_fields, :type => :list, :namespace => PCAWG.organism
+    dumper2.init
+    TSV.traverse tsv, :type => :array, :into => dumper2 do |gene, values|
+      values = values.collect{|l| 
+        l.include?('true') ? 'true' : 'false' 
+      } 
+      [gene, values]
+    end
+  end
+
 end
 
 Sample.update_task_properties

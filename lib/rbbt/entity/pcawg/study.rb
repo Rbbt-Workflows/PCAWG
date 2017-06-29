@@ -287,6 +287,40 @@ module Study
     tsv.select(PCAWG::DONOR_FIELD => donors)
   end
 
+  dep Sample, :gene_extra_status, :compute => :bootstrap do |jobname,options|
+    study = Study.setup(jobname.dup)
+    if study.has_cnv?
+      study.genotyped_samples.collect{|sample| Sample.setup(sample, :cohort => study) unless Sample === sample; sample.gene_extra_status(:job, options) }.flatten
+    else
+      []
+    end
+  end
+  task :sample_gene_extra => :tsv do
+    if dependencies.any?
+      parser = TSV::Parser.new dependencies.first
+      fields = parser.fields
+      fields.unshift "Sample"
+      header = TSV.header_lines(parser.key_field, parser.fields, parser.options.merge(:type => :double))
+
+      io = Misc.open_pipe do |sin|
+        sin.puts header
+
+        TSV.traverse dependencies, :type => :array do |job|
+          sample = job.clean_name.split(":").last
+          TSV.traverse job, :type => :array do |line|
+            next if line =~ /^#/
+            gene,_sep,status = line.partition("\t")
+            parts = [gene, sample, status]
+            sin.puts parts * "\t"
+          end
+        end
+      end
+
+      TSV.collapse_stream io
+    else
+      ""
+    end
+  end
   
 end
 
