@@ -77,9 +77,9 @@ module Sample
   end
 
   dep :genomic_mutations, :compute => :produce
-  dep Sequence, :intersect_bed, :sorted => true, :positions => :genomic_mutations do |jobname, options|
+  dep Sequence, :intersect_bed, :sorted => true, :positions => :genomic_mutations, :bed_file => 'placeholder' do |jobname, options|
     PCAWG.regions.produce.glob("*").collect do |file|
-      inputs = {:bed_file => "" + file.find.to_s}.merge(options)
+      inputs = options.merge({:bed_file => "" + file.find.to_s})
       {:workflow => Sequence, :task => :intersect_bed, :jobname => jobname, :inputs => inputs}
     end
   end
