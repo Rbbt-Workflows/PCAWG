@@ -329,7 +329,7 @@ module Sample
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
+      PCAWG.matrices.copy_number.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
     rescue
       []
     end
@@ -341,7 +341,7 @@ module Sample
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
+      PCAWG.matrices.copy_number.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
     rescue
       []
     end
@@ -353,7 +353,7 @@ module Sample
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number_focal.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
+      PCAWG.matrices.copy_number_focal.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
     rescue
       []
     end
@@ -365,7 +365,7 @@ module Sample
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number_focal.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
+      PCAWG.matrices.copy_number_focal.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
     rescue
       []
     end
