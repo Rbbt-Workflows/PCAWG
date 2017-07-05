@@ -251,6 +251,11 @@ module Sample
     end
   end
 
+  property :get_genes_extra => :single do |type|
+    genes = self.gene_extra_status.select(type => "true").keys
+    Gene.setup(genes.dup, "Ensembl Gene ID", organism).extend AnnotatedArray
+  end
+
   property :expression_samples => :array do
     index = PCAWG.donor_rna_samples.tsv :fields => [PCAWG::RNA_TUMOR_SAMPLE], :type => :flat
     self.collect do |donor|
