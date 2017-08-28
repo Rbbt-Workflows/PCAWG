@@ -77,9 +77,9 @@ module Sample
   end
 
   dep :genomic_mutations, :compute => :produce
-  dep Sequence, :intersect_bed, :sorted => true, :positions => :genomic_mutations, :bed_file => 'placeholder' do |jobname, options|
+  dep Sequence, :intersect_bed, :sorted => true, :positions => :genomic_mutations do |jobname, options|
     PCAWG.regions.produce.glob("*").collect do |file|
-      inputs = options.merge({:bed_file => "" + file.find.to_s})
+      inputs = {:bed_file => "" + file.find.to_s}.merge(options)
       {:workflow => Sequence, :task => :intersect_bed, :jobname => jobname, :inputs => inputs}
     end
   end
@@ -251,11 +251,6 @@ module Sample
     end
   end
 
-  property :get_genes_extra => :single do |type|
-    genes = self.gene_extra_status.select(type => "true").keys
-    Gene.setup(genes.dup, "Ensembl Gene ID", organism).extend AnnotatedArray
-  end
-
   property :expression_samples => :array do
     index = PCAWG.donor_rna_samples.tsv :fields => [PCAWG::RNA_TUMOR_SAMPLE], :type => :flat
     self.collect do |donor|
@@ -334,7 +329,7 @@ module Sample
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
+      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
     rescue
       []
     end
@@ -346,7 +341,7 @@ module Sample
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
+      PCAWG.matrices.copy_number.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
     rescue
       []
     end
@@ -358,7 +353,7 @@ module Sample
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number_focal.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
+      PCAWG.matrices.copy_number_focal.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
     rescue
       []
     end
@@ -370,7 +365,7 @@ module Sample
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number_focal.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
+      PCAWG.matrices.copy_number_focal.tsv(:fields => [donor], :type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
     rescue
       []
     end
