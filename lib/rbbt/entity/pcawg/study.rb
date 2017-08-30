@@ -210,6 +210,19 @@ module Study
     end
   end
 
+  property :has_candidate_drivers? => :single do
+    !! PCAWG.candidate_driver_dir(self)
+  end
+
+  property :candidate_drivers => :single do |type|
+    if has_candidate_drivers? and PCAWG.candidate_driver_dir(self)[type].exists?
+      tsv = PCAWG.candidate_driver_dir(self)[type].tsv :type => :list, :fields => []
+      tsv.keys.ensembl
+    else
+      []
+    end
+  end
+
   property :condition => :single do
     self
   end
