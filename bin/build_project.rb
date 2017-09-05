@@ -111,7 +111,7 @@ ppp "Contaminated: #{ contaminated }"
 
 all_matrix_samples = TSV.parse_header(matrix_file, :header_hash => '').fields
 
-TSV.traverse matrix_samples, :bar => "Placing rnaseq" do |study,sample_info|
+TSV.traverse matrix_samples, :bar => "Placing RNASeq" do |study,sample_info|
   if sample_info[:tumor]
     study_dir = File.join(project_dir, study)
     study_matrix_file = File.join(study_dir, 'matrices/tumor_rnaseq/data')

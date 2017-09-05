@@ -9,16 +9,24 @@ module PCAWG
 
         sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
         directory.glob("*.bedpe.gz").each do |file|
+          begin
           sample = File.basename(file).split(".").first
           donor = sample2donor[sample]
+
           next if donor.nil?
-          stream = TSV.traverse Open.open(file), :type => :array, :into => :stream do |line|
+
+          stream = TSV.traverse file, :type => :array, :into => :stream do |line|
             next if line.include? 'chrom'
             chr1, pos1, _pos1, chr2, pos2, _pos2, _id, support, strand1, strand2, sv_class = line.split("\t")
             [chr1, pos1, sv_class,chr2,pos2] * ":"
           end
 
-          Open.write(real[donor].find, stream.read)
+          Misc.sensiblewrite(real[donor].find, stream)
+
+          rescue
+            Log.exception $!
+            raise $!
+          end
         end
       end
       FileUtils.rm_rf directory
