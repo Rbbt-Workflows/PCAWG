@@ -40,8 +40,8 @@ module PCAWG
           TSV.traverse file, :type => :array, :into => final do |line|
             next if line =~ /chromosome/
             chr, pos, type, *rest = line.split("\t")
-            chr2 = rest.pop
             pos2 = rest.pop
+            chr2 = rest.pop
             if chr2 == "NA"
               cpos = [chr, pos] * ":"
             else
