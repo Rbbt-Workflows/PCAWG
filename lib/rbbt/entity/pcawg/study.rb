@@ -199,10 +199,10 @@ module Study
       tsv = PCAWG.driver_dir(self)[type].tsv :type => :list, :cast => :to_f
       tsv = FDR.adjust_hash!(tsv) if fdr
       if type == "enhancer"
-        drivers = tsv.select("p-value"){|p| p.to_f < threshold.to_f }.keys.collect{|g| g.split("::")[1].sub('-',':') }
+        drivers = tsv.select("p-value"){|p| !p.nil? && (p.to_f < threshold.to_f) }.keys.collect{|g| g.split("::")[1].sub('-',':') }
         ChromosomeRange.setup(drivers, PCAWG.organism)
       else
-        drivers = tsv.select("p-value"){|p| p.to_f < threshold.to_f }.keys.collect{|g| g.split("::").last.gsub(/\.\d+$/,'') }
+        drivers = tsv.select("p-value"){|p| !p.nil? && (p.to_f < threshold.to_f) }.keys.collect{|g| g.split("::").last.gsub(/\.\d+$/,'') }
         Gene.setup(drivers, "Ensembl Gene ID", PCAWG.organism)
       end
     else
