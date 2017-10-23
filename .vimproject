@@ -16,10 +16,12 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
     pcawg.rb
     pcawg=pcawg{
      donor_info.rb
-     expression.rb
+
      genotype.rb
+     expression.rb
      structural_variants.rb
      copy_number.rb
+
      signatures.rb
      clonality.rb
      regions.rb

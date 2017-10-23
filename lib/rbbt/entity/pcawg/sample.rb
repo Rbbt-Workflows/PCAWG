@@ -448,6 +448,25 @@ module Sample
     end
   end
 
+  dep :organism
+  dep :watson
+  dep :genomic_mutations
+  dep Sequence, :affected_genes, :mutations => :genomic_mutations, :organism => :organism, :watson => :watson
+  task :gene_timing => :tsv do
+    organism = step(:organism).load
+    timing = PCAWG.clonality.timing[clean_donor].tsv :unnamed => true
+
+    gene_timings = TSV.setup({}, :key_field => "Ensembl Gene ID", :fields => ["Timing"], :type => :flat, :namespace => organism)
+    TSV.traverse step(:affected_genes) do |mutation, genes|
+      mutation = mutation.first if Array === mutation
+      time = timing[mutation.split(":").values_at(0,1) * ":"]
+      genes.each do |gene|
+        gene_timings[gene] ||= []
+        gene_timings[gene] << time
+      end
+    end
+    gene_timings
+  end
 end
 
 Sample.update_task_properties
