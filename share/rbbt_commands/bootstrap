@@ -82,7 +82,7 @@ tasks.each do |task|
   nil
  end
 
- Misc.bootstrap(meta.collect{|m| "meta=" << m} + abbrs + other.collect{|m| "other=" << m}, num.to_i) do |study|
+ Misc.bootstrap( abbrs + meta.collect{|m| "meta=" << m} + other.collect{|m| "other=" << m}, num.to_i) do |study|
   study = study + '.NOHYPER' if options[:no_hyper]
   study = Study.setup(study.dup)
   begin
