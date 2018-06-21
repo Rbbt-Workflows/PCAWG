@@ -334,6 +334,76 @@ module Study
       ""
     end
   end
+
+  dep Sample, :gene_cnv_status_focal, :compute => :bootstrap do |jobname,options|
+    study = Study.setup(jobname.dup)
+    if study.has_cnv?
+      study.cnv_samples.collect{|sample| Sample.setup(sample, :cohort => study) unless Sample === sample; sample.gene_cnv_status_focal(:job, options) }.flatten
+    else
+      []
+    end
+  end
+  task :sample_gene_cnvs_focal => :tsv do
+    if dependencies.any?
+      parser = TSV::Parser.new dependencies.first
+      fields = parser.fields
+      fields.unshift "Sample"
+      header = TSV.header_lines(parser.key_field, parser.fields, parser.options.merge(:type => :double))
+
+      io = Misc.open_pipe do |sin|
+        sin.puts header
+
+        TSV.traverse dependencies, :type => :array do |job|
+          sample = job.clean_name.split(":").last
+          TSV.traverse job, :type => :array do |line|
+            next if line =~ /^#/
+            gene,_sep,status = line.partition("\t")
+            parts = [gene, sample, status]
+            sin.puts parts * "\t"
+          end
+        end
+      end
+
+      TSV.collapse_stream io
+    else
+      ""
+    end
+  end
+
+  dep :sample_gene_mutations, :compute => :produce
+  dep :sample_gene_cnvs_focal, :compute => :produce
+  task :sample_genes => :tsv do
+    if study.has_cnv?
+      io = TSV.paste_streams [step(:sample_gene_mutations), step(:sample_gene_cnvs_focal)]
+      parser = TSV::Parser.new io
+      dumper = TSV::Dumper.new parser.options.merge(:fields => parser.fields[0..-3] + parser.fields[-1..-1])
+      dumper.init
+      TSV.traverse parser, :into => dumper do |gene,values|
+        gene = gene.first if Array === gene
+
+        samples, *rest = values
+        cnv = rest.pop
+        cnv_samples = rest.pop
+        new_values = rest
+        new_cnv = ['normal'] * samples.length
+        cnv_samples.each_with_index do |cnv_sample,i|
+          index = samples.index cnv_sample
+          if index.nil?
+            samples << cnv_sample
+            new_values.each{|l| l << 'false'}
+            new_cnv << cnv[i]
+          else
+            new_cnv[index] = cnv[i]
+          end
+        end
+        new_values.unshift(samples)
+        new_values.push(new_cnv)
+        [gene, new_values]
+      end
+    else
+      TSV.get_stream step(:sample_gene_mutations)
+    end
+  end
   
 end
 

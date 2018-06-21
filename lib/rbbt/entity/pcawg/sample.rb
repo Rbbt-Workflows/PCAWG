@@ -329,12 +329,27 @@ module Sample
     raise 
   end
 
+  dep :organism
+  dep :gene_cnv_status
+  task :gene_cnv_status_focal => :tsv do 
+    index = PCAWG.donor_wgs_samples.index :target => PCAWG::WGS_SAMPLE_FIELD, :persist => true
+    name2ensembl = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :fields => "Associated Gene Name", :persist => true
+    sample = index[clean_donor]
+    begin
+      focal = PCAWG::DATA_DIR["focal_data_by_genes.rmcnv.pt_170207.txt"].tsv(:type => :list, :cast => :to_f, :persist => true, :header_hash => '').select(sample){|v| v != 0 }.keys
+    rescue
+      focal = []
+    end
+    focal_ensembl = name2ensembl.chunked_values_at focal
+    step(:gene_cnv_status).load.select(focal_ensembl)
+  end
+
   input :gain_cnv_threshold, :float, "Copy number threshold to consider the gene", 1
   task :gained_GISTIC => :array do |threshold|
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
+      PCAWG.matrices.copy_number.tsv(:type => :list, :cast => :to_f, :persist => true).select(donor){|v| v > threshold}.keys
     rescue
       []
     end
@@ -346,8 +361,9 @@ module Sample
     name2ensg = Organism.identifiers(PCAWG.organism).index :target => "Ensembl Gene ID", :persist => true, :order => true
     donor = clean_donor
     genes = begin
-      PCAWG.matrices.copy_number.tsv(:type => :single, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
+      PCAWG.matrices.copy_number.tsv(:type => :list, :cast => :to_f, :persist => true).select(donor){|v| v < threshold}.keys
     rescue
+      Log.exception $!
       []
     end
     name2ensg.values_at(*genes).compact
