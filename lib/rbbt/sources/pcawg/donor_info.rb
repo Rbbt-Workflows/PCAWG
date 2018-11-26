@@ -148,7 +148,7 @@ module PCAWG
         raise "No donors" if donors.empty?
         donors & all_donors
       rescue
-        PCAWG.donor_other_cohorts[value].list & all_donors
+        PCAWG.donor_other_cohorts[s].list & all_donors
       end
     end
   end
