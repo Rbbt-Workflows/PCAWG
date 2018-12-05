@@ -470,7 +470,7 @@ module Sample
   dep Sequence, :affected_genes, :mutations => :genomic_mutations, :organism => :organism, :watson => :watson
   task :gene_timing => :tsv do
     organism = step(:organism).load
-    timing = PCAWG.clonality.timing[clean_donor].tsv :unnamed => true
+    timing = PCAWG.clonality.timing.produce[clean_donor].tsv :unnamed => true
 
     gene_timings = TSV.setup({}, :key_field => "Ensembl Gene ID", :fields => ["Timing"], :type => :flat, :namespace => organism)
     TSV.traverse step(:affected_genes) do |mutation, genes|
