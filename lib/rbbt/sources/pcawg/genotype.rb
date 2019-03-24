@@ -17,7 +17,7 @@ module PCAWG
       last_donor = nil
       io = nil
 
-      TSV.traverse DATA_DIR['October_2016_whitelist_2583.snv_mnv_indel.maf.gz'].produce, :type => :array, :bar => true do |line|
+      TSV.traverse DATA_DIR['October_2016_whitelist_2583.snv_mnv_indel.maf.gz'].produce, :type => :array, :bar => "Processing mutations" do |line|
         next if line =~ /^Tumor_Sample_Barcode/
         parts = line.split("\t")
         chr, start, eend, ref, alt, alt2, ali, alt_count, ref_count  = parts.values_at 1,2,3,7,8,9,12,37,38

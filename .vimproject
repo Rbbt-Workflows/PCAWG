@@ -137,14 +137,29 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
  }
  share=share{
   source=data/projects/PCAWG/.source filter="*"{
+   20170325_consensus_subclonal_reconstruction_beta1.tar.gz
+   All_samples_PCAWG_probabilities_for_subs_beta2.20170320.txt.gz
    October_2016_whitelist_2583.snv_mnv_indel.maf.gz
+   PCAWG-2,5,9,14 candidate driver release 4-22-2017.xlsx
+   PCAWG_signature_patterns_beta2.20170320.txt.gz
+   PCAWG_sub_signatures_in_samples_beta2.20170320.txt.gz
    aliquot_donor_tumor.whitelist.tsv.gz
-   consensus.20161103.somatic.cna.tar.gz
+   all_data_by_genes.rmcnv.pt_170207.txt.gz
+   consensus.20170119.somatic.cna.annotated.tar.gz
+   final_integration_results_2017_03_16.tar.gz
+   focal_data_by_genes.rmcnv.pt_170207.txt.gz
    joint_fpkm_uq.tsv.gz
+   mutation_colors.tsv
+   pandrugs.tar.gz
+   pandrugs.tsv.gz
    pcawg_consensus_1.6.161116.somatic_svs.tar.gz
    pcawg_donor_clinical_August2016_v7.tsv
-   pcawg_specimen_histology_August2016_v6.tsv
+   pcawg_donor_clinical_August2016_v9.tsv
+   pcawg_specimen_histology_August2016_v9.tsv
+   pcawg_whitelist_coding_drivers_v1_sep302016.txt.gz
+   pcawg_whitelist_somatic_driver_mutations_beta.csv.gz
    release_may2016.v1.4.tsv
+   tumor_type-Pandrugs-PCAWG.tsv
   }
   rbbt_commands=rbbt_commands filter="*"{
    bootstrap
@@ -158,7 +173,6 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    driver_enrichment.rb
    driver_enrichment_format.rb
 
-
    format_for_nuria
    rebuild_for_samples
    compare_vcf
@@ -167,6 +181,8 @@ PCAWG=/$PWD filter="*.rb *.rake Rakefile *.rdoc *.R *.sh *.js *.haml *.sass *.tx
    prepare_kb.rb
 
    pcawg_5.rb
+
+   clonality_wg5.rb
   }
  }
 }

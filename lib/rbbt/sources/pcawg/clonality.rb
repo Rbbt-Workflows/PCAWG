@@ -31,7 +31,7 @@ module PCAWG
         Path.setup(directory)
 
         sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
-        directory.glob("*/*_cluster_assignments.txt.gz").each do |file|
+        TSV.traverse directory.glob("*/*_cluster_assignments.txt.gz"), :bar => "Processing assignments" do |file|
           sample = File.basename(file).split("_").first
           donor = sample2donor[sample]
           next if donor.nil?
@@ -67,7 +67,7 @@ module PCAWG
         Path.setup(directory)
 
         sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
-        directory.glob("*/*_mutation_timing.txt.gz").each do |file|
+        TSV.traverse directory.glob("*/*_mutation_timing.txt.gz"), :bar => "Processing timing" do |file|
           sample = File.basename(file).split("_").first
           donor = sample2donor[sample]
           next if donor.nil?

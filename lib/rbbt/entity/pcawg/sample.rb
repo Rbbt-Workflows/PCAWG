@@ -70,7 +70,7 @@ module Sample
     Misc.sort_mutation_stream PCAWG.CNV.produce[clean_name.split(":").last].open
   end
 
-  dep :genomic_mutations
+  dep :genomic_mutations, :compute => :produce
   dep Sequence, :intersect_bed, :positions => :genomic_mutations
   task :intersect_bed => :tsv do
     TSV.get_stream step(:intersect_bed)
@@ -466,7 +466,7 @@ module Sample
 
   dep :organism
   dep :watson
-  dep :genomic_mutations
+  dep :genomic_mutations, :compute => :produce
   dep Sequence, :affected_genes, :mutations => :genomic_mutations, :organism => :organism, :watson => :watson
   task :gene_timing => :tsv do
     organism = step(:organism).load
@@ -475,7 +475,9 @@ module Sample
     gene_timings = TSV.setup({}, :key_field => "Ensembl Gene ID", :fields => ["Timing"], :type => :flat, :namespace => organism)
     TSV.traverse step(:affected_genes) do |mutation, genes|
       mutation = mutation.first if Array === mutation
-      time = timing[mutation.split(":").values_at(0,1) * ":"]
+      chr, pos = mutation.split(":").values_at(0,1)
+      time = timing[[chr, pos] * ":"]
+      time = timing[[chr, (pos.to_i + 1).to_s] * ":"] if time.nil?
       genes.each do |gene|
         gene_timings[gene] ||= []
         gene_timings[gene] << time
