@@ -21,6 +21,8 @@ $ #{$0} [options]
 -nh--no_hyper Ignore hypermutated samples (defaut=true)
 --concurrent* Number of concurrent processes
 -W--workflows* Load a list of workflows
+-ssa--skip_samples Skip samples
+-sst--skip_studies Skip Studies
 EOF
 
 if options[:help]
@@ -70,6 +72,8 @@ abbrs = PCAWG.all_abbreviations
 meta = PCAWG.all_meta
 other = PCAWG.donor_other_cohorts.glob('*').collect{|f| File.basename f }
 
+studies = abbrs + meta.collect{|m| "meta=" << m} + other.collect{|m| "other=" << m}
+
 num = options[:concurrent] || "10"
 tasks.each do |task|
  Misc.bootstrap(donors, num.to_i) do |donor|
@@ -80,9 +84,9 @@ tasks.each do |task|
   rescue
   end
   nil
- end
+ end unless options[:skip_samples]
 
- Misc.bootstrap( abbrs + meta.collect{|m| "meta=" << m} + other.collect{|m| "other=" << m}, num.to_i) do |study|
+ Misc.bootstrap( studies, num.to_i) do |study|
   study = study + '.NOHYPER' if options[:no_hyper]
   study = Study.setup(study.dup)
   begin
@@ -93,6 +97,6 @@ tasks.each do |task|
    Log.exception $!
   end
   nil
- end
+ end unless options[:skip_studies]
 end
 

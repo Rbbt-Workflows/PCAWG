@@ -303,7 +303,9 @@ module Study
   dep Sample, :gene_extra_status, :compute => :bootstrap do |jobname,options|
     study = Study.setup(jobname.dup)
     if study.has_cnv?
-      study.genotyped_samples.collect{|sample| Sample.setup(sample, :cohort => study) unless Sample === sample; sample.gene_extra_status(:job, options) }.flatten
+      study.genotyped_samples.collect{|sample| 
+        {:jobname => sample, :inputs => options}
+      }
     else
       []
     end
