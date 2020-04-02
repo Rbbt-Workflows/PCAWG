@@ -7,3 +7,14 @@ project/
 *.save
 driver_enrichment
 result*/
+sandbox/
+tmp/
+bin/dark_matter.rb
+bin/dark_matter_new.rb
+share/rbbt_commands/driver_enrichment.rb
+share/rbbt_commands/driver_enrichment_format.rb
+share/rbbt_commands/network_format.rb
+share/rbbt_commands/network_format_dir.rb
+share/rbbt_commands/pcawg_5.rb
+share/rbbt_commands/ppi_network_format.rb
+share/rbbt_commands/prepare_kb.rb
