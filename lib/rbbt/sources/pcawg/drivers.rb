@@ -19,8 +19,10 @@ module PCAWG
     end.first
   end
 
+  PCAWG.claim DATA_DIR['final_integration_results_2017_03_16.tar.gz'], :url, "https://b2drop.eudat.eu/s/PWj3NmRJg6KMkX4/download"
+
   PCAWG.claim PCAWG.drivers, :proc do |real|
-    file = DATA_DIR['final_integration_results_2017_03_16.tar.gz'].find
+    file = DATA_DIR['final_integration_results_2017_03_16.tar.gz'].produce.find
     TmpFile.with_file do |directory|
       FileUtils.mkdir_p directory
       Misc.in_dir directory do

@@ -8,6 +8,7 @@ module PCAWG
 
   DATA_DIR = Rbbt.root.share.data.projects.PCAWG[".source"]
   DATA_DIR.libdir = Path.caller_lib_dir
+  DATA_DIR.resource = PCAWG
 
   PROJECT_VAR_DIR = Rbbt.root.var.PCAWG
 

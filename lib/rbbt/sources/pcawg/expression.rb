@@ -1,8 +1,6 @@
 module PCAWG
 
-  Rbbt.claim DATA_DIR['joint_fpkm_uq.tsv.gz'].tap{|o| o.resource = PCAWG}, :proc do |filename|
-    raise "Please place the file joint_fpkm_uq.tsv.gz into #{ filename }"
-  end
+  PCAWG.claim DATA_DIR['joint_fpkm_uq.tsv.gz'], :url, "https://b2drop.eudat.eu/s/Ym4WNiwMJd3STgj/download"
 
   PCAWG.claim PCAWG.matrices.gene_expression, :proc do 
     TSV.traverse DATA_DIR["joint_fpkm_uq.tsv.gz"].produce, :type => :array, :into => :stream, :bar => true do |line|

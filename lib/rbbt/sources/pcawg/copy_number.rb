@@ -1,10 +1,12 @@
 module PCAWG
+  PCAWG.claim DATA_DIR['consensus.20170119.somatic.cna.annotated.tar.gz'], :url, "https://b2drop.eudat.eu/s/3Xb5PFdq9w4Mj7j/download"
+
   PCAWG.claim PCAWG.CNV, :proc do |real|
-    file = DATA_DIR['consensus.20170119.somatic.cna.annotated.tar.gz'].find
+    file = DATA_DIR['consensus.20170119.somatic.cna.annotated.tar.gz']
     TmpFile.with_file do |directory|
       FileUtils.mkdir_p directory
       Misc.in_dir directory do
-        CMD.cmd("tar xvfz '#{file}'")
+        CMD.cmd("tar xvfz '#{file.find}'")
         Path.setup(directory)
 
         sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD

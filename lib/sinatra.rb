@@ -10,8 +10,6 @@ require 'rbbt/entity/gene'
 require 'rbbt/entity/mutated_isoform'
 require 'rbbt/entity/protein'
 
-require 'rbbt/workflow/remote/client'
-
 Entity::REST.setup(Gene)
 Entity::REST.setup(Protein)
 Entity::REST.setup(MutatedIsoform)
