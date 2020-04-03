@@ -6,7 +6,7 @@ module PCAWG
     TmpFile.with_file do |directory|
       FileUtils.mkdir_p directory
       Misc.in_dir directory do
-        CMD.cmd("tar xvfz '#{file.find}'")
+        CMD.cmd("tar xvfz '#{file.produce.find}'")
         Path.setup(directory)
 
         sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
