@@ -52,9 +52,8 @@ module Study
 
   dep Sample, :SV_candidate_fusions, :compute => :bootstrap do |jobname,options|
     study = Study.setup(jobname.dup)
-    study.genotyped_samples.collect{|s| s.SV_candidate_fusions(:job, options) }
+    study.genotyped_samples.collect{|s| {:jobname => "PCAWG:" + s, :inputs => options} }
   end
-
   task :SV_candidate_fusion_incidence => :tsv do
     counts = TSV.setup({}, :key_field => "Ensembl Gene ID - Ensembl Gene ID", :fields => ["Sample"], :type => :flat)
     dependencies.each do |dep|
