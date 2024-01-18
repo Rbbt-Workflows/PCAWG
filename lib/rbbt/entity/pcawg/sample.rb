@@ -1,4 +1,5 @@
 Workflow.require_workflow "Sample"
+Workflow.require_workflow "Sequence"
 
 module Sample
 
