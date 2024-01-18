@@ -83,7 +83,7 @@ TSV.traverse tsv, :bar => "Placing vcf" do |id,study|
     Open.write(File.join(study_dir, 'metadata.yaml'), metadata.sub('[CONDITION]', study.sub(/-.*/,'')))
   end
 
-  if File.exists? snv_file
+  if File.exist? snv_file
     target_file = File.join(genotype_dir, id + '.vcf')
     CMD.cmd("zcat #{ snv_file } | grep -v 'LOWSUPPORT' > #{target_file}", :no_fail => true)
     CMD.cmd("zcat #{ indel_file } | grep -v '^#' | grep -v 'LOWSUPPORT' >> #{target_file}", :no_fail => true)
@@ -115,7 +115,7 @@ TSV.traverse matrix_samples, :bar => "Placing RNASeq" do |study,sample_info|
   if sample_info[:tumor]
     study_dir = File.join(project_dir, study)
     study_matrix_file = File.join(study_dir, 'matrices/tumor_rnaseq/data')
-    FileUtils.mkdir_p File.dirname(study_matrix_file) unless File.exists? File.dirname(study_matrix_file)
+    FileUtils.mkdir_p File.dirname(study_matrix_file) unless File.exist? File.dirname(study_matrix_file)
 
     tumor_samples = []
     sample_names = []
@@ -133,7 +133,7 @@ TSV.traverse matrix_samples, :bar => "Placing RNASeq" do |study,sample_info|
   if sample_info[:normal]
     study_dir = File.join(project_dir, study)
     study_matrix_file = File.join(study_dir, 'matrices/normal_rnaseq/data')
-    FileUtils.mkdir_p File.dirname(study_matrix_file) unless File.exists? File.dirname(study_matrix_file)
+    FileUtils.mkdir_p File.dirname(study_matrix_file) unless File.exist? File.dirname(study_matrix_file)
 
     tumor_samples = []
     sample_names = []

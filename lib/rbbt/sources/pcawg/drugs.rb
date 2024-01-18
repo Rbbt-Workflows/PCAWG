@@ -9,7 +9,7 @@ module PCAWG
   #      Path.setup(directory)
 
   #      sample2donor = PCAWG.donor_wgs_samples.index :target => PCAWG::DONOR_FIELD
-  #      FileUtils.mkdir_p real.find unless File.exists? real.find
+  #      FileUtils.mkdir_p real.find unless File.exist? real.find
   #      directory.glob("pandrugs/*/*.tsv").each do |file|
   #        cohort, donor, *rest = File.basename(file).split("_")
   #        FileUtils.cp file, real[donor].find

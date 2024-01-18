@@ -171,7 +171,7 @@ end
 
   #      if last_donor != donor
   #        io.close if io
-  #        if File.exists?(directory[donor])
+  #        if File.exist?(directory[donor])
   #          io = Open.open(directory[donor], :mode => 'a')
   #        else
   #          io = Open.open(directory[donor], :mode => 'w')
@@ -219,7 +219,7 @@ end
 
   #      if last_donor != donor
   #        io.close if io
-  #        if File.exists?(directory[donor])
+  #        if File.exist?(directory[donor])
   #          io = Open.open(directory[donor], :mode => 'a')
   #        else
   #          io = Open.open(directory[donor], :mode => 'w')
@@ -266,7 +266,7 @@ end
 
   #      if last_donor != donor
   #        io.close if io
-  #        if File.exists?(directory[donor])
+  #        if File.exist?(directory[donor])
   #          io = Open.open(directory[donor], :mode => 'a')
   #        else
   #          io = Open.open(directory[donor], :mode => 'w')
@@ -314,7 +314,7 @@ end
 
   #      if last_donor != donor
   #        io.close if io
-  #        if File.exists?(directory[donor])
+  #        if File.exist?(directory[donor])
   #          io = Open.open(directory[donor], :mode => 'a')
   #        else
   #          io = Open.open(directory[donor], :mode => 'w')

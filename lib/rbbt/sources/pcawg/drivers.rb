@@ -167,7 +167,7 @@ module PCAWG
       fields << "ID"
       tissue_entries.each do |tissue, values|
         tissue_dir = real[tissue].find
-        FileUtils.mkdir_p tissue_dir unless File.exists? tissue_dir
+        FileUtils.mkdir_p tissue_dir unless File.exist? tissue_dir
 
         tissue_values = TSV.setup({}, :key_field => "Associated Gene Name", :fields => fields, :type => :list, :namespace => PCAWG.organism)
         values.each do |list|

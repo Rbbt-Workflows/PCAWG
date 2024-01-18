@@ -97,7 +97,7 @@ TSV.traverse indel_file, :bar => "Extracting variants", :type => :array do |line
 
   sample_streams[id] ||= begin
                            sample_genotype = File.join(project_dir, study, 'genotypes', id)
-                           FileUtils.mkdir_p File.join(project_dir, study, 'genotypes') unless File.exists?(File.join(project_dir, study, 'genotypes'))
+                           FileUtils.mkdir_p File.join(project_dir, study, 'genotypes') unless File.exist?(File.join(project_dir, study, 'genotypes'))
                            Open.open(sample_genotype, :mode => 'w')
                          end
 
@@ -110,7 +110,7 @@ TSV.traverse matrix_samples, :bar => "Placing rnaseq" do |study,sample_info|
   if sample_info[:tumor]
     study_dir = File.join(project_dir, study)
     study_matrix_file = File.join(study_dir, 'matrices/tumor_rnaseq/data')
-    FileUtils.mkdir_p File.dirname(study_matrix_file) unless File.exists? File.dirname(study_matrix_file)
+    FileUtils.mkdir_p File.dirname(study_matrix_file) unless File.exist? File.dirname(study_matrix_file)
 
     tumor_samples = []
     sample_names = []
@@ -128,7 +128,7 @@ TSV.traverse matrix_samples, :bar => "Placing rnaseq" do |study,sample_info|
   if sample_info[:normal]
     study_dir = File.join(project_dir, study)
     study_matrix_file = File.join(study_dir, 'matrices/normal_rnaseq/data')
-    FileUtils.mkdir_p File.dirname(study_matrix_file) unless File.exists? File.dirname(study_matrix_file)
+    FileUtils.mkdir_p File.dirname(study_matrix_file) unless File.exist? File.dirname(study_matrix_file)
 
     tumor_samples = []
     sample_names = []
